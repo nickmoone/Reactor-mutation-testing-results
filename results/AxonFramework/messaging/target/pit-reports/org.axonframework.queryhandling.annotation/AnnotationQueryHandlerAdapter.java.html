@@ -1,0 +1,2056 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+<body>
+
+
+<h1>AnnotationQueryHandlerAdapter.java</h1>
+
+<table class="src">
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_1'/>
+1
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_1'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>/*</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_2'/>
+2
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_2'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * Copyright (c) 2010-2022. Axon Framework</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_3'/>
+3
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_3'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> *</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_4'/>
+4
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_4'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * Licensed under the Apache License, Version 2.0 (the &#34;License&#34;);</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_5'/>
+5
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_5'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * you may not use this file except in compliance with the License.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_6'/>
+6
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_6'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * You may obtain a copy of the License at</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_7'/>
+7
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_7'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> *</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_8'/>
+8
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_8'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> *    http://www.apache.org/licenses/LICENSE-2.0</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_9'/>
+9
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_9'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> *</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_10'/>
+10
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_10'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * Unless required by applicable law or agreed to in writing, software</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_11'/>
+11
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_11'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * distributed under the License is distributed on an &#34;AS IS&#34; BASIS,</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_12'/>
+12
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_12'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_13'/>
+13
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_13'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * See the License for the specific language governing permissions and</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_14'/>
+14
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_14'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * limitations under the License.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_15'/>
+15
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_15'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_16'/>
+16
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_16'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>package org.axonframework.queryhandling.annotation;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_17'/>
+17
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_17'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_18'/>
+18
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_18'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.axonframework.common.Registration;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_19'/>
+19
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_19'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.axonframework.messaging.MessageHandler;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_20'/>
+20
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_20'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.axonframework.messaging.annotation.AnnotatedHandlerInspector;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_21'/>
+21
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_21'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.axonframework.messaging.annotation.ClasspathHandlerDefinition;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_22'/>
+22
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_22'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.axonframework.messaging.annotation.ClasspathParameterResolverFactory;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_23'/>
+23
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_23'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.axonframework.messaging.annotation.HandlerDefinition;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_24'/>
+24
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_24'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.axonframework.messaging.annotation.MessageHandlingMember;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_25'/>
+25
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_25'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.axonframework.messaging.annotation.ParameterResolverFactory;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_26'/>
+26
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_26'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.axonframework.queryhandling.NoHandlerForQueryException;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_27'/>
+27
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_27'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.axonframework.queryhandling.QueryBus;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_28'/>
+28
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_28'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.axonframework.queryhandling.QueryHandler;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_29'/>
+29
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_29'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.axonframework.queryhandling.QueryHandlerAdapter;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_30'/>
+30
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_30'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.axonframework.queryhandling.QueryMessage;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_31'/>
+31
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_31'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_32'/>
+32
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_32'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import java.util.Collection;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_33'/>
+33
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_33'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import java.util.Optional;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_34'/>
+34
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_34'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import java.util.stream.Collectors;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_35'/>
+35
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_35'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import javax.annotation.Nonnull;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_36'/>
+36
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_36'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_37'/>
+37
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_37'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>/**</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_38'/>
+38
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_38'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * Adapter that turns any {@link QueryHandler @QueryHandler} annotated bean into a {@link MessageHandler}</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_39'/>
+39
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_39'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * implementation. Each annotated method is subscribed as a QueryHandler at the {@link QueryBus} for the query type</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_40'/>
+40
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_40'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * specified by the parameter/return type of that method.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_41'/>
+41
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_41'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> *</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_42'/>
+42
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_42'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * @author Marc Gathier</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_43'/>
+43
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_43'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * @since 3.1</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_44'/>
+44
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_44'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_45'/>
+45
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_45'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>public class AnnotationQueryHandlerAdapter&#60;T&#62; implements QueryHandlerAdapter, MessageHandler&#60;QueryMessage&#60;?, ?&#62;&#62; {</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_46'/>
+46
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_46'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_47'/>
+47
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_47'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    private final T target;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_48'/>
+48
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_48'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    private final AnnotatedHandlerInspector&#60;T&#62; model;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_49'/>
+49
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_49'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_50'/>
+50
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_50'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    /**</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_51'/>
+51
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_51'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * Initializes the adapter, forwarding call to the given {@code target}.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_52'/>
+52
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_52'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     *</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_53'/>
+53
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_53'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * @param target the instance with {@link QueryHandler} annotated methods</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_54'/>
+54
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_54'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_55'/>
+55
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_55'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public AnnotationQueryHandlerAdapter(T target) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_56'/>
+56
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_56'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        this(target, ClasspathParameterResolverFactory.forClass(target.getClass()));</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_57'/>
+57
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_57'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_58'/>
+58
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_58'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_59'/>
+59
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_59'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    /**</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_60'/>
+60
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_60'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * Initializes the adapter, forwarding call to the given {@code target}, resolving parameters using the given {@code</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_61'/>
+61
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_61'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * parameterResolverFactory}.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_62'/>
+62
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_62'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     *</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_63'/>
+63
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_63'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * @param target                   the instance with {@link QueryHandler} annotated methods</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_64'/>
+64
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_64'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * @param parameterResolverFactory the parameter resolver factory to resolve handler parameters with</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_65'/>
+65
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_65'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_66'/>
+66
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_66'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public AnnotationQueryHandlerAdapter(T target, ParameterResolverFactory parameterResolverFactory) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_67'/>
+67
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_67'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        this(target,</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_68'/>
+68
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_68'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>             parameterResolverFactory,</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_69'/>
+69
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_69'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>             ClasspathHandlerDefinition.forClass(target.getClass()));</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_70'/>
+70
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_70'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_71'/>
+71
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_71'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_72'/>
+72
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_72'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    /**</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_73'/>
+73
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_73'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * Initializes the adapter, forwarding call to the given {@code target}, resolving parameters using the given {@code</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_74'/>
+74
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_74'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * parameterResolverFactory} and creating handlers using {@code handlerDefinition}.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_75'/>
+75
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_75'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     *</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_76'/>
+76
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_76'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * @param target                   the instance with {@link QueryHandler} annotated methods</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_77'/>
+77
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_77'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * @param parameterResolverFactory the parameter resolver factory to resolve handler parameters with</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_78'/>
+78
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_78'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * @param handlerDefinition        the handler definition used to create concrete handlers</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_79'/>
+79
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_79'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_80'/>
+80
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_80'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    @SuppressWarnings(&#34;unchecked&#34;)</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_81'/>
+81
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_81'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public AnnotationQueryHandlerAdapter(T target,</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_82'/>
+82
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_82'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>                                         ParameterResolverFactory parameterResolverFactory,</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_83'/>
+83
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_83'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>                                         HandlerDefinition handlerDefinition) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_84'/>
+84
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_84'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        this.model = AnnotatedHandlerInspector.inspectType((Class&#60;T&#62;) target.getClass(),</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_85'/>
+85
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_85'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>                                                           parameterResolverFactory,</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_86'/>
+86
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_86'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>                                                           handlerDefinition);</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_87'/>
+87
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_87'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        this.target = target;</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_88'/>
+88
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_88'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_89'/>
+89
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_89'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_90'/>
+90
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_90'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    @Override</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_91'/>
+91
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_91'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public Registration subscribe(@Nonnull QueryBus queryBus) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_92'/>
+92
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_92'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        Collection&#60;Registration&#62; registrations = model.getHandlers(target.getClass())</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_93'/>
+93
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_93'>1</a>
+<span>
+1. lambda$subscribe$0 : replaced return value with Optional.empty for org/axonframework/queryhandling/annotation/AnnotationQueryHandlerAdapter::lambda$subscribe$0 &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>                                                      .map(handler -&#62; handler.unwrap(QueryHandlingMember.class))</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_94'/>
+94
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_94'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>                                                      .filter(Optional::isPresent)</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_95'/>
+95
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_95'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>                                                      .map(Optional::get)</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_96'/>
+96
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_96'>1</a>
+<span>
+1. lambda$subscribe$1 : replaced return value with null for org/axonframework/queryhandling/annotation/AnnotationQueryHandlerAdapter::lambda$subscribe$1 &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>                                                      .map(queryHandler -&#62; queryBus.subscribe(</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_97'/>
+97
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_97'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>                                                              queryHandler.getQueryName(),</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_98'/>
+98
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_98'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>                                                              queryHandler.getResultType(),</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_99'/>
+99
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_99'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>                                                              this</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_100'/>
+100
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_100'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>                                                      ))</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_101'/>
+101
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_101'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>                                                      .collect(Collectors.toList());</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_102'/>
+102
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_102'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_103'/>
+103
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_103'>1</a>
+<span>
+1. subscribe : replaced return value with null for org/axonframework/queryhandling/annotation/AnnotationQueryHandlerAdapter::subscribe &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        return () -&#62; registrations.stream()</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_104'/>
+104
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_104'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>                                  .map(Registration::cancel)</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_105'/>
+105
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_105'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>                                  .reduce(Boolean::logicalOr)</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_106'/>
+106
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_106'>2</a>
+<span>
+1. lambda$subscribe$2 : replaced boolean return with true for org/axonframework/queryhandling/annotation/AnnotationQueryHandlerAdapter::lambda$subscribe$2 &rarr; SURVIVED<br/>
+2. lambda$subscribe$2 : replaced boolean return with false for org/axonframework/queryhandling/annotation/AnnotationQueryHandlerAdapter::lambda$subscribe$2 &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='survived'>                                  .orElse(false);</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_107'/>
+107
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_107'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_108'/>
+108
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_108'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_109'/>
+109
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_109'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    @Override</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_110'/>
+110
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_110'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public Object handle(QueryMessage&#60;?, ?&#62; message) throws Exception {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_111'/>
+111
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_111'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        MessageHandlingMember&#60;? super T&#62; handler =</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_112'/>
+112
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_112'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>                model.getHandlers(target.getClass())</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_113'/>
+113
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_113'>2</a>
+<span>
+1. lambda$handle$3 : replaced boolean return with false for org/axonframework/queryhandling/annotation/AnnotationQueryHandlerAdapter::lambda$handle$3 &rarr; KILLED<br/>
+2. lambda$handle$3 : replaced boolean return with true for org/axonframework/queryhandling/annotation/AnnotationQueryHandlerAdapter::lambda$handle$3 &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>                     .filter(m -&#62; m.canHandle(message))</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_114'/>
+114
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_114'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>                     .findFirst()</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_115'/>
+115
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_115'>1</a>
+<span>
+1. lambda$handle$4 : replaced return value with null for org/axonframework/queryhandling/annotation/AnnotationQueryHandlerAdapter::lambda$handle$4 &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>                     .orElseThrow(() -&#62; new NoHandlerForQueryException(message));</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_116'/>
+116
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_116'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_117'/>
+117
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_117'>1</a>
+<span>
+1. handle : replaced return value with null for org/axonframework/queryhandling/annotation/AnnotationQueryHandlerAdapter::handle &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        return model.chainedInterceptor(target.getClass())</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_118'/>
+118
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_118'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>                    .handle(message, target, handler);</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_119'/>
+119
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_119'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_120'/>
+120
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_120'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_121'/>
+121
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_121'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    @Override</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_122'/>
+122
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_122'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public boolean canHandle(QueryMessage&#60;?, ?&#62; message) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_123'/>
+123
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_123'>2</a>
+<span>
+1. canHandle : replaced boolean return with false for org/axonframework/queryhandling/annotation/AnnotationQueryHandlerAdapter::canHandle &rarr; KILLED<br/>
+2. canHandle : replaced boolean return with true for org/axonframework/queryhandling/annotation/AnnotationQueryHandlerAdapter::canHandle &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        return model.getHandlers(target.getClass())</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_124'/>
+124
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_124'>2</a>
+<span>
+1. lambda$canHandle$5 : replaced boolean return with false for org/axonframework/queryhandling/annotation/AnnotationQueryHandlerAdapter::lambda$canHandle$5 &rarr; KILLED<br/>
+2. lambda$canHandle$5 : replaced boolean return with true for org/axonframework/queryhandling/annotation/AnnotationQueryHandlerAdapter::lambda$canHandle$5 &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>                    .anyMatch(handlingMember -&#62; handlingMember.canHandle(message));</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_125'/>
+125
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_125'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@64925ccb_126'/>
+126
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_126'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>}</span></pre></td></tr>
+
+
+
+<tr><td></td><td></td><td><h2>Mutations</h2></td></tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@64925ccb_93'>93</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_93'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>lambda$subscribe$0<br/><b>Killed by : </b>org.axonframework.queryhandling.annotation.AnnotationQueryHandlerAdapterTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.annotation.AnnotationQueryHandlerAdapterTest]/[method:subscribe()]</span></span> replaced return value with Optional.empty for org/axonframework/queryhandling/annotation/AnnotationQueryHandlerAdapter::lambda$subscribe$0 &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@64925ccb_96'>96</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_96'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>lambda$subscribe$1<br/><b>Killed by : </b>org.axonframework.queryhandling.annotation.AnnotationQueryHandlerAdapterTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.annotation.AnnotationQueryHandlerAdapterTest]/[method:subscribe()]</span></span> replaced return value with null for org/axonframework/queryhandling/annotation/AnnotationQueryHandlerAdapter::lambda$subscribe$1 &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@64925ccb_103'>103</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_103'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>subscribe<br/><b>Killed by : </b>org.axonframework.queryhandling.annotation.AnnotationQueryHandlerAdapterTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.annotation.AnnotationQueryHandlerAdapterTest]/[method:subscribe()]</span></span> replaced return value with null for org/axonframework/queryhandling/annotation/AnnotationQueryHandlerAdapter::subscribe &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@64925ccb_106'>106</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_106'/> 
+
+<p class='SURVIVED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>lambda$subscribe$2<br/><b>Killed by : </b>none</span></span> replaced boolean return with true for org/axonframework/queryhandling/annotation/AnnotationQueryHandlerAdapter::lambda$subscribe$2 &rarr; SURVIVED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>lambda$subscribe$2<br/><b>Killed by : </b>org.axonframework.queryhandling.annotation.AnnotationQueryHandlerAdapterTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.annotation.AnnotationQueryHandlerAdapterTest]/[method:subscribe()]</span></span> replaced boolean return with false for org/axonframework/queryhandling/annotation/AnnotationQueryHandlerAdapter::lambda$subscribe$2 &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@64925ccb_113'>113</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_113'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>lambda$handle$3<br/><b>Killed by : </b>org.axonframework.queryhandling.annotation.AnnotationQueryHandlerAdapterTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.annotation.AnnotationQueryHandlerAdapterTest]/[method:handleQueryWithProvidedOptional()]</span></span> replaced boolean return with false for org/axonframework/queryhandling/annotation/AnnotationQueryHandlerAdapter::lambda$handle$3 &rarr; KILLED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>lambda$handle$3<br/><b>Killed by : </b>org.axonframework.queryhandling.annotation.AnnotationQueryHandlerAdapterTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.annotation.AnnotationQueryHandlerAdapterTest]/[method:handleQueryThrowsNoHandlerForQueryException()]</span></span> replaced boolean return with true for org/axonframework/queryhandling/annotation/AnnotationQueryHandlerAdapter::lambda$handle$3 &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@64925ccb_115'>115</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_115'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>lambda$handle$4<br/><b>Killed by : </b>org.axonframework.queryhandling.annotation.AnnotationQueryHandlerAdapterTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.annotation.AnnotationQueryHandlerAdapterTest]/[method:handleQueryThrowsNoHandlerForQueryException()]</span></span> replaced return value with null for org/axonframework/queryhandling/annotation/AnnotationQueryHandlerAdapter::lambda$handle$4 &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@64925ccb_117'>117</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_117'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>handle<br/><b>Killed by : </b>org.axonframework.queryhandling.annotation.AnnotationQueryHandlerAdapterTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.annotation.AnnotationQueryHandlerAdapterTest]/[method:handleQueryWithProvidedOptional()]</span></span> replaced return value with null for org/axonframework/queryhandling/annotation/AnnotationQueryHandlerAdapter::handle &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@64925ccb_123'>123</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_123'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>canHandle<br/><b>Killed by : </b>org.axonframework.queryhandling.annotation.AnnotationQueryHandlerAdapterTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.annotation.AnnotationQueryHandlerAdapterTest]/[method:canHandleMessage()]</span></span> replaced boolean return with false for org/axonframework/queryhandling/annotation/AnnotationQueryHandlerAdapter::canHandle &rarr; KILLED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>canHandle<br/><b>Killed by : </b>org.axonframework.queryhandling.annotation.AnnotationQueryHandlerAdapterTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.annotation.AnnotationQueryHandlerAdapterTest]/[method:canHandleMessage()]</span></span> replaced boolean return with true for org/axonframework/queryhandling/annotation/AnnotationQueryHandlerAdapter::canHandle &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@64925ccb_124'>124</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@64925ccb_124'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>lambda$canHandle$5<br/><b>Killed by : </b>org.axonframework.queryhandling.annotation.AnnotationQueryHandlerAdapterTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.annotation.AnnotationQueryHandlerAdapterTest]/[method:canHandleMessage()]</span></span> replaced boolean return with false for org/axonframework/queryhandling/annotation/AnnotationQueryHandlerAdapter::lambda$canHandle$5 &rarr; KILLED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>lambda$canHandle$5<br/><b>Killed by : </b>org.axonframework.queryhandling.annotation.AnnotationQueryHandlerAdapterTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.annotation.AnnotationQueryHandlerAdapterTest]/[method:canHandleMessage()]</span></span> replaced boolean return with true for org/axonframework/queryhandling/annotation/AnnotationQueryHandlerAdapter::lambda$canHandle$5 &rarr; KILLED</p> 
+</td>
+</tr>
+
+</table>
+
+
+<h2>Active mutators</h2>
+<ul>
+<li class='mutator'>CONDITIONALS_BOUNDARY</li>
+<li class='mutator'>EMPTY_RETURNS</li>
+<li class='mutator'>EXPERIMENTAL_SWITCH</li>
+<li class='mutator'>FALSE_RETURNS</li>
+<li class='mutator'>INCREMENTS</li>
+<li class='mutator'>INVERT_NEGS</li>
+<li class='mutator'>MATH</li>
+<li class='mutator'>NULL_RETURNS</li>
+<li class='mutator'>PRIMITIVE_RETURNS</li>
+<li class='mutator'>REACTOR_REACTIVE_MUTATOR</li>
+<li class='mutator'>REMOVE_CONDITIONALS_EQUAL_ELSE</li>
+<li class='mutator'>REMOVE_CONDITIONALS_EQUAL_IF</li>
+<li class='mutator'>REMOVE_CONDITIONALS_ORDER_ELSE</li>
+<li class='mutator'>REMOVE_CONDITIONALS_ORDER_IF</li>
+<li class='mutator'>TRUE_RETURNS</li>
+<li class='mutator'>VOID_METHOD_CALLS</li>
+
+</ul>
+
+<h2>Tests examined</h2>
+<ul>
+<li>org.axonframework.queryhandling.StreamingQueryTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.StreamingQueryTest]/[method:emptyOptionalResults()] (1 ms)</li><li>org.axonframework.queryhandling.annotation.AnnotationQueryHandlerAdapterTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.annotation.AnnotationQueryHandlerAdapterTest]/[method:handleQueryThrowsNoHandlerForQueryException()] (2 ms)</li><li>org.axonframework.queryhandling.StreamingQueryTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.StreamingQueryTest]/[method:streamingStreamResults()] (2 ms)</li><li>org.axonframework.queryhandling.StreamingQueryTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.StreamingQueryTest]/[method:backpressureFluxQuery()] (4 ms)</li><li>org.axonframework.queryhandling.FutureAsResponseTypeToQueryHandlersTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.FutureAsResponseTypeToQueryHandlersTest]/[method:queryWithSingleResponse()] (502 ms)</li><li>org.axonframework.queryhandling.StreamingQueryTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.StreamingQueryTest]/[method:streamingFluxResults()] (1 ms)</li><li>org.axonframework.queryhandling.StreamingQueryTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.StreamingQueryTest]/[method:streamingSingleResult()] (1 ms)</li><li>org.axonframework.queryhandling.FutureAsResponseTypeToQueryHandlersTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.FutureAsResponseTypeToQueryHandlersTest]/[method:scatterGatherQueryWithMultipleResponses()] (510 ms)</li><li>org.axonframework.queryhandling.StreamingQueryTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.StreamingQueryTest]/[method:queryNotExists()] (0 ms)</li><li>org.axonframework.queryhandling.StreamingQueryTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.StreamingQueryTest]/[method:streamingNullResult()] (9 ms)</li><li>org.axonframework.queryhandling.annotation.AnnotationQueryHandlerAdapterTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.annotation.AnnotationQueryHandlerAdapterTest]/[method:canHandleMessage()] (2 ms)</li><li>org.axonframework.queryhandling.StreamingQueryTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.StreamingQueryTest]/[method:streamingMonoResult()] (103 ms)</li><li>org.axonframework.queryhandling.annotation.AnnotationQueryHandlerAdapterTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.annotation.AnnotationQueryHandlerAdapterTest]/[method:handleQuery()] (1 ms)</li><li>org.axonframework.queryhandling.annotation.AnnotationQueryHandlerAdapterTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.annotation.AnnotationQueryHandlerAdapterTest]/[method:subscribe()] (2 ms)</li><li>org.axonframework.queryhandling.StreamingQueryTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.StreamingQueryTest]/[method:optionalResults()] (0 ms)</li><li>org.axonframework.queryhandling.PrimitiveQueryHandlerResponseTypeTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.PrimitiveQueryHandlerResponseTypeTest]/[method:testByte()] (1 ms)</li><li>org.axonframework.queryhandling.PrimitiveQueryHandlerResponseTypeTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.PrimitiveQueryHandlerResponseTypeTest]/[method:testShort()] (1 ms)</li><li>org.axonframework.queryhandling.annotation.AnnotationQueryHandlerAdapterTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.annotation.AnnotationQueryHandlerAdapterTest]/[method:interceptMessages()] (3 ms)</li><li>org.axonframework.queryhandling.annotation.AnnotationQueryHandlerAdapterTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.annotation.AnnotationQueryHandlerAdapterTest]/[method:handleQueryWithProvidedOptional()] (1 ms)</li><li>org.axonframework.queryhandling.PrimitiveQueryHandlerResponseTypeTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.PrimitiveQueryHandlerResponseTypeTest]/[method:testInt()] (0 ms)</li><li>org.axonframework.queryhandling.FutureAsResponseTypeToQueryHandlersTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.FutureAsResponseTypeToQueryHandlersTest]/[method:futureSubscriptionQueryWithMultipleResponses()] (530 ms)</li><li>org.axonframework.queryhandling.StreamingQueryTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.StreamingQueryTest]/[method:dispatchInterceptor()] (1 ms)</li><li>org.axonframework.queryhandling.StreamingQueryTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.StreamingQueryTest]/[method:throttledFluxQuery()] (802 ms)</li><li>org.axonframework.queryhandling.PrimitiveQueryHandlerResponseTypeTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.PrimitiveQueryHandlerResponseTypeTest]/[method:testBoolean()] (1 ms)</li><li>org.axonframework.queryhandling.FutureAsResponseTypeToQueryHandlersTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.FutureAsResponseTypeToQueryHandlersTest]/[method:futureQueryWithMultipleResponses()] (502 ms)</li><li>org.axonframework.queryhandling.FutureAsResponseTypeToQueryHandlersTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.FutureAsResponseTypeToQueryHandlersTest]/[method:queryWithMultipleResponses()] (504 ms)</li><li>org.axonframework.queryhandling.FutureAsResponseTypeToQueryHandlersTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.FutureAsResponseTypeToQueryHandlersTest]/[method:subscriptionQueryWithMultipleResponses()] (501 ms)</li><li>org.axonframework.queryhandling.StreamingQueryTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.StreamingQueryTest]/[method:streamingFluxAfterHandlerCompletes()] (5002 ms)</li><li>org.axonframework.queryhandling.PrimitiveQueryHandlerResponseTypeTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.PrimitiveQueryHandlerResponseTypeTest]/[method:testFloat()] (2 ms)</li><li>org.axonframework.queryhandling.StreamingQueryTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.StreamingQueryTest]/[method:errorStream()] (2 ms)</li><li>org.axonframework.queryhandling.StreamingQueryTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.StreamingQueryTest]/[method:errorResult()] (1 ms)</li><li>org.axonframework.queryhandling.FutureAsResponseTypeToQueryHandlersTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.FutureAsResponseTypeToQueryHandlersTest]/[method:subscriptionQueryWithSingleResponse()] (502 ms)</li><li>org.axonframework.queryhandling.StreamingQueryTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.StreamingQueryTest]/[method:resubscribeWorksEvenWhenAnErrorHasBeenCashed()] (2 ms)</li><li>org.axonframework.queryhandling.PrimitiveQueryHandlerResponseTypeTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.PrimitiveQueryHandlerResponseTypeTest]/[method:testChar()] (0 ms)</li><li>org.axonframework.queryhandling.PrimitiveQueryHandlerResponseTypeTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.PrimitiveQueryHandlerResponseTypeTest]/[method:testDouble()] (2 ms)</li><li>org.axonframework.queryhandling.StreamingQueryTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.StreamingQueryTest]/[method:streamingListResults()] (0 ms)</li><li>org.axonframework.queryhandling.StreamingQueryTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.StreamingQueryTest]/[method:streamingCompletableFutureResult()] (1 ms)</li><li>org.axonframework.queryhandling.annotation.AnnotationQueryHandlerAdapterTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.annotation.AnnotationQueryHandlerAdapterTest]/[method:handleQueryForCollection()] (1 ms)</li><li>org.axonframework.queryhandling.annotation.AnnotationQueryHandlerAdapterTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.annotation.AnnotationQueryHandlerAdapterTest]/[method:handleQueryWithEmptyOptional()] (1 ms)</li><li>org.axonframework.queryhandling.PrimitiveQueryHandlerResponseTypeTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.PrimitiveQueryHandlerResponseTypeTest]/[method:testLong()] (1 ms)</li><li>org.axonframework.queryhandling.annotation.AnnotationQueryHandlerAdapterTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.annotation.AnnotationQueryHandlerAdapterTest]/[method:handleQueryWithException()] (2 ms)</li><li>org.axonframework.queryhandling.StreamingQueryTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.StreamingQueryTest]/[method:switchHandlerOnError()] (2 ms)</li><li>org.axonframework.queryhandling.FutureAsResponseTypeToQueryHandlersTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.FutureAsResponseTypeToQueryHandlersTest]/[method:scatterGatherQueryWithSingleResponse()] (503 ms)</li><li>org.axonframework.queryhandling.StreamingQueryTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.StreamingQueryTest]/[method:handlerInterceptor()] (1 ms)</li><li>org.axonframework.queryhandling.FutureAsResponseTypeToQueryHandlersTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.FutureAsResponseTypeToQueryHandlersTest]/[method:futureScatterGatherQueryWithMultipleResponses()] (503 ms)</li>
+</ul>
+
+<br/>
+
+Report generated by <a href='https://pitest.org'>PIT</a> pitest-reactor
+
+</body>
+</html>

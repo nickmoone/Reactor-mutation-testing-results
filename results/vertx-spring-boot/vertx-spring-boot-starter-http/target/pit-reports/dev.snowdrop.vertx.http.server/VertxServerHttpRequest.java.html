@@ -1,0 +1,1672 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+<body>
+
+
+<h1>VertxServerHttpRequest.java</h1>
+
+<table class="src">
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6332f548_1'/>
+1
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6332f548_1'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>package dev.snowdrop.vertx.http.server;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6332f548_2'/>
+2
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6332f548_2'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6332f548_3'/>
+3
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6332f548_3'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import java.net.InetSocketAddress;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6332f548_4'/>
+4
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6332f548_4'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import java.net.URI;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6332f548_5'/>
+5
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6332f548_5'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6332f548_6'/>
+6
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6332f548_6'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import dev.snowdrop.vertx.http.utils.BufferConverter;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6332f548_7'/>
+7
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6332f548_7'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import dev.snowdrop.vertx.http.utils.CookieConverter;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6332f548_8'/>
+8
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6332f548_8'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import io.vertx.core.buffer.Buffer;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6332f548_9'/>
+9
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6332f548_9'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import io.vertx.core.http.HttpServerRequest;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6332f548_10'/>
+10
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6332f548_10'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import io.vertx.core.net.SocketAddress;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6332f548_11'/>
+11
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6332f548_11'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import io.vertx.ext.web.RoutingContext;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6332f548_12'/>
+12
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6332f548_12'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import dev.snowdrop.vertx.http.common.ReadStreamFluxBuilder;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6332f548_13'/>
+13
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6332f548_13'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.springframework.core.io.buffer.DataBuffer;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6332f548_14'/>
+14
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6332f548_14'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.springframework.http.HttpCookie;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6332f548_15'/>
+15
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6332f548_15'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.springframework.http.HttpHeaders;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6332f548_16'/>
+16
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6332f548_16'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.springframework.http.server.reactive.AbstractServerHttpRequest;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6332f548_17'/>
+17
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6332f548_17'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.springframework.http.server.reactive.SslInfo;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6332f548_18'/>
+18
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6332f548_18'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.springframework.util.LinkedMultiValueMap;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6332f548_19'/>
+19
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6332f548_19'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.springframework.util.MultiValueMap;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6332f548_20'/>
+20
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6332f548_20'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import reactor.core.publisher.Flux;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6332f548_21'/>
+21
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6332f548_21'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6332f548_22'/>
+22
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6332f548_22'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>public class VertxServerHttpRequest extends AbstractServerHttpRequest {</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6332f548_23'/>
+23
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6332f548_23'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6332f548_24'/>
+24
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6332f548_24'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    private final RoutingContext context;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6332f548_25'/>
+25
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6332f548_25'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6332f548_26'/>
+26
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6332f548_26'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    private final HttpServerRequest delegate;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6332f548_27'/>
+27
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6332f548_27'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6332f548_28'/>
+28
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6332f548_28'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    private final Flux&#60;DataBuffer&#62; bodyFlux;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6332f548_29'/>
+29
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6332f548_29'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6332f548_30'/>
+30
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6332f548_30'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public VertxServerHttpRequest(RoutingContext context, BufferConverter bufferConverter) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6332f548_31'/>
+31
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6332f548_31'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        super(initUri(context.request()), &#34;&#34;, initHeaders(context.request()));</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6332f548_32'/>
+32
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6332f548_32'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        this.context = context;</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6332f548_33'/>
+33
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6332f548_33'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        this.delegate = context.request();</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6332f548_34'/>
+34
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6332f548_34'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        this.bodyFlux = new ReadStreamFluxBuilder&#60;Buffer, DataBuffer&#62;()</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6332f548_35'/>
+35
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6332f548_35'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>            .readStream(delegate)</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6332f548_36'/>
+36
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6332f548_36'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>            .dataConverter(bufferConverter::toDataBuffer)</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6332f548_37'/>
+37
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6332f548_37'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>            .build();</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6332f548_38'/>
+38
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6332f548_38'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6332f548_39'/>
+39
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6332f548_39'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6332f548_40'/>
+40
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6332f548_40'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    @SuppressWarnings(&#34;unchecked&#34;)</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6332f548_41'/>
+41
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6332f548_41'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    @Override</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6332f548_42'/>
+42
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6332f548_42'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public &#60;T&#62; T getNativeRequest() {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6332f548_43'/>
+43
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6332f548_43'>1</a>
+<span>
+1. getNativeRequest : replaced return value with null for dev/snowdrop/vertx/http/server/VertxServerHttpRequest::getNativeRequest &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        return (T) delegate;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6332f548_44'/>
+44
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6332f548_44'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6332f548_45'/>
+45
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6332f548_45'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6332f548_46'/>
+46
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6332f548_46'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    @Override</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6332f548_47'/>
+47
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6332f548_47'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public String getMethodValue() {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6332f548_48'/>
+48
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6332f548_48'>1</a>
+<span>
+1. getMethodValue : replaced return value with &#34;&#34; for dev/snowdrop/vertx/http/server/VertxServerHttpRequest::getMethodValue &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        return delegate.method().name();</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6332f548_49'/>
+49
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6332f548_49'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6332f548_50'/>
+50
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6332f548_50'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6332f548_51'/>
+51
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6332f548_51'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    @Override</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6332f548_52'/>
+52
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6332f548_52'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public Flux&#60;DataBuffer&#62; getBody() {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6332f548_53'/>
+53
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6332f548_53'>1</a>
+<span>
+1. getBody : replaced return value with null for dev/snowdrop/vertx/http/server/VertxServerHttpRequest::getBody &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        return bodyFlux;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6332f548_54'/>
+54
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6332f548_54'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6332f548_55'/>
+55
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6332f548_55'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6332f548_56'/>
+56
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6332f548_56'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    @Override</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6332f548_57'/>
+57
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6332f548_57'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public InetSocketAddress getRemoteAddress() {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6332f548_58'/>
+58
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6332f548_58'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        SocketAddress address = delegate.remoteAddress();</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6332f548_59'/>
+59
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6332f548_59'>2</a>
+<span>
+1. getRemoteAddress : removed conditional - replaced equality check with false &rarr; KILLED<br/>
+2. getRemoteAddress : removed conditional - replaced equality check with true &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        if (address == null) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6332f548_60'/>
+60
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6332f548_60'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>            return null;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6332f548_61'/>
+61
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6332f548_61'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        }</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6332f548_62'/>
+62
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6332f548_62'>1</a>
+<span>
+1. getRemoteAddress : replaced return value with null for dev/snowdrop/vertx/http/server/VertxServerHttpRequest::getRemoteAddress &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        return new InetSocketAddress(address.host(), address.port());</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6332f548_63'/>
+63
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6332f548_63'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6332f548_64'/>
+64
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6332f548_64'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6332f548_65'/>
+65
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6332f548_65'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    @Override</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6332f548_66'/>
+66
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6332f548_66'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    protected MultiValueMap&#60;String, HttpCookie&#62; initCookies() {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6332f548_67'/>
+67
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6332f548_67'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        MultiValueMap&#60;String, HttpCookie&#62; cookies = new LinkedMultiValueMap&#60;&#62;();</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6332f548_68'/>
+68
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6332f548_68'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6332f548_69'/>
+69
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6332f548_69'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        context.cookieMap()</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6332f548_70'/>
+70
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6332f548_70'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>            .values()</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6332f548_71'/>
+71
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6332f548_71'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>            .stream()</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6332f548_72'/>
+72
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6332f548_72'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>            .map(CookieConverter::toHttpCookie)</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6332f548_73'/>
+73
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6332f548_73'>2</a>
+<span>
+1. lambda$initCookies$0 : removed call to org/springframework/util/MultiValueMap::add &rarr; KILLED<br/>
+2. initCookies : removed call to java/util/stream/Stream::forEach &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>            .forEach(cookie -&#62; cookies.add(cookie.getName(), cookie));</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6332f548_74'/>
+74
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6332f548_74'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6332f548_75'/>
+75
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6332f548_75'>1</a>
+<span>
+1. initCookies : replaced return value with null for dev/snowdrop/vertx/http/server/VertxServerHttpRequest::initCookies &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        return cookies;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6332f548_76'/>
+76
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6332f548_76'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6332f548_77'/>
+77
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6332f548_77'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6332f548_78'/>
+78
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6332f548_78'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    @Override</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6332f548_79'/>
+79
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6332f548_79'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    protected SslInfo initSslInfo() {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6332f548_80'/>
+80
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6332f548_80'>2</a>
+<span>
+1. initSslInfo : removed conditional - replaced equality check with false &rarr; KILLED<br/>
+2. initSslInfo : removed conditional - replaced equality check with true &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        if (delegate.sslSession() == null) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6332f548_81'/>
+81
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6332f548_81'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>            return null;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6332f548_82'/>
+82
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6332f548_82'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6332f548_83'/>
+83
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6332f548_83'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6332f548_84'/>
+84
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6332f548_84'>1</a>
+<span>
+1. initSslInfo : replaced return value with null for dev/snowdrop/vertx/http/server/VertxServerHttpRequest::initSslInfo &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        return new SslInfoImpl(delegate.sslSession());</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6332f548_85'/>
+85
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6332f548_85'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6332f548_86'/>
+86
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6332f548_86'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6332f548_87'/>
+87
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6332f548_87'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    private static URI initUri(HttpServerRequest request) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6332f548_88'/>
+88
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6332f548_88'>1</a>
+<span>
+1. initUri : replaced return value with null for dev/snowdrop/vertx/http/server/VertxServerHttpRequest::initUri &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        return URI.create(request.absoluteURI());</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6332f548_89'/>
+89
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6332f548_89'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6332f548_90'/>
+90
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6332f548_90'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6332f548_91'/>
+91
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6332f548_91'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    private static HttpHeaders initHeaders(HttpServerRequest request) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6332f548_92'/>
+92
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6332f548_92'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        HttpHeaders headers = new HttpHeaders();</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6332f548_93'/>
+93
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6332f548_93'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        request.headers()</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6332f548_94'/>
+94
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6332f548_94'>2</a>
+<span>
+1. lambda$initHeaders$1 : removed call to org/springframework/http/HttpHeaders::add &rarr; KILLED<br/>
+2. initHeaders : removed call to io/vertx/core/MultiMap::forEach &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>            .forEach(e -&#62; headers.add(e.getKey(), e.getValue()));</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6332f548_95'/>
+95
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6332f548_95'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6332f548_96'/>
+96
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6332f548_96'>1</a>
+<span>
+1. initHeaders : replaced return value with null for dev/snowdrop/vertx/http/server/VertxServerHttpRequest::initHeaders &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        return headers;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6332f548_97'/>
+97
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6332f548_97'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6332f548_98'/>
+98
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6332f548_98'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>}</span></pre></td></tr>
+
+
+
+<tr><td></td><td></td><td><h2>Mutations</h2></td></tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@6332f548_43'>43</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@6332f548_43'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>getNativeRequest<br/><b>Killed by : </b>dev.snowdrop.vertx.http.server.VertxServerHttpRequestTest.[engine:junit-jupiter]/[class:dev.snowdrop.vertx.http.server.VertxServerHttpRequestTest]/[method:shouldGetNativeRequest()]</span></span> replaced return value with null for dev/snowdrop/vertx/http/server/VertxServerHttpRequest::getNativeRequest &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@6332f548_48'>48</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@6332f548_48'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>getMethodValue<br/><b>Killed by : </b>dev.snowdrop.vertx.http.server.VertxServerHttpRequestTest.[engine:junit-jupiter]/[class:dev.snowdrop.vertx.http.server.VertxServerHttpRequestTest]/[method:shouldGetMethodValue()]</span></span> replaced return value with &#34;&#34; for dev/snowdrop/vertx/http/server/VertxServerHttpRequest::getMethodValue &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@6332f548_53'>53</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@6332f548_53'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>getBody<br/><b>Killed by : </b>dev.snowdrop.vertx.http.server.VertxServerHttpRequestTest.[engine:junit-jupiter]/[class:dev.snowdrop.vertx.http.server.VertxServerHttpRequestTest]/[method:shouldGetBody()]</span></span> replaced return value with null for dev/snowdrop/vertx/http/server/VertxServerHttpRequest::getBody &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@6332f548_59'>59</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@6332f548_59'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>getRemoteAddress<br/><b>Killed by : </b>dev.snowdrop.vertx.http.server.VertxServerHttpRequestTest.[engine:junit-jupiter]/[class:dev.snowdrop.vertx.http.server.VertxServerHttpRequestTest]/[method:shouldGetNullRemoteAddress()]</span></span> removed conditional - replaced equality check with false &rarr; KILLED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>getRemoteAddress<br/><b>Killed by : </b>dev.snowdrop.vertx.http.server.VertxServerHttpRequestTest.[engine:junit-jupiter]/[class:dev.snowdrop.vertx.http.server.VertxServerHttpRequestTest]/[method:shouldGetRemoteAddress()]</span></span> removed conditional - replaced equality check with true &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@6332f548_62'>62</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@6332f548_62'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>getRemoteAddress<br/><b>Killed by : </b>dev.snowdrop.vertx.http.server.VertxServerHttpRequestTest.[engine:junit-jupiter]/[class:dev.snowdrop.vertx.http.server.VertxServerHttpRequestTest]/[method:shouldGetRemoteAddress()]</span></span> replaced return value with null for dev/snowdrop/vertx/http/server/VertxServerHttpRequest::getRemoteAddress &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@6332f548_73'>73</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@6332f548_73'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>lambda$initCookies$0<br/><b>Killed by : </b>dev.snowdrop.vertx.http.server.VertxServerHttpRequestTest.[engine:junit-jupiter]/[class:dev.snowdrop.vertx.http.server.VertxServerHttpRequestTest]/[method:shouldInitCookies()]</span></span> removed call to org/springframework/util/MultiValueMap::add &rarr; KILLED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>initCookies<br/><b>Killed by : </b>dev.snowdrop.vertx.http.server.VertxServerHttpRequestTest.[engine:junit-jupiter]/[class:dev.snowdrop.vertx.http.server.VertxServerHttpRequestTest]/[method:shouldInitCookies()]</span></span> removed call to java/util/stream/Stream::forEach &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@6332f548_75'>75</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@6332f548_75'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>initCookies<br/><b>Killed by : </b>dev.snowdrop.vertx.http.server.VertxServerHttpRequestTest.[engine:junit-jupiter]/[class:dev.snowdrop.vertx.http.server.VertxServerHttpRequestTest]/[method:shouldInitCookies()]</span></span> replaced return value with null for dev/snowdrop/vertx/http/server/VertxServerHttpRequest::initCookies &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@6332f548_80'>80</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@6332f548_80'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>initSslInfo<br/><b>Killed by : </b>dev.snowdrop.vertx.http.server.VertxServerHttpRequestTest.[engine:junit-jupiter]/[class:dev.snowdrop.vertx.http.server.VertxServerHttpRequestTest]/[method:shouldIgnoreNullSslSession()]</span></span> removed conditional - replaced equality check with false &rarr; KILLED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>initSslInfo<br/><b>Killed by : </b>dev.snowdrop.vertx.http.server.VertxServerHttpRequestTest.[engine:junit-jupiter]/[class:dev.snowdrop.vertx.http.server.VertxServerHttpRequestTest]/[method:shouldInitSslInfo()]</span></span> removed conditional - replaced equality check with true &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@6332f548_84'>84</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@6332f548_84'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>initSslInfo<br/><b>Killed by : </b>dev.snowdrop.vertx.http.server.VertxServerHttpRequestTest.[engine:junit-jupiter]/[class:dev.snowdrop.vertx.http.server.VertxServerHttpRequestTest]/[method:shouldInitSslInfo()]</span></span> replaced return value with null for dev/snowdrop/vertx/http/server/VertxServerHttpRequest::initSslInfo &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@6332f548_88'>88</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@6332f548_88'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>initUri<br/><b>Killed by : </b>dev.snowdrop.vertx.http.server.VertxServerHttpRequestTest.[engine:junit-jupiter]/[class:dev.snowdrop.vertx.http.server.VertxServerHttpRequestTest]/[method:shouldGetNullRemoteAddress()]</span></span> replaced return value with null for dev/snowdrop/vertx/http/server/VertxServerHttpRequest::initUri &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@6332f548_94'>94</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@6332f548_94'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>lambda$initHeaders$1<br/><b>Killed by : </b>dev.snowdrop.vertx.http.it.WebSocketIT.[engine:junit-jupiter]/[class:dev.snowdrop.vertx.http.it.WebSocketIT]/[method:testAllowedCorsOrigin()]</span></span> removed call to org/springframework/http/HttpHeaders::add &rarr; KILLED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>initHeaders<br/><b>Killed by : </b>dev.snowdrop.vertx.http.it.WebSocketIT.[engine:junit-jupiter]/[class:dev.snowdrop.vertx.http.it.WebSocketIT]/[method:testAllowedCorsOrigin()]</span></span> removed call to io/vertx/core/MultiMap::forEach &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@6332f548_96'>96</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@6332f548_96'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>initHeaders<br/><b>Killed by : </b>dev.snowdrop.vertx.http.server.VertxServerHttpRequestTest.[engine:junit-jupiter]/[class:dev.snowdrop.vertx.http.server.VertxServerHttpRequestTest]/[method:shouldGetNullRemoteAddress()]</span></span> replaced return value with null for dev/snowdrop/vertx/http/server/VertxServerHttpRequest::initHeaders &rarr; KILLED</p> 
+</td>
+</tr>
+
+</table>
+
+
+<h2>Active mutators</h2>
+<ul>
+<li class='mutator'>CONDITIONALS_BOUNDARY</li>
+<li class='mutator'>EMPTY_RETURNS</li>
+<li class='mutator'>EXPERIMENTAL_SWITCH</li>
+<li class='mutator'>FALSE_RETURNS</li>
+<li class='mutator'>INCREMENTS</li>
+<li class='mutator'>INVERT_NEGS</li>
+<li class='mutator'>MATH</li>
+<li class='mutator'>NULL_RETURNS</li>
+<li class='mutator'>PRIMITIVE_RETURNS</li>
+<li class='mutator'>REACTOR_REACTIVE_MUTATOR</li>
+<li class='mutator'>REMOVE_CONDITIONALS_EQUAL_ELSE</li>
+<li class='mutator'>REMOVE_CONDITIONALS_EQUAL_IF</li>
+<li class='mutator'>REMOVE_CONDITIONALS_ORDER_ELSE</li>
+<li class='mutator'>REMOVE_CONDITIONALS_ORDER_IF</li>
+<li class='mutator'>TRUE_RETURNS</li>
+<li class='mutator'>VOID_METHOD_CALLS</li>
+
+</ul>
+
+<h2>Tests examined</h2>
+<ul>
+<li>dev.snowdrop.vertx.http.it.HttpSslIT.[engine:junit-jupiter]/[class:dev.snowdrop.vertx.http.it.HttpSslIT]/[method:testDefaultEngine()] (537 ms)</li><li>dev.snowdrop.vertx.http.it.HttpIT.[engine:junit-jupiter]/[class:dev.snowdrop.vertx.http.it.HttpIT]/[method:testBasicAuth()] (526 ms)</li><li>dev.snowdrop.vertx.http.it.WebSocketIT.[engine:junit-jupiter]/[class:dev.snowdrop.vertx.http.it.WebSocketIT]/[method:shouldSendAndReceiveMultiFrameTextMessage()] (367 ms)</li><li>dev.snowdrop.vertx.http.it.Http2IT.[engine:junit-jupiter]/[class:dev.snowdrop.vertx.http.it.Http2IT]/[method:testCorsFilter()] (409 ms)</li><li>dev.snowdrop.vertx.http.it.Http2IT.[engine:junit-jupiter]/[class:dev.snowdrop.vertx.http.it.Http2IT]/[method:testFormData()] (473 ms)</li><li>dev.snowdrop.vertx.http.it.HttpIT.[engine:junit-jupiter]/[class:dev.snowdrop.vertx.http.it.HttpIT]/[method:testClientWithInfiniteSse()] (4299 ms)</li><li>dev.snowdrop.vertx.http.server.VertxServerHttpRequestTest.[engine:junit-jupiter]/[class:dev.snowdrop.vertx.http.server.VertxServerHttpRequestTest]/[method:shouldGetMethodValue()] (3 ms)</li><li>dev.snowdrop.vertx.http.server.VertxServerHttpRequestTest.[engine:junit-jupiter]/[class:dev.snowdrop.vertx.http.server.VertxServerHttpRequestTest]/[method:shouldInitCookies()] (133 ms)</li><li>dev.snowdrop.vertx.http.it.WebSocketIT.[engine:junit-jupiter]/[class:dev.snowdrop.vertx.http.it.WebSocketIT]/[method:shouldSendAndReceivePong()] (401 ms)</li><li>dev.snowdrop.vertx.http.server.VertxServerHttpRequestTest.[engine:junit-jupiter]/[class:dev.snowdrop.vertx.http.server.VertxServerHttpRequestTest]/[method:shouldGetRemoteAddress()] (3 ms)</li><li>dev.snowdrop.vertx.http.it.HttpIT.[engine:junit-jupiter]/[class:dev.snowdrop.vertx.http.it.HttpIT]/[method:shouldGetStaticContent()] (322 ms)</li><li>dev.snowdrop.vertx.http.it.Http2IT.[engine:junit-jupiter]/[class:dev.snowdrop.vertx.http.it.Http2IT]/[method:shouldGet404Response()] (601 ms)</li><li>dev.snowdrop.vertx.http.it.HttpIT.[engine:junit-jupiter]/[class:dev.snowdrop.vertx.http.it.HttpIT]/[method:shouldGet404Response()] (303 ms)</li><li>dev.snowdrop.vertx.http.server.VertxServerHttpRequestTest.[engine:junit-jupiter]/[class:dev.snowdrop.vertx.http.server.VertxServerHttpRequestTest]/[method:shouldInitSslInfo()] (3 ms)</li><li>dev.snowdrop.vertx.http.it.HttpIT.[engine:junit-jupiter]/[class:dev.snowdrop.vertx.http.it.HttpIT]/[method:shouldExtractBodyAfterRequestEnded()] (288 ms)</li><li>dev.snowdrop.vertx.http.it.WebSocketIT.[engine:junit-jupiter]/[class:dev.snowdrop.vertx.http.it.WebSocketIT]/[method:shouldSendAndReceiveTextMessage()] (355 ms)</li><li>dev.snowdrop.vertx.http.it.HttpSslIT.[engine:junit-jupiter]/[class:dev.snowdrop.vertx.http.it.HttpSslIT]/[method:testSecureRequestWithAlpn()] (513 ms)</li><li>dev.snowdrop.vertx.http.it.HttpIT.[engine:junit-jupiter]/[class:dev.snowdrop.vertx.http.it.HttpIT]/[method:testCorsAnnotation()] (299 ms)</li><li>dev.snowdrop.vertx.http.it.WebSocketIT.[engine:junit-jupiter]/[class:dev.snowdrop.vertx.http.it.WebSocketIT]/[method:serverShouldCloseSocket()] (301 ms)</li><li>dev.snowdrop.vertx.http.it.HttpIT.[engine:junit-jupiter]/[class:dev.snowdrop.vertx.http.it.HttpIT]/[method:testCorsFilter()] (289 ms)</li><li>dev.snowdrop.vertx.http.it.Http2IT.[engine:junit-jupiter]/[class:dev.snowdrop.vertx.http.it.Http2IT]/[method:testBasicAuth()] (1385 ms)</li><li>dev.snowdrop.vertx.http.it.Http2FileTransferIT.[engine:junit-jupiter]/[class:dev.snowdrop.vertx.http.it.Http2FileTransferIT]/[method:shouldDownloadLargeFile()] (11332 ms)</li><li>dev.snowdrop.vertx.http.it.HttpSslIT.[engine:junit-jupiter]/[class:dev.snowdrop.vertx.http.it.HttpSslIT]/[method:testJdkEngine()] (461 ms)</li><li>dev.snowdrop.vertx.http.it.HttpIT.[engine:junit-jupiter]/[class:dev.snowdrop.vertx.http.it.HttpIT]/[method:shouldGetEmptyResponse()] (274 ms)</li><li>dev.snowdrop.vertx.http.it.Http2IT.[engine:junit-jupiter]/[class:dev.snowdrop.vertx.http.it.Http2IT]/[method:shouldGetEmptyResponse()] (615 ms)</li><li>dev.snowdrop.vertx.http.it.Http2IT.[engine:junit-jupiter]/[class:dev.snowdrop.vertx.http.it.Http2IT]/[method:testForwardedHeaders()] (528 ms)</li><li>dev.snowdrop.vertx.http.server.VertxServerHttpRequestTest.[engine:junit-jupiter]/[class:dev.snowdrop.vertx.http.server.VertxServerHttpRequestTest]/[method:shouldGetNullRemoteAddress()] (3 ms)</li><li>dev.snowdrop.vertx.http.it.Http2IT.[engine:junit-jupiter]/[class:dev.snowdrop.vertx.http.it.Http2IT]/[method:testSse()] (673 ms)</li><li>dev.snowdrop.vertx.http.it.Http2IT.[engine:junit-jupiter]/[class:dev.snowdrop.vertx.http.it.Http2IT]/[method:testCache()] (816 ms)</li><li>dev.snowdrop.vertx.http.server.VertxServerHttpRequestTest.[engine:junit-jupiter]/[class:dev.snowdrop.vertx.http.server.VertxServerHttpRequestTest]/[method:shouldGetNativeRequest()] (3 ms)</li><li>dev.snowdrop.vertx.http.server.VertxServerHttpRequestTest.[engine:junit-jupiter]/[class:dev.snowdrop.vertx.http.server.VertxServerHttpRequestTest]/[method:shouldIgnoreNullSslSession()] (3 ms)</li><li>dev.snowdrop.vertx.http.it.Http2IT.[engine:junit-jupiter]/[class:dev.snowdrop.vertx.http.it.Http2IT]/[method:shouldGetStaticContent()] (549 ms)</li><li>dev.snowdrop.vertx.http.it.Http2IT.[engine:junit-jupiter]/[class:dev.snowdrop.vertx.http.it.Http2IT]/[method:shouldExchangeHeaders()] (511 ms)</li><li>dev.snowdrop.vertx.http.server.VertxServerHttpRequestTest.[engine:junit-jupiter]/[class:dev.snowdrop.vertx.http.server.VertxServerHttpRequestTest]/[method:shouldGetBody()] (5 ms)</li><li>dev.snowdrop.vertx.http.it.HttpIT.[engine:junit-jupiter]/[class:dev.snowdrop.vertx.http.it.HttpIT]/[method:testFormData()] (283 ms)</li><li>dev.snowdrop.vertx.http.it.WebSocketIT.[engine:junit-jupiter]/[class:dev.snowdrop.vertx.http.it.WebSocketIT]/[method:testNotAllowedCorsOrigin()] (270 ms)</li><li>dev.snowdrop.vertx.http.it.HttpIT.[engine:junit-jupiter]/[class:dev.snowdrop.vertx.http.it.HttpIT]/[method:shouldExchangeHeaders()] (280 ms)</li><li>dev.snowdrop.vertx.http.it.WebSocketIT.[engine:junit-jupiter]/[class:dev.snowdrop.vertx.http.it.WebSocketIT]/[method:clientShouldCloseSocket()] (279 ms)</li><li>dev.snowdrop.vertx.http.it.HttpIT.[engine:junit-jupiter]/[class:dev.snowdrop.vertx.http.it.HttpIT]/[method:testCache()] (287 ms)</li><li>dev.snowdrop.vertx.http.it.WebSocketIT.[engine:junit-jupiter]/[class:dev.snowdrop.vertx.http.it.WebSocketIT]/[method:shouldSendAndReceiveBinaryMessage()] (346 ms)</li><li>dev.snowdrop.vertx.http.it.WebSocketIT.[engine:junit-jupiter]/[class:dev.snowdrop.vertx.http.it.WebSocketIT]/[method:shouldSendAndReceiveMultiFrameBinaryMessage()] (395 ms)</li><li>dev.snowdrop.vertx.http.it.WebSocketIT.[engine:junit-jupiter]/[class:dev.snowdrop.vertx.http.it.WebSocketIT]/[method:testAllowedCorsOrigin()] (259 ms)</li><li>dev.snowdrop.vertx.http.it.HttpIT.[engine:junit-jupiter]/[class:dev.snowdrop.vertx.http.it.HttpIT]/[method:testForwardedHeaders()] (289 ms)</li><li>dev.snowdrop.vertx.http.it.HttpIT.[engine:junit-jupiter]/[class:dev.snowdrop.vertx.http.it.HttpIT]/[method:shouldExchangeBodies()] (369 ms)</li><li>dev.snowdrop.vertx.http.it.Http2IT.[engine:junit-jupiter]/[class:dev.snowdrop.vertx.http.it.Http2IT]/[method:testExceptionHandler()] (724 ms)</li><li>dev.snowdrop.vertx.http.it.Http2IT.[engine:junit-jupiter]/[class:dev.snowdrop.vertx.http.it.Http2IT]/[method:testCorsAnnotation()] (753 ms)</li><li>dev.snowdrop.vertx.http.it.HttpFileTransferIT.[engine:junit-jupiter]/[class:dev.snowdrop.vertx.http.it.HttpFileTransferIT]/[method:shouldDownloadLargeFile()] (9254 ms)</li><li>dev.snowdrop.vertx.http.it.Http2FileTransferIT.[engine:junit-jupiter]/[class:dev.snowdrop.vertx.http.it.Http2FileTransferIT]/[method:shouldUploadLargeFile()] (24854 ms)</li><li>dev.snowdrop.vertx.http.it.HttpIT.[engine:junit-jupiter]/[class:dev.snowdrop.vertx.http.it.HttpIT]/[method:shouldGetActuatorHealth()] (281 ms)</li><li>dev.snowdrop.vertx.http.it.Http2IT.[engine:junit-jupiter]/[class:dev.snowdrop.vertx.http.it.Http2IT]/[method:testClientWithInfiniteSse()] (4487 ms)</li><li>dev.snowdrop.vertx.http.it.HttpSslIT.[engine:junit-jupiter]/[class:dev.snowdrop.vertx.http.it.HttpSslIT]/[method:testSecureRequest()] (863 ms)</li><li>dev.snowdrop.vertx.http.it.HttpIT.[engine:junit-jupiter]/[class:dev.snowdrop.vertx.http.it.HttpIT]/[method:testExceptionHandler()] (305 ms)</li><li>dev.snowdrop.vertx.http.it.HttpIT.[engine:junit-jupiter]/[class:dev.snowdrop.vertx.http.it.HttpIT]/[method:shouldGetCompressedStaticContent()] (264 ms)</li><li>dev.snowdrop.vertx.http.it.HttpSslIT.[engine:junit-jupiter]/[class:dev.snowdrop.vertx.http.it.HttpSslIT]/[method:testOpenSslEngineWithAlpn()] (581 ms)</li><li>dev.snowdrop.vertx.http.it.HttpSslIT.[engine:junit-jupiter]/[class:dev.snowdrop.vertx.http.it.HttpSslIT]/[method:testOpenSslEngine()] (400 ms)</li><li>dev.snowdrop.vertx.http.it.HttpSslIT.[engine:junit-jupiter]/[class:dev.snowdrop.vertx.http.it.HttpSslIT]/[method:testJdkEngineWithAlpn()] (431 ms)</li><li>dev.snowdrop.vertx.http.it.Http2IT.[engine:junit-jupiter]/[class:dev.snowdrop.vertx.http.it.Http2IT]/[method:shouldExchangeBodies()] (718 ms)</li><li>dev.snowdrop.vertx.http.it.HttpFileTransferIT.[engine:junit-jupiter]/[class:dev.snowdrop.vertx.http.it.HttpFileTransferIT]/[method:shouldUploadLargeFile()] (19527 ms)</li><li>dev.snowdrop.vertx.http.it.Http2IT.[engine:junit-jupiter]/[class:dev.snowdrop.vertx.http.it.Http2IT]/[method:shouldExchangeCookies()] (574 ms)</li><li>dev.snowdrop.vertx.http.it.Http2IT.[engine:junit-jupiter]/[class:dev.snowdrop.vertx.http.it.Http2IT]/[method:shouldGetActuatorHealth()] (501 ms)</li><li>dev.snowdrop.vertx.http.it.WebSocketIT.[engine:junit-jupiter]/[class:dev.snowdrop.vertx.http.it.WebSocketIT]/[method:shouldSendPingAndReceivePong()] (397 ms)</li><li>dev.snowdrop.vertx.http.it.HttpIT.[engine:junit-jupiter]/[class:dev.snowdrop.vertx.http.it.HttpIT]/[method:testSse()] (308 ms)</li><li>dev.snowdrop.vertx.http.it.WebSocketIT.[engine:junit-jupiter]/[class:dev.snowdrop.vertx.http.it.WebSocketIT]/[method:serverShouldSendFromTwoPublishers()] (399 ms)</li><li>dev.snowdrop.vertx.http.it.Http2IT.[engine:junit-jupiter]/[class:dev.snowdrop.vertx.http.it.Http2IT]/[method:shouldGetCompressedStaticContent()] (597 ms)</li><li>dev.snowdrop.vertx.http.it.Http2IT.[engine:junit-jupiter]/[class:dev.snowdrop.vertx.http.it.Http2IT]/[method:shouldExtractBodyAfterRequestEnded()] (460 ms)</li><li>dev.snowdrop.vertx.http.it.HttpIT.[engine:junit-jupiter]/[class:dev.snowdrop.vertx.http.it.HttpIT]/[method:shouldExchangeCookies()] (271 ms)</li><li>dev.snowdrop.vertx.http.it.HttpSslIT.[engine:junit-jupiter]/[class:dev.snowdrop.vertx.http.it.HttpSslIT]/[method:testDefaultEngineWithAlpn()] (387 ms)</li>
+</ul>
+
+<br/>
+
+Report generated by <a href='https://pitest.org'>PIT</a> pitest-reactor
+
+</body>
+</html>

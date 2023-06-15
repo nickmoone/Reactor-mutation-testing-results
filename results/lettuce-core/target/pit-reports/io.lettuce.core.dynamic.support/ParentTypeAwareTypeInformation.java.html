@@ -1,0 +1,1672 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+<body>
+
+
+<h1>ParentTypeAwareTypeInformation.java</h1>
+
+<table class="src">
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@489c5da7_1'/>
+1
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@489c5da7_1'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>/*</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@489c5da7_2'/>
+2
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@489c5da7_2'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * Copyright 2011-2022 the original author or authors.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@489c5da7_3'/>
+3
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@489c5da7_3'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> *</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@489c5da7_4'/>
+4
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@489c5da7_4'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * Licensed under the Apache License, Version 2.0 (the &#34;License&#34;);</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@489c5da7_5'/>
+5
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@489c5da7_5'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * you may not use this file except in compliance with the License.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@489c5da7_6'/>
+6
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@489c5da7_6'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * You may obtain a copy of the License at</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@489c5da7_7'/>
+7
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@489c5da7_7'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> *</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@489c5da7_8'/>
+8
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@489c5da7_8'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> *      https://www.apache.org/licenses/LICENSE-2.0</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@489c5da7_9'/>
+9
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@489c5da7_9'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> *</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@489c5da7_10'/>
+10
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@489c5da7_10'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * Unless required by applicable law or agreed to in writing, software</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@489c5da7_11'/>
+11
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@489c5da7_11'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * distributed under the License is distributed on an &#34;AS IS&#34; BASIS,</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@489c5da7_12'/>
+12
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@489c5da7_12'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@489c5da7_13'/>
+13
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@489c5da7_13'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * See the License for the specific language governing permissions and</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@489c5da7_14'/>
+14
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@489c5da7_14'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * limitations under the License.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@489c5da7_15'/>
+15
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@489c5da7_15'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@489c5da7_16'/>
+16
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@489c5da7_16'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>package io.lettuce.core.dynamic.support;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@489c5da7_17'/>
+17
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@489c5da7_17'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@489c5da7_18'/>
+18
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@489c5da7_18'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import java.lang.reflect.Type;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@489c5da7_19'/>
+19
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@489c5da7_19'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import java.lang.reflect.TypeVariable;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@489c5da7_20'/>
+20
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@489c5da7_20'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import java.util.HashMap;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@489c5da7_21'/>
+21
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@489c5da7_21'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import java.util.Map;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@489c5da7_22'/>
+22
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@489c5da7_22'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@489c5da7_23'/>
+23
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@489c5da7_23'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>/**</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@489c5da7_24'/>
+24
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@489c5da7_24'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * Base class for {@link TypeInformation} implementations that need parent type awareness.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@489c5da7_25'/>
+25
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@489c5da7_25'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@489c5da7_26'/>
+26
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@489c5da7_26'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>abstract class ParentTypeAwareTypeInformation&#60;S&#62; extends TypeDiscoverer&#60;S&#62; {</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@489c5da7_27'/>
+27
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@489c5da7_27'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@489c5da7_28'/>
+28
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@489c5da7_28'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    private final TypeDiscoverer&#60;?&#62; parent;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@489c5da7_29'/>
+29
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@489c5da7_29'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@489c5da7_30'/>
+30
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@489c5da7_30'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    private int hashCode;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@489c5da7_31'/>
+31
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@489c5da7_31'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@489c5da7_32'/>
+32
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@489c5da7_32'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    /**</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@489c5da7_33'/>
+33
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@489c5da7_33'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * Creates a new {@link ParentTypeAwareTypeInformation}.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@489c5da7_34'/>
+34
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@489c5da7_34'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     *</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@489c5da7_35'/>
+35
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@489c5da7_35'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * @param type must not be {@code null}.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@489c5da7_36'/>
+36
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@489c5da7_36'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * @param parent must not be {@code null}.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@489c5da7_37'/>
+37
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@489c5da7_37'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * @param map must not be {@code null}.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@489c5da7_38'/>
+38
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@489c5da7_38'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@489c5da7_39'/>
+39
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@489c5da7_39'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    protected ParentTypeAwareTypeInformation(Type type, TypeDiscoverer&#60;?&#62; parent, Map&#60;TypeVariable&#60;?&#62;, Type&#62; map) {</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@489c5da7_40'/>
+40
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@489c5da7_40'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@489c5da7_41'/>
+41
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@489c5da7_41'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        super(type, mergeMaps(parent, map));</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@489c5da7_42'/>
+42
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@489c5da7_42'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        this.parent = parent;</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@489c5da7_43'/>
+43
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@489c5da7_43'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@489c5da7_44'/>
+44
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@489c5da7_44'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@489c5da7_45'/>
+45
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@489c5da7_45'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    /**</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@489c5da7_46'/>
+46
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@489c5da7_46'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * Merges the type variable maps of the given parent with the new map.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@489c5da7_47'/>
+47
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@489c5da7_47'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     *</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@489c5da7_48'/>
+48
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@489c5da7_48'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * @param parent must not be {@code null}.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@489c5da7_49'/>
+49
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@489c5da7_49'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * @param map must not be {@code null}.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@489c5da7_50'/>
+50
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@489c5da7_50'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * @return</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@489c5da7_51'/>
+51
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@489c5da7_51'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@489c5da7_52'/>
+52
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@489c5da7_52'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    private static Map&#60;TypeVariable&#60;?&#62;, Type&#62; mergeMaps(TypeDiscoverer&#60;?&#62; parent, Map&#60;TypeVariable&#60;?&#62;, Type&#62; map) {</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@489c5da7_53'/>
+53
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@489c5da7_53'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@489c5da7_54'/>
+54
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@489c5da7_54'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        Map&#60;TypeVariable&#60;?&#62;, Type&#62; typeVariableMap = new HashMap&#60;TypeVariable&#60;?&#62;, Type&#62;();</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@489c5da7_55'/>
+55
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@489c5da7_55'>1</a>
+<span>
+1. mergeMaps : removed call to java/util/Map::putAll &rarr; SURVIVED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='survived'>        typeVariableMap.putAll(map);</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@489c5da7_56'/>
+56
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@489c5da7_56'>1</a>
+<span>
+1. mergeMaps : removed call to java/util/Map::putAll &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        typeVariableMap.putAll(parent.getTypeVariableMap());</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@489c5da7_57'/>
+57
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@489c5da7_57'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@489c5da7_58'/>
+58
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@489c5da7_58'>1</a>
+<span>
+1. mergeMaps : replaced return value with Collections.emptyMap for io/lettuce/core/dynamic/support/ParentTypeAwareTypeInformation::mergeMaps &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        return typeVariableMap;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@489c5da7_59'/>
+59
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@489c5da7_59'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@489c5da7_60'/>
+60
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@489c5da7_60'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@489c5da7_61'/>
+61
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@489c5da7_61'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    @Override</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@489c5da7_62'/>
+62
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@489c5da7_62'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    protected TypeInformation&#60;?&#62; createInfo(Type fieldType) {</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@489c5da7_63'/>
+63
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@489c5da7_63'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@489c5da7_64'/>
+64
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@489c5da7_64'>2</a>
+<span>
+1. createInfo : removed conditional - replaced equality check with false &rarr; SURVIVED<br/>
+2. createInfo : removed conditional - replaced equality check with true &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='survived'>        if (parent.getType().equals(fieldType)) {</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@489c5da7_65'/>
+65
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@489c5da7_65'>1</a>
+<span>
+1. createInfo : replaced return value with null for io/lettuce/core/dynamic/support/ParentTypeAwareTypeInformation::createInfo &rarr; NO_COVERAGE<br/>
+
+</span>
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>            return parent;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@489c5da7_66'/>
+66
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@489c5da7_66'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@489c5da7_67'/>
+67
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@489c5da7_67'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@489c5da7_68'/>
+68
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@489c5da7_68'>1</a>
+<span>
+1. createInfo : replaced return value with null for io/lettuce/core/dynamic/support/ParentTypeAwareTypeInformation::createInfo &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        return super.createInfo(fieldType);</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@489c5da7_69'/>
+69
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@489c5da7_69'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@489c5da7_70'/>
+70
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@489c5da7_70'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@489c5da7_71'/>
+71
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@489c5da7_71'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    @Override</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@489c5da7_72'/>
+72
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@489c5da7_72'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public boolean equals(Object obj) {</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@489c5da7_73'/>
+73
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@489c5da7_73'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@489c5da7_74'/>
+74
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@489c5da7_74'>2</a>
+<span>
+1. equals : removed conditional - replaced equality check with true &rarr; SURVIVED<br/>
+2. equals : removed conditional - replaced equality check with false &rarr; SURVIVED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='survived'>        if (!super.equals(obj)) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@489c5da7_75'/>
+75
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@489c5da7_75'>1</a>
+<span>
+1. equals : replaced boolean return with true for io/lettuce/core/dynamic/support/ParentTypeAwareTypeInformation::equals &rarr; SURVIVED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='survived'>            return false;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@489c5da7_76'/>
+76
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@489c5da7_76'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@489c5da7_77'/>
+77
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@489c5da7_77'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@489c5da7_78'/>
+78
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@489c5da7_78'>2</a>
+<span>
+1. equals : removed conditional - replaced equality check with false &rarr; SURVIVED<br/>
+2. equals : removed conditional - replaced equality check with true &rarr; SURVIVED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='survived'>        if (!this.getClass().equals(obj.getClass())) {</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@489c5da7_79'/>
+79
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@489c5da7_79'>1</a>
+<span>
+1. equals : replaced boolean return with true for io/lettuce/core/dynamic/support/ParentTypeAwareTypeInformation::equals &rarr; NO_COVERAGE<br/>
+
+</span>
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>            return false;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@489c5da7_80'/>
+80
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@489c5da7_80'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@489c5da7_81'/>
+81
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@489c5da7_81'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@489c5da7_82'/>
+82
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@489c5da7_82'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        ParentTypeAwareTypeInformation&#60;?&#62; that = (ParentTypeAwareTypeInformation&#60;?&#62;) obj;</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@489c5da7_83'/>
+83
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@489c5da7_83'>6</a>
+<span>
+1. equals : removed conditional - replaced equality check with true &rarr; SURVIVED<br/>
+2. equals : removed conditional - replaced equality check with true &rarr; NO_COVERAGE<br/>
+3. equals : removed conditional - replaced equality check with false &rarr; NO_COVERAGE<br/>
+4. equals : removed conditional - replaced equality check with false &rarr; SURVIVED<br/>
+5. equals : replaced boolean return with true for io/lettuce/core/dynamic/support/ParentTypeAwareTypeInformation::equals &rarr; SURVIVED<br/>
+6. equals : replaced boolean return with false for io/lettuce/core/dynamic/support/ParentTypeAwareTypeInformation::equals &rarr; SURVIVED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='survived'>        return this.parent == null ? that.parent == null : this.parent.equals(that.parent);</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@489c5da7_84'/>
+84
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@489c5da7_84'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@489c5da7_85'/>
+85
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@489c5da7_85'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@489c5da7_86'/>
+86
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@489c5da7_86'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    @Override</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@489c5da7_87'/>
+87
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@489c5da7_87'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public int hashCode() {</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@489c5da7_88'/>
+88
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@489c5da7_88'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@489c5da7_89'/>
+89
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@489c5da7_89'>2</a>
+<span>
+1. hashCode : removed conditional - replaced equality check with true &rarr; NO_COVERAGE<br/>
+2. hashCode : removed conditional - replaced equality check with false &rarr; NO_COVERAGE<br/>
+
+</span>
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>        if (this.hashCode == 0) {</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@489c5da7_90'/>
+90
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@489c5da7_90'>2</a>
+<span>
+1. hashCode : Replaced integer multiplication with division &rarr; NO_COVERAGE<br/>
+2. hashCode : Replaced integer addition with subtraction &rarr; NO_COVERAGE<br/>
+
+</span>
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>            this.hashCode = super.hashCode() + 31 * parent.hashCode();</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@489c5da7_91'/>
+91
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@489c5da7_91'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@489c5da7_92'/>
+92
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@489c5da7_92'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@489c5da7_93'/>
+93
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@489c5da7_93'>1</a>
+<span>
+1. hashCode : replaced int return with 0 for io/lettuce/core/dynamic/support/ParentTypeAwareTypeInformation::hashCode &rarr; NO_COVERAGE<br/>
+
+</span>
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>        return this.hashCode;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@489c5da7_94'/>
+94
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@489c5da7_94'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@489c5da7_95'/>
+95
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@489c5da7_95'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@489c5da7_96'/>
+96
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@489c5da7_96'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>}</span></pre></td></tr>
+
+
+
+<tr><td></td><td></td><td><h2>Mutations</h2></td></tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@489c5da7_55'>55</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@489c5da7_55'/> 
+
+<p class='SURVIVED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>mergeMaps<br/><b>Killed by : </b>none</span></span> removed call to java/util/Map::putAll &rarr; SURVIVED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@489c5da7_56'>56</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@489c5da7_56'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>mergeMaps<br/><b>Killed by : </b>io.lettuce.core.dynamic.support.ParametrizedTypeInformationUnitTests.[engine:junit-jupiter]/[class:io.lettuce.core.dynamic.support.ParametrizedTypeInformationUnitTests]/[method:isAssignableShouldConsiderCompatibleType()]</span></span> removed call to java/util/Map::putAll &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@489c5da7_58'>58</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@489c5da7_58'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>mergeMaps<br/><b>Killed by : </b>io.lettuce.core.dynamic.support.ParametrizedTypeInformationUnitTests.[engine:junit-jupiter]/[class:io.lettuce.core.dynamic.support.ParametrizedTypeInformationUnitTests]/[method:isAssignableShouldConsiderCompatibleType()]</span></span> replaced return value with Collections.emptyMap for io/lettuce/core/dynamic/support/ParentTypeAwareTypeInformation::mergeMaps &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@489c5da7_64'>64</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@489c5da7_64'/> 
+
+<p class='SURVIVED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>createInfo<br/><b>Killed by : </b>none</span></span> removed conditional - replaced equality check with false &rarr; SURVIVED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>createInfo<br/><b>Killed by : </b>io.lettuce.core.dynamic.support.WildcardTypeInformationUnitTests.[engine:junit-jupiter]/[class:io.lettuce.core.dynamic.support.WildcardTypeInformationUnitTests]/[method:shouldResolveWildcardType()]</span></span> removed conditional - replaced equality check with true &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@489c5da7_65'>65</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@489c5da7_65'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>createInfo<br/><b>Killed by : </b>none</span></span> replaced return value with null for io/lettuce/core/dynamic/support/ParentTypeAwareTypeInformation::createInfo &rarr; NO_COVERAGE</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@489c5da7_68'>68</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@489c5da7_68'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>createInfo<br/><b>Killed by : </b>io.lettuce.core.dynamic.support.WildcardTypeInformationUnitTests.[engine:junit-jupiter]/[class:io.lettuce.core.dynamic.support.WildcardTypeInformationUnitTests]/[method:shouldResolveWildcardType()]</span></span> replaced return value with null for io/lettuce/core/dynamic/support/ParentTypeAwareTypeInformation::createInfo &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@489c5da7_74'>74</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@489c5da7_74'/> 
+
+<p class='SURVIVED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>equals<br/><b>Killed by : </b>none</span></span> removed conditional - replaced equality check with true &rarr; SURVIVED</p> <p class='SURVIVED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>equals<br/><b>Killed by : </b>none</span></span> removed conditional - replaced equality check with false &rarr; SURVIVED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@489c5da7_75'>75</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@489c5da7_75'/> 
+
+<p class='SURVIVED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>equals<br/><b>Killed by : </b>none</span></span> replaced boolean return with true for io/lettuce/core/dynamic/support/ParentTypeAwareTypeInformation::equals &rarr; SURVIVED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@489c5da7_78'>78</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@489c5da7_78'/> 
+
+<p class='SURVIVED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>equals<br/><b>Killed by : </b>none</span></span> removed conditional - replaced equality check with false &rarr; SURVIVED</p> <p class='SURVIVED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>equals<br/><b>Killed by : </b>none</span></span> removed conditional - replaced equality check with true &rarr; SURVIVED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@489c5da7_79'>79</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@489c5da7_79'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>equals<br/><b>Killed by : </b>none</span></span> replaced boolean return with true for io/lettuce/core/dynamic/support/ParentTypeAwareTypeInformation::equals &rarr; NO_COVERAGE</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@489c5da7_83'>83</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@489c5da7_83'/> 
+
+<p class='SURVIVED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>equals<br/><b>Killed by : </b>none</span></span> removed conditional - replaced equality check with true &rarr; SURVIVED</p> <p class='NO_COVERAGE'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>equals<br/><b>Killed by : </b>none</span></span> removed conditional - replaced equality check with true &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>3.<span><b>3</b><br/><b>Location : </b>equals<br/><b>Killed by : </b>none</span></span> removed conditional - replaced equality check with false &rarr; NO_COVERAGE</p> <p class='SURVIVED'><span class='pop'>4.<span><b>4</b><br/><b>Location : </b>equals<br/><b>Killed by : </b>none</span></span> removed conditional - replaced equality check with false &rarr; SURVIVED</p> <p class='SURVIVED'><span class='pop'>5.<span><b>5</b><br/><b>Location : </b>equals<br/><b>Killed by : </b>none</span></span> replaced boolean return with true for io/lettuce/core/dynamic/support/ParentTypeAwareTypeInformation::equals &rarr; SURVIVED</p> <p class='SURVIVED'><span class='pop'>6.<span><b>6</b><br/><b>Location : </b>equals<br/><b>Killed by : </b>none</span></span> replaced boolean return with false for io/lettuce/core/dynamic/support/ParentTypeAwareTypeInformation::equals &rarr; SURVIVED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@489c5da7_89'>89</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@489c5da7_89'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>hashCode<br/><b>Killed by : </b>none</span></span> removed conditional - replaced equality check with true &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>hashCode<br/><b>Killed by : </b>none</span></span> removed conditional - replaced equality check with false &rarr; NO_COVERAGE</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@489c5da7_90'>90</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@489c5da7_90'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>hashCode<br/><b>Killed by : </b>none</span></span> Replaced integer multiplication with division &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>hashCode<br/><b>Killed by : </b>none</span></span> Replaced integer addition with subtraction &rarr; NO_COVERAGE</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@489c5da7_93'>93</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@489c5da7_93'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>hashCode<br/><b>Killed by : </b>none</span></span> replaced int return with 0 for io/lettuce/core/dynamic/support/ParentTypeAwareTypeInformation::hashCode &rarr; NO_COVERAGE</p> 
+</td>
+</tr>
+
+</table>
+
+
+<h2>Active mutators</h2>
+<ul>
+<li class='mutator'>CONDITIONALS_BOUNDARY</li>
+<li class='mutator'>EMPTY_RETURNS</li>
+<li class='mutator'>EXPERIMENTAL_SWITCH</li>
+<li class='mutator'>FALSE_RETURNS</li>
+<li class='mutator'>INCREMENTS</li>
+<li class='mutator'>INVERT_NEGS</li>
+<li class='mutator'>MATH</li>
+<li class='mutator'>NULL_RETURNS</li>
+<li class='mutator'>PRIMITIVE_RETURNS</li>
+<li class='mutator'>REACTOR_REACTIVE_MUTATOR</li>
+<li class='mutator'>REMOVE_CONDITIONALS_EQUAL_ELSE</li>
+<li class='mutator'>REMOVE_CONDITIONALS_EQUAL_IF</li>
+<li class='mutator'>REMOVE_CONDITIONALS_ORDER_ELSE</li>
+<li class='mutator'>REMOVE_CONDITIONALS_ORDER_IF</li>
+<li class='mutator'>TRUE_RETURNS</li>
+<li class='mutator'>VOID_METHOD_CALLS</li>
+
+</ul>
+
+<h2>Tests examined</h2>
+<ul>
+<li>io.lettuce.core.dynamic.support.WildcardTypeInformationUnitTests.[engine:junit-jupiter]/[class:io.lettuce.core.dynamic.support.WildcardTypeInformationUnitTests]/[method:isAssignableFromExactType()] (0 ms)</li><li>io.lettuce.core.dynamic.output.OutputRegistryCommandOutputFactoryResolverUnitTests.[engine:junit-jupiter]/[class:io.lettuce.core.dynamic.output.OutputRegistryCommandOutputFactoryResolverUnitTests]/[method:shouldResolveBooleanWrappedOutput()] (1 ms)</li><li>io.lettuce.core.dynamic.output.OutputRegistryCommandOutputFactoryResolverUnitTests.[engine:junit-jupiter]/[class:io.lettuce.core.dynamic.output.OutputRegistryCommandOutputFactoryResolverUnitTests]/[method:shouldResolveBooleanListOutput()] (2 ms)</li><li>io.lettuce.core.dynamic.CommandSegmentCommandFactoryUnitTests.[engine:junit-jupiter]/[class:io.lettuce.core.dynamic.CommandSegmentCommandFactoryUnitTests]/[method:setKeyValueWithByteArrayCodec()] (23 ms)</li><li>io.lettuce.core.dynamic.output.CodecAwareOutputResolverUnitTests.[engine:junit-jupiter]/[class:io.lettuce.core.dynamic.output.CodecAwareOutputResolverUnitTests]/[method:shouldResolveListOfMapsOutput()] (5 ms)</li><li>io.lettuce.core.dynamic.codec.ParameterWrappersUnitTests.[engine:junit-jupiter]/[class:io.lettuce.core.dynamic.codec.ParameterWrappersUnitTests]/[method:shouldReturnValueTypeForList()] (1 ms)</li><li>io.lettuce.core.dynamic.output.OutputRegistryCommandOutputFactoryResolverUnitTests.[engine:junit-jupiter]/[class:io.lettuce.core.dynamic.output.OutputRegistryCommandOutputFactoryResolverUnitTests]/[method:shouldResolveListOfMapsOutput()] (1 ms)</li><li>io.lettuce.core.dynamic.ParameterBinderUnitTests.[engine:junit-jupiter]/[class:io.lettuce.core.dynamic.ParameterBinderUnitTests]/[method:bindsUnboundedValueRangeCorrectly()] (0 ms)</li><li>io.lettuce.core.dynamic.codec.AnnotationRedisCodecResolverUnitTests.[engine:junit-jupiter]/[class:io.lettuce.core.dynamic.codec.AnnotationRedisCodecResolverUnitTests]/[method:shouldResolveWithoutHints()] (0 ms)</li><li>io.lettuce.core.dynamic.codec.ParameterWrappersUnitTests.[engine:junit-jupiter]/[class:io.lettuce.core.dynamic.codec.ParameterWrappersUnitTests]/[method:shouldReturnValueTypeForKeyValue()] (1 ms)</li><li>io.lettuce.core.dynamic.support.ParametrizedTypeInformationUnitTests.[engine:junit-jupiter]/[class:io.lettuce.core.dynamic.support.ParametrizedTypeInformationUnitTests]/[method:isAssignableShouldConsiderCompatibleType()] (1 ms)</li><li>io.lettuce.core.dynamic.ReactiveTypeAdaptersUnitTests.[engine:junit-jupiter]/[class:io.lettuce.core.dynamic.ReactiveTypeAdaptersUnitTests]/[method:toWrapperShouldConvertMonoToFlux()] (3 ms)</li><li>io.lettuce.core.dynamic.ReactiveTypeAdaptersUnitTests.[engine:junit-jupiter]/[class:io.lettuce.core.dynamic.ReactiveTypeAdaptersUnitTests]/[method:toWrapperShouldConvertMonoToRxJava3Single()] (17 ms)</li><li>io.lettuce.core.dynamic.CommandSegmentCommandFactoryUnitTests.[engine:junit-jupiter]/[class:io.lettuce.core.dynamic.CommandSegmentCommandFactoryUnitTests]/[method:resolvesUnknownCommandToStringBackedCommandType()] (3 ms)</li><li>io.lettuce.core.dynamic.output.OutputRegistryUnitTests.[engine:junit-jupiter]/[class:io.lettuce.core.dynamic.output.OutputRegistryUnitTests]/[method:componentTypeOfKeyListOuputWithCodecIsAssignableFromListOfString()] (0 ms)</li><li>io.lettuce.core.dynamic.ReactiveTypeAdaptersUnitTests.[engine:junit-jupiter]/[class:io.lettuce.core.dynamic.ReactiveTypeAdaptersUnitTests]/[method:toWrapperShouldConvertRxJava3ObservableToMaybe()] (28 ms)</li><li>io.lettuce.core.dynamic.ReactiveTypeAdaptersUnitTests.[engine:junit-jupiter]/[class:io.lettuce.core.dynamic.ReactiveTypeAdaptersUnitTests]/[method:toWrapperShouldConvertRxJava2ObservableToMono()] (6 ms)</li><li>io.lettuce.core.dynamic.support.WildcardTypeInformationUnitTests.[engine:junit-jupiter]/[class:io.lettuce.core.dynamic.support.WildcardTypeInformationUnitTests]/[method:shouldResolveWildcardType()] (1 ms)</li><li>io.lettuce.core.dynamic.CommandSegmentCommandFactoryUnitTests.[engine:junit-jupiter]/[class:io.lettuce.core.dynamic.CommandSegmentCommandFactoryUnitTests]/[method:syncWithTimeout()] (4 ms)</li><li>io.lettuce.core.dynamic.codec.ParameterWrappersUnitTests.[engine:junit-jupiter]/[class:io.lettuce.core.dynamic.codec.ParameterWrappersUnitTests]/[method:shouldReturnValueTypeForRange()] (0 ms)</li><li>io.lettuce.core.dynamic.codec.ParameterWrappersUnitTests.[engine:junit-jupiter]/[class:io.lettuce.core.dynamic.codec.ParameterWrappersUnitTests]/[method:shouldReturnValueTypeForMap()] (0 ms)</li><li>io.lettuce.core.dynamic.output.OutputRegistryCommandOutputFactoryResolverUnitTests.[engine:junit-jupiter]/[class:io.lettuce.core.dynamic.output.OutputRegistryCommandOutputFactoryResolverUnitTests]/[method:shouldResolveStreamingStringListOutput()] (1 ms)</li><li>io.lettuce.core.dynamic.output.CodecAwareOutputResolverUnitTests.[engine:junit-jupiter]/[class:io.lettuce.core.dynamic.output.CodecAwareOutputResolverUnitTests]/[method:shouldResolveKeyOutput()] (1 ms)</li><li>io.lettuce.core.dynamic.ReactiveTypeAdaptersUnitTests.[engine:junit-jupiter]/[class:io.lettuce.core.dynamic.ReactiveTypeAdaptersUnitTests]/[method:toWrapperShouldConvertRxJava3FlowableToFlux()] (4 ms)</li><li>io.lettuce.core.dynamic.CommandSegmentCommandFactoryUnitTests.[engine:junit-jupiter]/[class:io.lettuce.core.dynamic.CommandSegmentCommandFactoryUnitTests]/[method:lowercaseCommandResolvesToStringCommand()] (6 ms)</li><li>io.lettuce.core.dynamic.ReactiveTypeAdaptersUnitTests.[engine:junit-jupiter]/[class:io.lettuce.core.dynamic.ReactiveTypeAdaptersUnitTests]/[method:toWrapperShouldConvertRxJava2ObservableToSingle()] (2 ms)</li><li>io.lettuce.core.dynamic.ReactiveTypeAdaptersUnitTests.[engine:junit-jupiter]/[class:io.lettuce.core.dynamic.ReactiveTypeAdaptersUnitTests]/[method:toWrapperShouldCastMonoToMono()] (3 ms)</li><li>io.lettuce.core.dynamic.ReactiveTypeAdaptersUnitTests.[engine:junit-jupiter]/[class:io.lettuce.core.dynamic.ReactiveTypeAdaptersUnitTests]/[method:toWrapperShouldConvertRxJava2ObservableToMaybe()] (3 ms)</li><li>io.lettuce.core.dynamic.ReactiveTypeAdaptersUnitTests.[engine:junit-jupiter]/[class:io.lettuce.core.dynamic.ReactiveTypeAdaptersUnitTests]/[method:toWrapperShouldConvertRxJava3ObservableToMono()] (3 ms)</li><li>io.lettuce.core.dynamic.ReactiveTypeAdaptersUnitTests.[engine:junit-jupiter]/[class:io.lettuce.core.dynamic.ReactiveTypeAdaptersUnitTests]/[method:toWrapperShouldConvertRxJava2SingleToMono()] (3 ms)</li><li>io.lettuce.core.dynamic.ReactiveTypeAdaptersUnitTests.[engine:junit-jupiter]/[class:io.lettuce.core.dynamic.ReactiveTypeAdaptersUnitTests]/[method:toWrapperShouldCastRxJava3FlowableToPublisher()] (51 ms)</li><li>io.lettuce.core.dynamic.output.CodecAwareOutputResolverUnitTests.[engine:junit-jupiter]/[class:io.lettuce.core.dynamic.output.CodecAwareOutputResolverUnitTests]/[method:shouldResolveMapsOutput()] (2 ms)</li><li>io.lettuce.core.dynamic.ReactiveTypeAdaptersUnitTests.[engine:junit-jupiter]/[class:io.lettuce.core.dynamic.ReactiveTypeAdaptersUnitTests]/[method:toWrapperShouldConvertRxJava3ObservableToPublisher()] (6 ms)</li><li>io.lettuce.core.dynamic.ReactiveTypeAdaptersUnitTests.[engine:junit-jupiter]/[class:io.lettuce.core.dynamic.ReactiveTypeAdaptersUnitTests]/[method:toWrapperShouldConvertRxJava3SingleToMono()] (4 ms)</li><li>io.lettuce.core.dynamic.ConversionServiceUnitTests.[engine:junit-jupiter]/[class:io.lettuce.core.dynamic.ConversionServiceUnitTests]/[method:convert()] (51 ms)</li><li>io.lettuce.core.dynamic.support.WildcardTypeInformationUnitTests.[engine:junit-jupiter]/[class:io.lettuce.core.dynamic.support.WildcardTypeInformationUnitTests]/[method:isAssignableFromCompatibleComponentType()] (1 ms)</li><li>io.lettuce.core.dynamic.output.OutputRegistryCommandOutputFactoryResolverUnitTests.[engine:junit-jupiter]/[class:io.lettuce.core.dynamic.output.OutputRegistryCommandOutputFactoryResolverUnitTests]/[method:shouldResolveKeyOutput()] (1 ms)</li><li>io.lettuce.core.dynamic.CommandSegmentCommandFactoryUnitTests.[engine:junit-jupiter]/[class:io.lettuce.core.dynamic.CommandSegmentCommandFactoryUnitTests]/[method:clientSetname()] (4 ms)</li><li>io.lettuce.core.dynamic.output.OutputRegistryUnitTests.[engine:junit-jupiter]/[class:io.lettuce.core.dynamic.output.OutputRegistryUnitTests]/[method:getKeyOutputType()] (0 ms)</li><li>io.lettuce.core.dynamic.output.OutputRegistryCommandOutputFactoryResolverUnitTests.[engine:junit-jupiter]/[class:io.lettuce.core.dynamic.output.OutputRegistryCommandOutputFactoryResolverUnitTests]/[method:stringValueCollectionIsAssignableFromStringValueListOutput()] (1 ms)</li><li>io.lettuce.core.dynamic.ReactiveTypeAdaptersUnitTests.[engine:junit-jupiter]/[class:io.lettuce.core.dynamic.ReactiveTypeAdaptersUnitTests]/[method:toWrapperShouldConvertRxJava3MaybeToMono()] (3 ms)</li><li>io.lettuce.core.dynamic.ReactiveTypeAdaptersUnitTests.[engine:junit-jupiter]/[class:io.lettuce.core.dynamic.ReactiveTypeAdaptersUnitTests]/[method:toWrapperShouldConvertMonoToRxJava1Single()] (9 ms)</li><li>io.lettuce.core.dynamic.ReactiveTypeAdaptersUnitTests.[engine:junit-jupiter]/[class:io.lettuce.core.dynamic.ReactiveTypeAdaptersUnitTests]/[method:toWrapperShouldConvertRxJava2FlowableToFlux()] (3 ms)</li><li>io.lettuce.core.dynamic.ReactiveTypeAdaptersUnitTests.[engine:junit-jupiter]/[class:io.lettuce.core.dynamic.ReactiveTypeAdaptersUnitTests]/[method:toWrapperShouldConvertRxJava2SingleToPublisher()] (3 ms)</li><li>io.lettuce.core.dynamic.output.OutputRegistryCommandOutputFactoryResolverUnitTests.[engine:junit-jupiter]/[class:io.lettuce.core.dynamic.output.OutputRegistryCommandOutputFactoryResolverUnitTests]/[method:shouldResolveBooleanOutput()] (2 ms)</li><li>io.lettuce.core.dynamic.ConversionServiceUnitTests.[engine:junit-jupiter]/[class:io.lettuce.core.dynamic.ConversionServiceUnitTests]/[method:canConvert()] (2 ms)</li><li>io.lettuce.core.dynamic.support.ParametrizedTypeInformationUnitTests.[engine:junit-jupiter]/[class:io.lettuce.core.dynamic.support.ParametrizedTypeInformationUnitTests]/[method:isAssignableShouldConsiderExactType()] (1 ms)</li><li>io.lettuce.core.dynamic.CommandSegmentCommandFactoryUnitTests.[engine:junit-jupiter]/[class:io.lettuce.core.dynamic.CommandSegmentCommandFactoryUnitTests]/[method:asyncWithTimeout()] (3 ms)</li><li>io.lettuce.core.dynamic.support.ParametrizedTypeInformationUnitTests.[engine:junit-jupiter]/[class:io.lettuce.core.dynamic.support.ParametrizedTypeInformationUnitTests]/[method:isAssignableShouldConsiderNestedParameterTypes()] (1 ms)</li><li>io.lettuce.core.dynamic.output.OutputRegistryUnitTests.[engine:junit-jupiter]/[class:io.lettuce.core.dynamic.output.OutputRegistryUnitTests]/[method:componentTypeOfKeyOuputWithCodecIsAssignableFromString()] (1 ms)</li><li>io.lettuce.core.dynamic.CommandSegmentCommandFactoryUnitTests.[engine:junit-jupiter]/[class:io.lettuce.core.dynamic.CommandSegmentCommandFactoryUnitTests]/[method:setKeyValue()] (5 ms)</li><li>io.lettuce.core.dynamic.output.CodecAwareOutputResolverUnitTests.[engine:junit-jupiter]/[class:io.lettuce.core.dynamic.output.CodecAwareOutputResolverUnitTests]/[method:shouldResolveValueListOutput()] (11 ms)</li><li>io.lettuce.core.dynamic.ReactiveTypeAdaptersUnitTests.[engine:junit-jupiter]/[class:io.lettuce.core.dynamic.ReactiveTypeAdaptersUnitTests]/[method:toWrapperShouldConvertRxJava2MaybeToFlux()] (3 ms)</li><li>io.lettuce.core.dynamic.DefaultCommandMethodVerifierUnitTests.[engine:junit-jupiter]/[class:io.lettuce.core.dynamic.DefaultCommandMethodVerifierUnitTests]/[method:shouldPassWithCorrectParameterCount()] (1 ms)</li><li>io.lettuce.core.dynamic.output.CodecAwareOutputResolverUnitTests.[engine:junit-jupiter]/[class:io.lettuce.core.dynamic.output.CodecAwareOutputResolverUnitTests]/[method:shouldResolveValueOutput()] (1 ms)</li><li>io.lettuce.core.dynamic.output.OutputRegistryCommandOutputFactoryResolverUnitTests.[engine:junit-jupiter]/[class:io.lettuce.core.dynamic.output.OutputRegistryCommandOutputFactoryResolverUnitTests]/[method:shouldResolveStringScoredValueListOutput()] (1 ms)</li><li>io.lettuce.core.dynamic.ReactiveTypeAdaptersUnitTests.[engine:junit-jupiter]/[class:io.lettuce.core.dynamic.ReactiveTypeAdaptersUnitTests]/[method:toWrapperShouldConvertRxJava2ObservableToPublisher()] (4 ms)</li><li>io.lettuce.core.dynamic.ReactiveTypeAdaptersUnitTests.[engine:junit-jupiter]/[class:io.lettuce.core.dynamic.ReactiveTypeAdaptersUnitTests]/[method:toWrapperShouldConvertRxJava3SingleToPublisher()] (4 ms)</li><li>io.lettuce.core.dynamic.ReactiveTypeAdaptersUnitTests.[engine:junit-jupiter]/[class:io.lettuce.core.dynamic.ReactiveTypeAdaptersUnitTests]/[method:toWrapperShouldConvertRxJava3FlowableToMono()] (2 ms)</li><li>io.lettuce.core.dynamic.CommandSegmentCommandFactoryUnitTests.[engine:junit-jupiter]/[class:io.lettuce.core.dynamic.CommandSegmentCommandFactoryUnitTests]/[method:setWithArgs()] (4 ms)</li><li>io.lettuce.core.dynamic.support.ParametrizedTypeInformationUnitTests.[engine:junit-jupiter]/[class:io.lettuce.core.dynamic.support.ParametrizedTypeInformationUnitTests]/[method:isAssignableShouldConsiderWildcard()] (1 ms)</li><li>io.lettuce.core.dynamic.output.CodecAwareOutputResolverUnitTests.[engine:junit-jupiter]/[class:io.lettuce.core.dynamic.output.CodecAwareOutputResolverUnitTests]/[method:shouldResolveKeyListOutput()] (2 ms)</li><li>io.lettuce.core.dynamic.ReactiveCommandSegmentCommandFactoryUnitTests.[engine:junit-jupiter]/[class:io.lettuce.core.dynamic.ReactiveCommandSegmentCommandFactoryUnitTests]/[method:commandCreationWithTimeoutShouldFail()] (2 ms)</li><li>io.lettuce.core.dynamic.output.OutputRegistryCommandOutputFactoryResolverUnitTests.[engine:junit-jupiter]/[class:io.lettuce.core.dynamic.output.OutputRegistryCommandOutputFactoryResolverUnitTests]/[method:shouldResolveGeoCoordinatesValueOutput()] (2 ms)</li><li>io.lettuce.core.dynamic.ReactiveTypeAdaptersUnitTests.[engine:junit-jupiter]/[class:io.lettuce.core.dynamic.ReactiveTypeAdaptersUnitTests]/[method:toWrapperShouldConvertRxJava2MaybeToPublisher()] (11 ms)</li><li>io.lettuce.core.dynamic.CommandSegmentCommandFactoryUnitTests.[engine:junit-jupiter]/[class:io.lettuce.core.dynamic.CommandSegmentCommandFactoryUnitTests]/[method:annotatedClientSetname()] (5 ms)</li><li>io.lettuce.core.dynamic.support.ParametrizedTypeInformationUnitTests.[engine:junit-jupiter]/[class:io.lettuce.core.dynamic.support.ParametrizedTypeInformationUnitTests]/[method:returnsNullMapValueTypeForNonMapProperties()] (0 ms)</li><li>io.lettuce.core.dynamic.ReactiveTypeAdaptersUnitTests.[engine:junit-jupiter]/[class:io.lettuce.core.dynamic.ReactiveTypeAdaptersUnitTests]/[method:toWrapperShouldConvertRxJava2FlowableToMono()] (3 ms)</li><li>io.lettuce.core.dynamic.ReactiveTypeAdaptersUnitTests.[engine:junit-jupiter]/[class:io.lettuce.core.dynamic.ReactiveTypeAdaptersUnitTests]/[method:toWrapperShouldConvertRxJava3ObservableToFlux()] (2 ms)</li><li>io.lettuce.core.dynamic.output.OutputRegistryCommandOutputFactoryResolverUnitTests.[engine:junit-jupiter]/[class:io.lettuce.core.dynamic.output.OutputRegistryCommandOutputFactoryResolverUnitTests]/[method:shouldResolveStringValueListOutput()] (1 ms)</li><li>io.lettuce.core.dynamic.ReactiveCommandSegmentCommandFactoryUnitTests.[engine:junit-jupiter]/[class:io.lettuce.core.dynamic.ReactiveCommandSegmentCommandFactoryUnitTests]/[method:shouldResolveNonStreamingOutput()] (3 ms)</li><li>io.lettuce.core.dynamic.support.WildcardTypeInformationUnitTests.[engine:junit-jupiter]/[class:io.lettuce.core.dynamic.support.WildcardTypeInformationUnitTests]/[method:isAssignableFromCompatibleFirstLevelType()] (0 ms)</li><li>io.lettuce.core.dynamic.CommandSegmentCommandFactoryUnitTests.[engine:junit-jupiter]/[class:io.lettuce.core.dynamic.CommandSegmentCommandFactoryUnitTests]/[method:setKeyValueWithHintedValue()] (4 ms)</li><li>io.lettuce.core.dynamic.ReactiveTypeAdaptersUnitTests.[engine:junit-jupiter]/[class:io.lettuce.core.dynamic.ReactiveTypeAdaptersUnitTests]/[method:toWrapperShouldConvertRxJava2ObservableToFlux()] (12 ms)</li><li>io.lettuce.core.dynamic.output.OutputRegistryCommandOutputFactoryResolverUnitTests.[engine:junit-jupiter]/[class:io.lettuce.core.dynamic.output.OutputRegistryCommandOutputFactoryResolverUnitTests]/[method:shouldResolveStringListOutput()] (2 ms)</li><li>io.lettuce.core.dynamic.support.WildcardTypeInformationUnitTests.[engine:junit-jupiter]/[class:io.lettuce.core.dynamic.support.WildcardTypeInformationUnitTests]/[method:isAssignableFromLowerBoundComponentType()] (0 ms)</li><li>io.lettuce.core.dynamic.ReactiveTypeAdaptersUnitTests.[engine:junit-jupiter]/[class:io.lettuce.core.dynamic.ReactiveTypeAdaptersUnitTests]/[method:toWrapperShouldConvertRxJava3ObservableToSingle()] (2 ms)</li><li>io.lettuce.core.dynamic.output.OutputRegistryUnitTests.[engine:junit-jupiter]/[class:io.lettuce.core.dynamic.output.OutputRegistryUnitTests]/[method:customizedValueOutput()] (1 ms)</li><li>io.lettuce.core.dynamic.CommandSegmentCommandFactoryUnitTests.[engine:junit-jupiter]/[class:io.lettuce.core.dynamic.CommandSegmentCommandFactoryUnitTests]/[method:varargsMethodWithParameterIndexAccess()] (4 ms)</li><li>io.lettuce.core.dynamic.ParameterBinderUnitTests.[engine:junit-jupiter]/[class:io.lettuce.core.dynamic.ParameterBinderUnitTests]/[method:bindsValueRangeCorrectly()] (1 ms)</li><li>io.lettuce.core.dynamic.codec.AnnotationRedisCodecResolverUnitTests.[engine:junit-jupiter]/[class:io.lettuce.core.dynamic.codec.AnnotationRedisCodecResolverUnitTests]/[method:shouldDiscoverCodecTypesFromWrappers()] (0 ms)</li><li>io.lettuce.core.dynamic.output.OutputRegistryUnitTests.[engine:junit-jupiter]/[class:io.lettuce.core.dynamic.output.OutputRegistryUnitTests]/[method:streamingTypeOfKeyListOuputWithCodecIsAssignableFromListOfString()] (0 ms)</li><li>io.lettuce.core.dynamic.output.OutputRegistryCommandOutputFactoryResolverUnitTests.[engine:junit-jupiter]/[class:io.lettuce.core.dynamic.output.OutputRegistryCommandOutputFactoryResolverUnitTests]/[method:shouldResolveVoidOutput()] (2 ms)</li><li>io.lettuce.core.dynamic.ReactiveTypeAdaptersUnitTests.[engine:junit-jupiter]/[class:io.lettuce.core.dynamic.ReactiveTypeAdaptersUnitTests]/[method:toWrapperShouldCastRxJava2FlowableToPublisher()] (9 ms)</li><li>io.lettuce.core.dynamic.output.OutputRegistryCommandOutputFactoryResolverUnitTests.[engine:junit-jupiter]/[class:io.lettuce.core.dynamic.output.OutputRegistryCommandOutputFactoryResolverUnitTests]/[method:stringWildcardValueCollectionIsAssignableFromOutputs()] (1 ms)</li><li>io.lettuce.core.dynamic.support.ParametrizedTypeInformationUnitTests.[engine:junit-jupiter]/[class:io.lettuce.core.dynamic.support.ParametrizedTypeInformationUnitTests]/[method:isAssignableShouldConsiderWildcardOfNumberType()] (1 ms)</li><li>io.lettuce.core.dynamic.ConversionServiceUnitTests.[engine:junit-jupiter]/[class:io.lettuce.core.dynamic.ConversionServiceUnitTests]/[method:getConverter()] (1 ms)</li><li>io.lettuce.core.dynamic.ReactiveTypeAdaptersUnitTests.[engine:junit-jupiter]/[class:io.lettuce.core.dynamic.ReactiveTypeAdaptersUnitTests]/[method:toWrapperShouldConvertRxJava3MaybeToPublisher()] (4 ms)</li><li>io.lettuce.core.dynamic.ReactiveCommandSegmentCommandFactoryUnitTests.[engine:junit-jupiter]/[class:io.lettuce.core.dynamic.ReactiveCommandSegmentCommandFactoryUnitTests]/[method:shouldResolveStreamingOutput()] (2 ms)</li><li>io.lettuce.core.dynamic.output.OutputRegistryUnitTests.[engine:junit-jupiter]/[class:io.lettuce.core.dynamic.output.OutputRegistryUnitTests]/[method:getStringListOutputType()] (0 ms)</li><li>io.lettuce.core.dynamic.ReactiveTypeAdaptersUnitTests.[engine:junit-jupiter]/[class:io.lettuce.core.dynamic.ReactiveTypeAdaptersUnitTests]/[method:toWrapperShouldConvertRxJava2MaybeToMono()] (4 ms)</li><li>io.lettuce.core.dynamic.codec.ParameterWrappersUnitTests.[engine:junit-jupiter]/[class:io.lettuce.core.dynamic.codec.ParameterWrappersUnitTests]/[method:shouldReturnValueTypeForValue()] (0 ms)</li><li>io.lettuce.core.dynamic.ReactiveTypeAdaptersUnitTests.[engine:junit-jupiter]/[class:io.lettuce.core.dynamic.ReactiveTypeAdaptersUnitTests]/[method:toWrapperShouldConvertRxJava3MaybeToFlux()] (2 ms)</li><li>io.lettuce.core.dynamic.output.OutputRegistryUnitTests.[engine:junit-jupiter]/[class:io.lettuce.core.dynamic.output.OutputRegistryUnitTests]/[method:streamingTypeOfKeyOuputWithCodecIsAssignableFromString()] (0 ms)</li><li>io.lettuce.core.dynamic.ReactiveTypeAdaptersUnitTests.[engine:junit-jupiter]/[class:io.lettuce.core.dynamic.ReactiveTypeAdaptersUnitTests]/[method:toWrapperShouldConvertMonoToRxJava2Single()] (50 ms)</li><li>io.lettuce.core.dynamic.output.OutputRegistryCommandOutputFactoryResolverUnitTests.[engine:junit-jupiter]/[class:io.lettuce.core.dynamic.output.OutputRegistryCommandOutputFactoryResolverUnitTests]/[method:shouldResolveByteArrayOutput()] (1 ms)</li><li>io.lettuce.core.dynamic.support.WildcardTypeInformationUnitTests.[engine:junit-jupiter]/[class:io.lettuce.core.dynamic.support.WildcardTypeInformationUnitTests]/[method:isAssignableFromUpperBoundComponentType()] (1 ms)</li>
+</ul>
+
+<br/>
+
+Report generated by <a href='https://pitest.org'>PIT</a> pitest-reactor
+
+</body>
+</html>

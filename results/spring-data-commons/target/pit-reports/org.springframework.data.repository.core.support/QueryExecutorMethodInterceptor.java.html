@@ -1,0 +1,2984 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+<body>
+
+
+<h1>QueryExecutorMethodInterceptor.java</h1>
+
+<table class="src">
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_1'/>
+1
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_1'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>/*</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_2'/>
+2
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_2'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * Copyright 2020-2023 the original author or authors.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_3'/>
+3
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_3'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> *</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_4'/>
+4
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_4'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * Licensed under the Apache License, Version 2.0 (the &#34;License&#34;);</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_5'/>
+5
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_5'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * you may not use this file except in compliance with the License.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_6'/>
+6
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_6'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * You may obtain a copy of the License at</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_7'/>
+7
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_7'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> *</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_8'/>
+8
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_8'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> *      https://www.apache.org/licenses/LICENSE-2.0</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_9'/>
+9
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_9'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> *</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_10'/>
+10
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_10'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * Unless required by applicable law or agreed to in writing, software</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_11'/>
+11
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_11'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * distributed under the License is distributed on an &#34;AS IS&#34; BASIS,</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_12'/>
+12
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_12'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_13'/>
+13
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_13'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * See the License for the specific language governing permissions and</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_14'/>
+14
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_14'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * limitations under the License.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_15'/>
+15
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_15'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_16'/>
+16
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_16'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>package org.springframework.data.repository.core.support;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_17'/>
+17
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_17'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_18'/>
+18
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_18'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import java.lang.reflect.Method;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_19'/>
+19
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_19'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import java.util.Collections;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_20'/>
+20
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_20'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import java.util.HashMap;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_21'/>
+21
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_21'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import java.util.List;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_22'/>
+22
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_22'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import java.util.Map;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_23'/>
+23
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_23'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import java.util.Optional;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_24'/>
+24
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_24'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_25'/>
+25
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_25'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.aopalliance.intercept.MethodInterceptor;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_26'/>
+26
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_26'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.aopalliance.intercept.MethodInvocation;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_27'/>
+27
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_27'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.springframework.core.ResolvableType;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_28'/>
+28
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_28'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.springframework.data.projection.ProjectionFactory;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_29'/>
+29
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_29'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.springframework.data.repository.core.NamedQueries;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_30'/>
+30
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_30'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.springframework.data.repository.core.RepositoryInformation;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_31'/>
+31
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_31'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.springframework.data.repository.core.support.RepositoryInvocationMulticaster.DefaultRepositoryInvocationMulticaster;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_32'/>
+32
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_32'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.springframework.data.repository.core.support.RepositoryInvocationMulticaster.NoOpRepositoryInvocationMulticaster;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_33'/>
+33
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_33'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.springframework.data.repository.query.QueryCreationException;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_34'/>
+34
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_34'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.springframework.data.repository.query.QueryLookupStrategy;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_35'/>
+35
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_35'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.springframework.data.repository.query.QueryMethod;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_36'/>
+36
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_36'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.springframework.data.repository.query.RepositoryQuery;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_37'/>
+37
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_37'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.springframework.data.repository.util.QueryExecutionConverters;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_38'/>
+38
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_38'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.springframework.data.util.Pair;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_39'/>
+39
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_39'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.springframework.lang.Nullable;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_40'/>
+40
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_40'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.springframework.util.ConcurrentReferenceHashMap;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_41'/>
+41
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_41'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_42'/>
+42
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_42'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>/**</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_43'/>
+43
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_43'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * This {@link MethodInterceptor} intercepts calls to methods of the custom implementation and delegates the to it if</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_44'/>
+44
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_44'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * configured. Furthermore it resolves method calls to finders and triggers execution of them. You can rely on having a</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_45'/>
+45
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_45'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * custom repository implementation instance set if this returns true.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_46'/>
+46
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_46'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> *</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_47'/>
+47
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_47'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * @author Oliver Gierke</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_48'/>
+48
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_48'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * @author Mark Paluch</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_49'/>
+49
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_49'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * @author Christoph Strobl</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_50'/>
+50
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_50'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * @author John Blum</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_51'/>
+51
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_51'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * @author Johannes Englmeier</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_52'/>
+52
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_52'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_53'/>
+53
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_53'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>class QueryExecutorMethodInterceptor implements MethodInterceptor {</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_54'/>
+54
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_54'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_55'/>
+55
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_55'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;private final RepositoryInformation repositoryInformation;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_56'/>
+56
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_56'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;private final Map&#60;Method, RepositoryQuery&#62; queries;</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_57'/>
+57
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_57'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>&#9;private final Map&#60;Method, RepositoryMethodInvoker&#62; invocationMetadataCache = new ConcurrentReferenceHashMap&#60;&#62;();</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_58'/>
+58
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_58'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;private final QueryExecutionResultHandler resultHandler;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_59'/>
+59
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_59'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;private final NamedQueries namedQueries;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_60'/>
+60
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_60'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;private final List&#60;QueryCreationListener&#60;?&#62;&#62; queryPostProcessors;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_61'/>
+61
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_61'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;private final RepositoryInvocationMulticaster invocationMulticaster;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_62'/>
+62
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_62'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_63'/>
+63
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_63'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;/**</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_64'/>
+64
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_64'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9; * Creates a new {@link QueryExecutorMethodInterceptor}. Builds a model of {@link QueryMethod}s to be invoked on</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_65'/>
+65
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_65'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9; * execution of repository interface methods.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_66'/>
+66
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_66'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9; */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_67'/>
+67
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_67'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;public QueryExecutorMethodInterceptor(RepositoryInformation repositoryInformation,</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_68'/>
+68
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_68'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;&#9;&#9;ProjectionFactory projectionFactory, Optional&#60;QueryLookupStrategy&#62; queryLookupStrategy, NamedQueries namedQueries,</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_69'/>
+69
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_69'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;&#9;&#9;List&#60;QueryCreationListener&#60;?&#62;&#62; queryPostProcessors,</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_70'/>
+70
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_70'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>&#9;&#9;&#9;List&#60;RepositoryMethodInvocationListener&#62; methodInvocationListeners) {</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_71'/>
+71
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_71'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_72'/>
+72
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_72'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>&#9;&#9;this.repositoryInformation = repositoryInformation;</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_73'/>
+73
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_73'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>&#9;&#9;this.namedQueries = namedQueries;</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_74'/>
+74
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_74'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>&#9;&#9;this.queryPostProcessors = queryPostProcessors;</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_75'/>
+75
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_75'>2</a>
+<span>
+1. &#60;init&#62; : removed conditional - replaced equality check with false &rarr; SURVIVED<br/>
+2. &#60;init&#62; : removed conditional - replaced equality check with true &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='survived'>&#9;&#9;this.invocationMulticaster = methodInvocationListeners.isEmpty() ? NoOpRepositoryInvocationMulticaster.INSTANCE</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_76'/>
+76
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_76'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>&#9;&#9;&#9;&#9;: new DefaultRepositoryInvocationMulticaster(methodInvocationListeners);</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_77'/>
+77
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_77'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_78'/>
+78
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_78'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>&#9;&#9;this.resultHandler = new QueryExecutionResultHandler(RepositoryFactorySupport.CONVERSION_SERVICE);</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_79'/>
+79
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_79'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_80'/>
+80
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_80'>4</a>
+<span>
+1. &#60;init&#62; : removed conditional - replaced equality check with true &rarr; KILLED<br/>
+2. &#60;init&#62; : removed conditional - replaced equality check with false &rarr; KILLED<br/>
+3. &#60;init&#62; : removed conditional - replaced equality check with true &rarr; KILLED<br/>
+4. &#60;init&#62; : removed conditional - replaced equality check with false &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>&#9;&#9;if (!queryLookupStrategy.isPresent() &#38;&#38; repositoryInformation.hasQueryMethods()) {</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_81'/>
+81
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_81'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_82'/>
+82
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_82'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>&#9;&#9;&#9;throw new IllegalStateException(</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_83'/>
+83
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_83'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;&#9;&#9;&#9;&#9;&#34;You have defined query methods in the repository&#34; + &#34; but do not have any query lookup strategy defined.&#34;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_84'/>
+84
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_84'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;&#9;&#9;&#9;&#9;&#9;&#9;+ &#34; The infrastructure apparently does not support query methods&#34;);</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_85'/>
+85
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_85'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;&#9;}</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_86'/>
+86
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_86'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_87'/>
+87
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_87'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>&#9;&#9;this.queries = queryLookupStrategy //</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_88'/>
+88
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_88'>1</a>
+<span>
+1. lambda$new$0 : replaced return value with Collections.emptyMap for org/springframework/data/repository/core/support/QueryExecutorMethodInterceptor::lambda$new$0 &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>&#9;&#9;&#9;&#9;.map(it -&#62; mapMethodsToQuery(repositoryInformation, it, projectionFactory)) //</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_89'/>
+89
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_89'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>&#9;&#9;&#9;&#9;.orElse(Collections.emptyMap());</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_90'/>
+90
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_90'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>&#9;}</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_91'/>
+91
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_91'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_92'/>
+92
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_92'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;private Map&#60;Method, RepositoryQuery&#62; mapMethodsToQuery(RepositoryInformation repositoryInformation,</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_93'/>
+93
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_93'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;&#9;&#9;QueryLookupStrategy lookupStrategy, ProjectionFactory projectionFactory) {</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_94'/>
+94
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_94'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_95'/>
+95
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_95'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>&#9;&#9;Map&#60;Method, RepositoryQuery&#62; result = new HashMap&#60;&#62;();</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_96'/>
+96
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_96'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_97'/>
+97
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_97'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>&#9;&#9;for (Method method : repositoryInformation.getQueryMethods()) {</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_98'/>
+98
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_98'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_99'/>
+99
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_99'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>&#9;&#9;&#9;Pair&#60;Method, RepositoryQuery&#62; pair = lookupQuery(method, repositoryInformation, lookupStrategy,</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_100'/>
+100
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_100'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;&#9;&#9;&#9;&#9;projectionFactory);</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_101'/>
+101
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_101'>1</a>
+<span>
+1. mapMethodsToQuery : removed call to org/springframework/data/repository/core/support/QueryExecutorMethodInterceptor::invokeListeners &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>&#9;&#9;&#9;invokeListeners(pair.getSecond());</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_102'/>
+102
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_102'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>&#9;&#9;&#9;result.put(pair.getFirst(), pair.getSecond());</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_103'/>
+103
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_103'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>&#9;&#9;}</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_104'/>
+104
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_104'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_105'/>
+105
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_105'>1</a>
+<span>
+1. mapMethodsToQuery : replaced return value with Collections.emptyMap for org/springframework/data/repository/core/support/QueryExecutorMethodInterceptor::mapMethodsToQuery &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>&#9;&#9;return result;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_106'/>
+106
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_106'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;}</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_107'/>
+107
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_107'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_108'/>
+108
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_108'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;private Pair&#60;Method, RepositoryQuery&#62; lookupQuery(Method method, RepositoryInformation information,</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_109'/>
+109
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_109'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;&#9;&#9;QueryLookupStrategy strategy, ProjectionFactory projectionFactory) {</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_110'/>
+110
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_110'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;&#9;try {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_111'/>
+111
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_111'>1</a>
+<span>
+1. lookupQuery : replaced return value with null for org/springframework/data/repository/core/support/QueryExecutorMethodInterceptor::lookupQuery &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>&#9;&#9;&#9;return Pair.of(method, strategy.resolveQuery(method, information, projectionFactory, namedQueries));</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_112'/>
+112
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_112'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='uncovered'><pre><span  class=''>&#9;&#9;} catch (QueryCreationException e) {</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_113'/>
+113
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_113'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='uncovered'><pre><span  class=''>&#9;&#9;&#9;throw e;</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_114'/>
+114
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_114'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>&#9;&#9;} catch (RuntimeException e) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_115'/>
+115
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_115'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>&#9;&#9;&#9;throw QueryCreationException.create(e.getMessage(), e, information.getRepositoryInterface(), method);</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_116'/>
+116
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_116'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;&#9;}</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_117'/>
+117
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_117'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;}</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_118'/>
+118
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_118'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_119'/>
+119
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_119'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;@SuppressWarnings({ &#34;rawtypes&#34;, &#34;unchecked&#34; })</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_120'/>
+120
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_120'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;private void invokeListeners(RepositoryQuery query) {</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_121'/>
+121
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_121'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_122'/>
+122
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_122'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>&#9;&#9;for (QueryCreationListener listener : queryPostProcessors) {</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_123'/>
+123
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_123'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_124'/>
+124
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_124'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>&#9;&#9;&#9;ResolvableType typeArgument = ResolvableType.forClass(QueryCreationListener.class, listener.getClass())</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_125'/>
+125
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_125'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>&#9;&#9;&#9;&#9;&#9;.getGeneric(0);</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_126'/>
+126
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_126'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_127'/>
+127
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_127'>4</a>
+<span>
+1. invokeListeners : removed conditional - replaced equality check with true &rarr; SURVIVED<br/>
+2. invokeListeners : removed conditional - replaced equality check with false &rarr; KILLED<br/>
+3. invokeListeners : removed conditional - replaced equality check with true &rarr; KILLED<br/>
+4. invokeListeners : removed conditional - replaced equality check with false &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='survived'>&#9;&#9;&#9;if (typeArgument != null &#38;&#38; typeArgument.isAssignableFrom(ResolvableType.forClass(query.getClass()))) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_128'/>
+128
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_128'>1</a>
+<span>
+1. invokeListeners : removed call to org/springframework/data/repository/core/support/QueryCreationListener::onCreation &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>&#9;&#9;&#9;&#9;listener.onCreation(query);</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_129'/>
+129
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_129'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;&#9;&#9;}</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_130'/>
+130
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_130'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>&#9;&#9;}</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_131'/>
+131
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_131'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>&#9;}</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_132'/>
+132
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_132'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_133'/>
+133
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_133'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;@Override</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_134'/>
+134
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_134'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;@Nullable</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_135'/>
+135
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_135'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;public Object invoke(@SuppressWarnings(&#34;null&#34;) MethodInvocation invocation) throws Throwable {</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_136'/>
+136
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_136'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_137'/>
+137
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_137'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>&#9;&#9;Method method = invocation.getMethod();</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_138'/>
+138
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_138'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_139'/>
+139
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_139'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>&#9;&#9;QueryExecutionConverters.ExecutionAdapter executionAdapter = QueryExecutionConverters //</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_140'/>
+140
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_140'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>&#9;&#9;&#9;&#9;.getExecutionAdapter(method.getReturnType());</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_141'/>
+141
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_141'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_142'/>
+142
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_142'>2</a>
+<span>
+1. invoke : removed conditional - replaced equality check with true &rarr; SURVIVED<br/>
+2. invoke : removed conditional - replaced equality check with false &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='survived'>&#9;&#9;if (executionAdapter == null) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_143'/>
+143
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_143'>1</a>
+<span>
+1. invoke : replaced return value with null for org/springframework/data/repository/core/support/QueryExecutorMethodInterceptor::invoke &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>&#9;&#9;&#9;return resultHandler.postProcessInvocationResult(doInvoke(invocation), method);</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_144'/>
+144
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_144'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;&#9;}</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_145'/>
+145
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_145'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_146'/>
+146
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_146'>1</a>
+<span>
+1. invoke : replaced return value with null for org/springframework/data/repository/core/support/QueryExecutorMethodInterceptor::invoke &rarr; NO_COVERAGE<br/>
+
+</span>
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>&#9;&#9;return executionAdapter //</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_147'/>
+147
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_147'>1</a>
+<span>
+1. lambda$invoke$1 : replaced return value with null for org/springframework/data/repository/core/support/QueryExecutorMethodInterceptor::lambda$invoke$1 &rarr; NO_COVERAGE<br/>
+
+</span>
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>&#9;&#9;&#9;&#9;.apply(() -&#62; resultHandler.postProcessInvocationResult(doInvoke(invocation), method));</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_148'/>
+148
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_148'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;}</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_149'/>
+149
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_149'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_150'/>
+150
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_150'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;@Nullable</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_151'/>
+151
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_151'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;private Object doInvoke(MethodInvocation invocation) throws Throwable {</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_152'/>
+152
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_152'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_153'/>
+153
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_153'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>&#9;&#9;Method method = invocation.getMethod();</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_154'/>
+154
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_154'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_155'/>
+155
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_155'>2</a>
+<span>
+1. doInvoke : removed conditional - replaced equality check with true &rarr; KILLED<br/>
+2. doInvoke : removed conditional - replaced equality check with false &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>&#9;&#9;if (hasQueryFor(method)) {</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_156'/>
+156
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_156'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_157'/>
+157
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_157'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>&#9;&#9;&#9;RepositoryMethodInvoker invocationMetadata = invocationMetadataCache.get(method);</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_158'/>
+158
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_158'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_159'/>
+159
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_159'>2</a>
+<span>
+1. doInvoke : removed conditional - replaced equality check with true &rarr; SURVIVED<br/>
+2. doInvoke : removed conditional - replaced equality check with false &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='survived'>&#9;&#9;&#9;if (invocationMetadata == null) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_160'/>
+160
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_160'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>&#9;&#9;&#9;&#9;invocationMetadata = RepositoryMethodInvoker.forRepositoryQuery(method, queries.get(method));</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_161'/>
+161
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_161'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>&#9;&#9;&#9;&#9;invocationMetadataCache.put(method, invocationMetadata);</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_162'/>
+162
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_162'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;&#9;&#9;}</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_163'/>
+163
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_163'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_164'/>
+164
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_164'>1</a>
+<span>
+1. doInvoke : replaced return value with null for org/springframework/data/repository/core/support/QueryExecutorMethodInterceptor::doInvoke &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>&#9;&#9;&#9;return invocationMetadata.invoke(repositoryInformation.getRepositoryInterface(), invocationMulticaster,</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_165'/>
+165
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_165'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>&#9;&#9;&#9;&#9;&#9;invocation.getArguments());</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_166'/>
+166
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_166'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;&#9;}</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_167'/>
+167
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_167'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_168'/>
+168
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_168'>1</a>
+<span>
+1. doInvoke : replaced return value with null for org/springframework/data/repository/core/support/QueryExecutorMethodInterceptor::doInvoke &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>&#9;&#9;return invocation.proceed();</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_169'/>
+169
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_169'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;}</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_170'/>
+170
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_170'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_171'/>
+171
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_171'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;/**</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_172'/>
+172
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_172'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9; * Returns whether we know of a query to execute for the given {@link Method};</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_173'/>
+173
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_173'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9; *</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_174'/>
+174
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_174'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9; * @param method</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_175'/>
+175
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_175'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9; * @return</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_176'/>
+176
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_176'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9; */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_177'/>
+177
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_177'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;private boolean hasQueryFor(Method method) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_178'/>
+178
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_178'>2</a>
+<span>
+1. hasQueryFor : replaced boolean return with true for org/springframework/data/repository/core/support/QueryExecutorMethodInterceptor::hasQueryFor &rarr; KILLED<br/>
+2. hasQueryFor : replaced boolean return with false for org/springframework/data/repository/core/support/QueryExecutorMethodInterceptor::hasQueryFor &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>&#9;&#9;return queries.containsKey(method);</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_179'/>
+179
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_179'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;}</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_180'/>
+180
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_180'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@26be4f83_181'/>
+181
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_181'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>}</span></pre></td></tr>
+
+
+
+<tr><td></td><td></td><td><h2>Mutations</h2></td></tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@26be4f83_75'>75</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_75'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>&#60;init&#62;<br/><b>Killed by : </b>org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests]/[method:capturesFailureFromInvocation()]</span></span> removed conditional - replaced equality check with true &rarr; KILLED</p> <p class='SURVIVED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>&#60;init&#62;<br/><b>Killed by : </b>none</span></span> removed conditional - replaced equality check with false &rarr; SURVIVED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@26be4f83_80'>80</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_80'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>&#60;init&#62;<br/><b>Killed by : </b>org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests]/[method:invokesCustomQueryCreationListenerForSpecialRepositoryQueryOnly()]</span></span> removed conditional - replaced equality check with true &rarr; KILLED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>&#60;init&#62;<br/><b>Killed by : </b>org.springframework.data.repository.core.support.QueryExecutorMethodInterceptorUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.core.support.QueryExecutorMethodInterceptorUnitTests]/[method:rejectsRepositoryInterfaceWithQueryMethodsIfNoQueryLookupStrategyIsDefined()]</span></span> removed conditional - replaced equality check with false &rarr; KILLED</p> <p class='KILLED'><span class='pop'>3.<span><b>3</b><br/><b>Location : </b>&#60;init&#62;<br/><b>Killed by : </b>org.springframework.data.repository.core.support.QueryExecutorMethodInterceptorUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.core.support.QueryExecutorMethodInterceptorUnitTests]/[method:skipsQueryLookupsIfQueryLookupStrategyIsNotPresent()]</span></span> removed conditional - replaced equality check with true &rarr; KILLED</p> <p class='KILLED'><span class='pop'>4.<span><b>4</b><br/><b>Location : </b>&#60;init&#62;<br/><b>Killed by : </b>org.springframework.data.repository.core.support.QueryExecutorMethodInterceptorUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.core.support.QueryExecutorMethodInterceptorUnitTests]/[method:rejectsRepositoryInterfaceWithQueryMethodsIfNoQueryLookupStrategyIsDefined()]</span></span> removed conditional - replaced equality check with false &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@26be4f83_88'>88</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_88'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>lambda$new$0<br/><b>Killed by : </b>org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests]/[method:convertsCollectionToOtherCollectionWithElementSuperType()]</span></span> replaced return value with Collections.emptyMap for org/springframework/data/repository/core/support/QueryExecutorMethodInterceptor::lambda$new$0 &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@26be4f83_101'>101</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_101'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>mapMethodsToQuery<br/><b>Killed by : </b>org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests]/[method:invokesCustomQueryCreationListenerForSpecialRepositoryQueryOnly()]</span></span> removed call to org/springframework/data/repository/core/support/QueryExecutorMethodInterceptor::invokeListeners &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@26be4f83_105'>105</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_105'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>mapMethodsToQuery<br/><b>Killed by : </b>org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests]/[method:convertsCollectionToOtherCollectionWithElementSuperType()]</span></span> replaced return value with Collections.emptyMap for org/springframework/data/repository/core/support/QueryExecutorMethodInterceptor::mapMethodsToQuery &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@26be4f83_111'>111</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_111'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>lookupQuery<br/><b>Killed by : </b>org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests]/[method:invokesCustomQueryCreationListenerForSpecialRepositoryQueryOnly()]</span></span> replaced return value with null for org/springframework/data/repository/core/support/QueryExecutorMethodInterceptor::lookupQuery &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@26be4f83_127'>127</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_127'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>invokeListeners<br/><b>Killed by : </b>org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests]/[method:invokesCustomQueryCreationListenerForSpecialRepositoryQueryOnly()]</span></span> removed conditional - replaced equality check with false &rarr; KILLED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>invokeListeners<br/><b>Killed by : </b>org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests]/[method:invokesCustomQueryCreationListenerForSpecialRepositoryQueryOnly()]</span></span> removed conditional - replaced equality check with true &rarr; KILLED</p> <p class='SURVIVED'><span class='pop'>3.<span><b>3</b><br/><b>Location : </b>invokeListeners<br/><b>Killed by : </b>none</span></span> removed conditional - replaced equality check with true &rarr; SURVIVED</p> <p class='KILLED'><span class='pop'>4.<span><b>4</b><br/><b>Location : </b>invokeListeners<br/><b>Killed by : </b>org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests]/[method:invokesCustomQueryCreationListenerForSpecialRepositoryQueryOnly()]</span></span> removed conditional - replaced equality check with false &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@26be4f83_128'>128</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_128'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>invokeListeners<br/><b>Killed by : </b>org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests]/[method:invokesCustomQueryCreationListenerForSpecialRepositoryQueryOnly()]</span></span> removed call to org/springframework/data/repository/core/support/QueryCreationListener::onCreation &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@26be4f83_142'>142</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_142'/> 
+
+<p class='SURVIVED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>invoke<br/><b>Killed by : </b>none</span></span> removed conditional - replaced equality check with true &rarr; SURVIVED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>invoke<br/><b>Killed by : </b>org.springframework.data.repository.cdi.RepositoryFragmentsIntegrationTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.cdi.RepositoryFragmentsIntegrationTests]/[method:shouldFindImplementationForNestedRepositoryFragment()]</span></span> removed conditional - replaced equality check with false &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@26be4f83_143'>143</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_143'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>invoke<br/><b>Killed by : </b>org.springframework.data.repository.cdi.RepositoryFragmentsIntegrationTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.cdi.RepositoryFragmentsIntegrationTests]/[method:shouldFindImplementationForNestedRepositoryFragment()]</span></span> replaced return value with null for org/springframework/data/repository/core/support/QueryExecutorMethodInterceptor::invoke &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@26be4f83_146'>146</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_146'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>invoke<br/><b>Killed by : </b>none</span></span> replaced return value with null for org/springframework/data/repository/core/support/QueryExecutorMethodInterceptor::invoke &rarr; NO_COVERAGE</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@26be4f83_147'>147</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_147'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>lambda$invoke$1<br/><b>Killed by : </b>none</span></span> replaced return value with null for org/springframework/data/repository/core/support/QueryExecutorMethodInterceptor::lambda$invoke$1 &rarr; NO_COVERAGE</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@26be4f83_155'>155</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_155'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>doInvoke<br/><b>Killed by : </b>org.springframework.data.repository.cdi.RepositoryFragmentsIntegrationTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.cdi.RepositoryFragmentsIntegrationTests]/[method:shouldFindImplementationForNestedRepositoryFragment()]</span></span> removed conditional - replaced equality check with true &rarr; KILLED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>doInvoke<br/><b>Killed by : </b>org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests]/[method:convertsCollectionToOtherCollectionWithElementSuperType()]</span></span> removed conditional - replaced equality check with false &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@26be4f83_159'>159</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_159'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>doInvoke<br/><b>Killed by : </b>org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests]/[method:convertsCollectionToOtherCollectionWithElementSuperType()]</span></span> removed conditional - replaced equality check with false &rarr; KILLED</p> <p class='SURVIVED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>doInvoke<br/><b>Killed by : </b>none</span></span> removed conditional - replaced equality check with true &rarr; SURVIVED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@26be4f83_164'>164</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_164'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>doInvoke<br/><b>Killed by : </b>org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests]/[method:convertsCollectionToOtherCollectionWithElementSuperType()]</span></span> replaced return value with null for org/springframework/data/repository/core/support/QueryExecutorMethodInterceptor::doInvoke &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@26be4f83_168'>168</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_168'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>doInvoke<br/><b>Killed by : </b>org.springframework.data.repository.cdi.RepositoryFragmentsIntegrationTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.cdi.RepositoryFragmentsIntegrationTests]/[method:shouldFindImplementationForNestedRepositoryFragment()]</span></span> replaced return value with null for org/springframework/data/repository/core/support/QueryExecutorMethodInterceptor::doInvoke &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@26be4f83_178'>178</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@26be4f83_178'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>hasQueryFor<br/><b>Killed by : </b>org.springframework.data.repository.cdi.RepositoryFragmentsIntegrationTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.cdi.RepositoryFragmentsIntegrationTests]/[method:shouldFindImplementationForNestedRepositoryFragment()]</span></span> replaced boolean return with true for org/springframework/data/repository/core/support/QueryExecutorMethodInterceptor::hasQueryFor &rarr; KILLED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>hasQueryFor<br/><b>Killed by : </b>org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests]/[method:convertsCollectionToOtherCollectionWithElementSuperType()]</span></span> replaced boolean return with false for org/springframework/data/repository/core/support/QueryExecutorMethodInterceptor::hasQueryFor &rarr; KILLED</p> 
+</td>
+</tr>
+
+</table>
+
+
+<h2>Active mutators</h2>
+<ul>
+<li class='mutator'>CONDITIONALS_BOUNDARY</li>
+<li class='mutator'>EMPTY_RETURNS</li>
+<li class='mutator'>EXPERIMENTAL_SWITCH</li>
+<li class='mutator'>FALSE_RETURNS</li>
+<li class='mutator'>INCREMENTS</li>
+<li class='mutator'>INVERT_NEGS</li>
+<li class='mutator'>MATH</li>
+<li class='mutator'>NULL_RETURNS</li>
+<li class='mutator'>PRIMITIVE_RETURNS</li>
+<li class='mutator'>REACTOR_REACTIVE_MUTATOR</li>
+<li class='mutator'>REMOVE_CONDITIONALS_EQUAL_ELSE</li>
+<li class='mutator'>REMOVE_CONDITIONALS_EQUAL_IF</li>
+<li class='mutator'>REMOVE_CONDITIONALS_ORDER_ELSE</li>
+<li class='mutator'>REMOVE_CONDITIONALS_ORDER_IF</li>
+<li class='mutator'>TRUE_RETURNS</li>
+<li class='mutator'>VOID_METHOD_CALLS</li>
+
+</ul>
+
+<h2>Tests examined</h2>
+<ul>
+<li>org.springframework.data.repository.support.RepositoriesUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.support.RepositoriesUnitTests]/[method:exposesPersistentEntityForDomainTypes()] (35 ms)</li><li>org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests]/[method:considersRequiredReturnValue()] (16 ms)</li><li>org.springframework.data.repository.kotlin.CoroutineCrudRepositoryUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.kotlin.CoroutineCrudRepositoryUnitTests]/[method:shouldBridgeFlowMethod()] (25 ms)</li><li>org.springframework.data.repository.support.RepositoriesUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.support.RepositoriesUnitTests]/[method:exposesRepositoryForProxyType()] (25 ms)</li><li>org.springframework.data.repository.kotlin.CoroutineCrudRepositoryUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.kotlin.CoroutineCrudRepositoryUnitTests]/[method:shouldInvokeDeleteAllWhenGivenIterable()] (22 ms)</li><li>org.springframework.data.repository.core.support.QueryExecutorMethodInterceptorUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.core.support.QueryExecutorMethodInterceptorUnitTests]/[method:rejectsRepositoryInterfaceWithQueryMethodsIfNoQueryLookupStrategyIsDefined()] (2 ms)</li><li>org.springframework.data.repository.support.DomainClassConverterUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.support.DomainClassConverterUnitTests]/[method:supportsConversionFromEntityToString()] (7 ms)</li><li>org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests]/[method:invokesCustomQueryCreationListenerForSpecialRepositoryQueryOnly()] (4 ms)</li><li>org.springframework.data.repository.support.RepositoriesUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.support.RepositoriesUnitTests]/[method:keepsPrimaryRepositoryInCaseOfMultipleOnes()] (317 ms)</li><li>org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests]/[method:addsTransactionProxyInterfaceIfAvailable()] (18 ms)</li><li>org.springframework.data.repository.core.support.ReactiveWrapperRepositoryFactorySupportUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.core.support.ReactiveWrapperRepositoryFactorySupportUnitTests]/[method:invokesCustomMethodIfItRedeclaresACRUDOne()] (152 ms)</li><li>org.springframework.data.repository.support.DomainClassConverterUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.support.DomainClassConverterUnitTests]/[method:matchesIfConversionInBetweenIsPossible()] (8 ms)</li><li>org.springframework.data.repository.support.RepositoriesUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.support.RepositoriesUnitTests]/[method:findsRepositoryForSubTypes()] (14 ms)</li><li>org.springframework.data.repository.config.RepositoryConfigurationDelegateUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.config.RepositoryConfigurationDelegateUnitTests]/[method:registersDeferredRepositoryInitializationListener()] (58 ms)</li><li>org.springframework.data.repository.support.RepositoriesUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.support.RepositoriesUnitTests]/[method:usesChildRepositoryIfRegistered()] (339 ms)</li><li>org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests]/[method:invokesCustomMethodCompositionMethodIfItRedeclaresACRUDOne()] (5 ms)</li><li>org.springframework.data.repository.support.DomainClassConverterUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.support.DomainClassConverterUnitTests]/[method:registersConvertersOnConversionService()] (8 ms)</li><li>org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests]/[method:wrapsExecutionResultIntoCompletableFutureWithEntityCollectionIfConfigured()] (220 ms)</li><li>org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests]/[method:considersRequiredKotlinNullableParameter()] (4 ms)</li><li>org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests]/[method:wrapsExecutionResultIntoListenableFutureWithEntityCollectionIfConfigured()] (758 ms)</li><li>org.springframework.data.repository.cdi.RepositoryFragmentsIntegrationTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.cdi.RepositoryFragmentsIntegrationTests]/[method:shouldRespectInterfaceOrder()] (165 ms)</li><li>org.springframework.data.repository.init.ResourceReaderRepositoryInitializerUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.init.ResourceReaderRepositoryInitializerUnitTests]/[method:storesCollectionOfObjectsCorrectly()] (24 ms)</li><li>org.springframework.data.repository.kotlin.CoroutineCrudRepositoryUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.kotlin.CoroutineCrudRepositoryUnitTests]/[method:shouldInvokeExistsById()] (31 ms)</li><li>org.springframework.data.repository.cdi.CdiConfigurationIntegrationTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.cdi.CdiConfigurationIntegrationTests]/[method:shouldApplyImplementationPostfix()] (571 ms)</li><li>org.springframework.data.repository.support.DomainClassConverterUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.support.DomainClassConverterUnitTests]/[method:supportsConversionFromIdType()] (8 ms)</li><li>org.springframework.data.repository.kotlin.CoroutineCrudRepositoryUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.kotlin.CoroutineCrudRepositoryUnitTests]/[method:shouldInvokeFindAll()] (21 ms)</li><li>org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests]/[method:dummyRepositoryShouldsupportQuerydsl()] (11 ms)</li><li>org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests]/[method:callsApplicationStartupOnRepositoryInitialization()] (9 ms)</li><li>org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests]/[method:convertsWithSameElementType()] (18 ms)</li><li>org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests]/[method:derivedQueryMethodCannotBeImplemented()] (9 ms)</li><li>org.springframework.data.repository.cdi.RepositoryFragmentsIntegrationTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.cdi.RepositoryFragmentsIntegrationTests]/[method:shouldFindImplementationForNestedRepositoryFragment()] (1 ms)</li><li>org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests]/[method:considersNullabilityForKotlinInterfaceProperties()] (20 ms)</li><li>org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests]/[method:callsStaticMethodOnInterface()] (17 ms)</li><li>org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests]/[method:considersRequiredKotlinParameter()] (5 ms)</li><li>org.springframework.data.repository.support.RepositoriesUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.support.RepositoriesUnitTests]/[method:keepsPrimaryRepositoryInCaseOfMultipleOnesIfContextIsNotAConfigurableListableBeanFactory()] (26 ms)</li><li>org.springframework.data.repository.kotlin.CoroutineCrudRepositoryUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.kotlin.CoroutineCrudRepositoryUnitTests]/[method:shouldBridgeSuspendedAsListMethod()] (26 ms)</li><li>org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests]/[method:createsRepositoryInstanceWithCustomIntermediateRepository()] (22 ms)</li><li>org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests]/[method:wrapsExecutionResultIntoFutureIfConfigured()] (620 ms)</li><li>org.springframework.data.repository.kotlin.CoroutineCrudRepositoryUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.kotlin.CoroutineCrudRepositoryUnitTests]/[method:shouldInvokeFindAllById()] (29 ms)</li><li>org.springframework.data.repository.kotlin.CoroutineCrudRepositoryUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.kotlin.CoroutineCrudRepositoryUnitTests]/[method:shouldBridgeRxJavaQueryMethod()] (6 ms)</li><li>org.springframework.data.repository.init.ResourceReaderRepositoryInitializerUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.init.ResourceReaderRepositoryInitializerUnitTests]/[method:emitsRepositoriesPopulatedEventIfPublisherConfigured()] (163 ms)</li><li>org.springframework.data.repository.kotlin.CoroutineCrudRepositoryUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.kotlin.CoroutineCrudRepositoryUnitTests]/[method:shouldBridgeSuspendedFlowMethod()] (17 ms)</li><li>org.springframework.data.repository.kotlin.CoroutineCrudRepositoryCustomImplementationUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.kotlin.CoroutineCrudRepositoryCustomImplementationUnitTests]/[method:shouldInvokeFindAll()] (129 ms)</li><li>org.springframework.data.repository.kotlin.CoroutineCrudRepositoryUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.kotlin.CoroutineCrudRepositoryUnitTests]/[method:shouldBridgeQueryMethod()] (5 ms)</li><li>org.springframework.data.repository.config.RepositoryBeanDefinitionRegistrarSupportIntegrationTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.config.RepositoryBeanDefinitionRegistrarSupportIntegrationTests]/[method:testBootstrappingWithInheritedConfigClasses()] (247 ms)</li><li>org.springframework.data.repository.core.support.ReactiveWrapperRepositoryFactorySupportUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.core.support.ReactiveWrapperRepositoryFactorySupportUnitTests]/[method:callsRxJava2MethodOnBaseImplementationWithExactArguments()] (12 ms)</li><li>org.springframework.data.repository.kotlin.CoroutineCrudRepositoryUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.kotlin.CoroutineCrudRepositoryUnitTests]/[method:shouldInvokeDeleteAll()] (411 ms)</li><li>org.springframework.data.repository.core.support.RepositoryFactoryBeanSupportUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.core.support.RepositoryFactoryBeanSupportUnitTests]/[method:customizesRepositoryFactory()] (17 ms)</li><li>org.springframework.data.repository.core.support.TransactionRepositoryFactoryBeanSupportUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.core.support.TransactionRepositoryFactoryBeanSupportUnitTests]/[method:disablesDefaultTransactionsIfConfigured()] (26 ms)</li><li>org.springframework.data.repository.cdi.RepositoryFragmentsIntegrationTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.cdi.RepositoryFragmentsIntegrationTests]/[method:shouldFindCustomImplementationForNestedRepository()] (179 ms)</li><li>org.springframework.data.repository.config.RepositoryConfigurationDelegateUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.config.RepositoryConfigurationDelegateUnitTests]/[method:registersLazyAutowireCandidateResolver()] (346 ms)</li><li>org.springframework.data.repository.cdi.RepositoryFragmentsIntegrationTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.cdi.RepositoryFragmentsIntegrationTests]/[method:shouldInvokeCustomImplementationLast()] (1 ms)</li><li>org.springframework.data.repository.support.RepositoriesUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.support.RepositoriesUnitTests]/[method:exposesParentRepositoryForChildIfOnlyParentRepositoryIsRegistered()] (23 ms)</li><li>org.springframework.data.repository.kotlin.CoroutineCrudRepositoryUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.kotlin.CoroutineCrudRepositoryUnitTests]/[method:shouldInvokeDeleteAllWhenGivenFlow()] (22 ms)</li><li>org.springframework.data.repository.config.RepositoryBeanDefinitionRegistrarSupportIntegrationTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.config.RepositoryBeanDefinitionRegistrarSupportIntegrationTests]/[method:registersExtensionAsBeanDefinition()] (213 ms)</li><li>org.springframework.data.repository.support.DomainClassConverterUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.support.DomainClassConverterUnitTests]/[method:matchFailsIfNoIntermediateConversionIsPossible()] (9 ms)</li><li>org.springframework.data.repository.config.RepositoryBeanDefinitionRegistrarSupportIntegrationTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.config.RepositoryBeanDefinitionRegistrarSupportIntegrationTests]/[method:duplicateImplementationsMayBeExcludedViaFilters()] (219 ms)</li><li>org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests]/[method:routesCallToRedeclaredMethodIntoTarget()] (59 ms)</li><li>org.springframework.data.repository.support.DefaultRepositoryInvokerFactoryIntegrationTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.support.DefaultRepositoryInvokerFactoryIntegrationTests]/[method:findOneShouldDelegateToAppropriateRepository()] (12 ms)</li><li>org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests]/[method:createsProxyForAnnotatedRepository()] (7 ms)</li><li>org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests]/[method:wrapsExecutionResultIntoListenableFutureIfConfigured()] (258 ms)</li><li>org.springframework.data.repository.core.support.RepositoryFactoryBeanSupportUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.core.support.RepositoryFactoryBeanSupportUnitTests]/[method:returnsRepositoryInformationForFragmentSetup()] (96 ms)</li><li>org.springframework.data.repository.kotlin.CoroutineCrudRepositoryUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.kotlin.CoroutineCrudRepositoryUnitTests]/[method:shouldInvokeSaveAllWhenGivenFlow()] (22 ms)</li><li>org.springframework.data.repository.cdi.CdiRepositoryBeanUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.cdi.CdiRepositoryBeanUnitTests]/[method:passesCorrectBeanNameToTheImplementationDetector()] (172 ms)</li><li>org.springframework.data.repository.cdi.WebbeansCdiRepositoryExtensionSupportIntegrationTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.cdi.WebbeansCdiRepositoryExtensionSupportIntegrationTests]/[method:createsSpringDataRepositoryWithCustimImplBean()] (157 ms)</li><li>org.springframework.data.repository.init.ResourceReaderRepositoryInitializerUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.init.ResourceReaderRepositoryInitializerUnitTests]/[method:storesSingleObjectCorrectly()] (11 ms)</li><li>org.springframework.data.repository.config.RepositoryBeanDefinitionRegistrarSupportIntegrationTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.config.RepositoryBeanDefinitionRegistrarSupportIntegrationTests]/[method:composedRepositoriesShouldBeAssembledCorrectly()] (902 ms)</li><li>org.springframework.data.repository.support.RepositoriesUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.support.RepositoriesUnitTests]/[method:rejectsNullBeanFactory()] (8 ms)</li><li>org.springframework.data.repository.support.DomainClassConverterUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.support.DomainClassConverterUnitTests]/[method:toIdConverterDoesNotMatchIfTargetTypeIsAssignableFromSource()] (12 ms)</li><li>org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests]/[method:shouldAllowVoidMethods()] (5 ms)</li><li>org.springframework.data.repository.kotlin.CoroutineCrudRepositoryUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.kotlin.CoroutineCrudRepositoryUnitTests]/[method:shouldInvokeDeleteAllById()] (9 ms)</li><li>org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests]/[method:invokesCustomMethodIfItRedeclaresACRUDOne()] (5 ms)</li><li>org.springframework.data.repository.support.DomainClassConverterUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.support.DomainClassConverterUnitTests]/[method:converterDoesntMatchIfTargetTypeIsAssignableFromSource()] (7 ms)</li><li>org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests]/[method:invokesCustomRepositoryProxyPostProcessor()] (5 ms)</li><li>org.springframework.data.repository.support.DomainClassConverterUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.support.DomainClassConverterUnitTests]/[method:returnsNullForFailedLookup()] (8 ms)</li><li>org.springframework.data.repository.support.DomainClassConverterUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.support.DomainClassConverterUnitTests]/[method:convertsStringToUserCorrectly()] (10 ms)</li><li>org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests]/[method:convertsCollectionToOtherCollectionWithElementSuperType()] (5 ms)</li><li>org.springframework.data.repository.core.support.RepositoryFactoryBeanSupportUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.core.support.RepositoryFactoryBeanSupportUnitTests]/[method:reportsMappingContextUnavailableForPersistentEntityLookup()] (78 ms)</li><li>org.springframework.data.repository.kotlin.CoroutineCrudRepositoryUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.kotlin.CoroutineCrudRepositoryUnitTests]/[method:shouldInvokeFindById()] (7 ms)</li><li>org.springframework.data.repository.config.RepositoryBeanDefinitionRegistrarSupportIntegrationTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.config.RepositoryBeanDefinitionRegistrarSupportIntegrationTests]/[method:registeredBeanDefinitionsContainHumanReadableResourceDescription()] (234 ms)</li><li>org.springframework.data.repository.support.RepositoriesUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.support.RepositoriesUnitTests]/[method:doesNotConsiderCrudRepositoriesOnly()] (18 ms)</li><li>org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests]/[method:capturesFailureFromInvocation()] (12 ms)</li><li>org.springframework.data.repository.core.support.ReactiveWrapperRepositoryFactorySupportUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.core.support.ReactiveWrapperRepositoryFactorySupportUnitTests]/[method:callsRxJava2MethodOnBaseImplementationWithTypeConversion()] (5 ms)</li><li>org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests]/[method:wrapsExecutionResultIntoCompletableFutureIfConfigured()] (282 ms)</li><li>org.springframework.data.repository.core.support.QueryExecutorMethodInterceptorUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.core.support.QueryExecutorMethodInterceptorUnitTests]/[method:skipsQueryLookupsIfQueryLookupStrategyIsNotPresent()] (95 ms)</li><li>org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests]/[method:considersRequiredParameter()] (7 ms)</li><li>org.springframework.data.repository.config.PrimaryRepositoryIntegrationTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.config.PrimaryRepositoryIntegrationTests]/[method:returnsPrimaryInstance()] (300 ms)</li><li>org.springframework.data.repository.kotlin.CoroutineCrudRepositoryUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.kotlin.CoroutineCrudRepositoryUnitTests]/[method:shouldBridgeRxJavaToFlowMethod()] (62 ms)</li><li>org.springframework.data.repository.support.RepositoriesUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.support.RepositoriesUnitTests]/[method:discoversRepositoryForAlternativeDomainType()] (25 ms)</li><li>org.springframework.data.repository.support.DomainClassConverterUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.support.DomainClassConverterUnitTests]/[method:supportsConversionFromEntityToIdType()] (114 ms)</li><li>org.springframework.data.repository.support.RepositoriesUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.support.RepositoriesUnitTests]/[method:doesNotFindInformationForNonManagedDomainClass()] (22 ms)</li><li>org.springframework.data.repository.config.RepositoryBeanDefinitionRegistrarSupportIntegrationTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.config.RepositoryBeanDefinitionRegistrarSupportIntegrationTests]/[method:beanDefinitionSourceIsSetForJavaConfigScannedBeans()] (227 ms)</li><li>org.springframework.data.repository.kotlin.CoroutineCrudRepositoryUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.kotlin.CoroutineCrudRepositoryUnitTests]/[method:shouldInvokeSaveAllWhenGivenIterable()] (746 ms)</li><li>org.springframework.data.repository.support.RepositoriesUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.support.RepositoriesUnitTests]/[method:exposesRepositoryFactoryInformationForRepository()] (8 ms)</li><li>org.springframework.data.repository.support.DomainClassConverterUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.support.DomainClassConverterUnitTests]/[method:discoversFactoryAndRepoFromParentApplicationContext()] (9 ms)</li>
+</ul>
+
+<br/>
+
+Report generated by <a href='https://pitest.org'>PIT</a> pitest-reactor
+
+</body>
+</html>

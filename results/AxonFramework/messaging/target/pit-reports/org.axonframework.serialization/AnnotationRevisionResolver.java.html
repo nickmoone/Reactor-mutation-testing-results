@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+<body>
+
+
+<h1>AnnotationRevisionResolver.java</h1>
+
+<table class="src">
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@753b09ff_1'/>
+1
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@753b09ff_1'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>/*</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@753b09ff_2'/>
+2
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@753b09ff_2'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * Copyright (c) 2010-2018. Axon Framework</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@753b09ff_3'/>
+3
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@753b09ff_3'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> *</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@753b09ff_4'/>
+4
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@753b09ff_4'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * Licensed under the Apache License, Version 2.0 (the &#34;License&#34;);</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@753b09ff_5'/>
+5
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@753b09ff_5'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * you may not use this file except in compliance with the License.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@753b09ff_6'/>
+6
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@753b09ff_6'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * You may obtain a copy of the License at</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@753b09ff_7'/>
+7
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@753b09ff_7'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> *</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@753b09ff_8'/>
+8
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@753b09ff_8'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> *    http://www.apache.org/licenses/LICENSE-2.0</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@753b09ff_9'/>
+9
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@753b09ff_9'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> *</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@753b09ff_10'/>
+10
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@753b09ff_10'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * Unless required by applicable law or agreed to in writing, software</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@753b09ff_11'/>
+11
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@753b09ff_11'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * distributed under the License is distributed on an &#34;AS IS&#34; BASIS,</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@753b09ff_12'/>
+12
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@753b09ff_12'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@753b09ff_13'/>
+13
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@753b09ff_13'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * See the License for the specific language governing permissions and</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@753b09ff_14'/>
+14
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@753b09ff_14'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * limitations under the License.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@753b09ff_15'/>
+15
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@753b09ff_15'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@753b09ff_16'/>
+16
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@753b09ff_16'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@753b09ff_17'/>
+17
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@753b09ff_17'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>package org.axonframework.serialization;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@753b09ff_18'/>
+18
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@753b09ff_18'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@753b09ff_19'/>
+19
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@753b09ff_19'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>/**</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@753b09ff_20'/>
+20
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@753b09ff_20'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * Revision Resolver implementation that checks for the presence of an {@link Revision @Revision} annotation. The value</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@753b09ff_21'/>
+21
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@753b09ff_21'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * of that annotation is returns as the revision of the payload it annotates. Note that {@code @Revision} is an</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@753b09ff_22'/>
+22
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@753b09ff_22'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * inherited annotation, meaning that subclasses of annotated classes inherit the revision of their parent.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@753b09ff_23'/>
+23
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@753b09ff_23'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * &#60;p/&#62;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@753b09ff_24'/>
+24
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@753b09ff_24'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * This implementation returns {@code null} for objects that do not have a {@code @Revision} annotation.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@753b09ff_25'/>
+25
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@753b09ff_25'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> *</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@753b09ff_26'/>
+26
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@753b09ff_26'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * @author Allard Buijze</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@753b09ff_27'/>
+27
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@753b09ff_27'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * @since 2.0</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@753b09ff_28'/>
+28
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@753b09ff_28'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> */</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@753b09ff_29'/>
+29
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@753b09ff_29'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>public class AnnotationRevisionResolver implements RevisionResolver {</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@753b09ff_30'/>
+30
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@753b09ff_30'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@753b09ff_31'/>
+31
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@753b09ff_31'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    @Override</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@753b09ff_32'/>
+32
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@753b09ff_32'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public String revisionOf(Class&#60;?&#62; payloadType) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@753b09ff_33'/>
+33
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@753b09ff_33'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        Revision revision = payloadType.getAnnotation(Revision.class);</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@753b09ff_34'/>
+34
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@753b09ff_34'>3</a>
+<span>
+1. revisionOf : removed conditional - replaced equality check with false &rarr; KILLED<br/>
+2. revisionOf : replaced return value with &#34;&#34; for org/axonframework/serialization/AnnotationRevisionResolver::revisionOf &rarr; KILLED<br/>
+3. revisionOf : removed conditional - replaced equality check with true &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        return revision != null ? revision.value() : null;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@753b09ff_35'/>
+35
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@753b09ff_35'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@753b09ff_36'/>
+36
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@753b09ff_36'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>}</span></pre></td></tr>
+
+
+
+<tr><td></td><td></td><td><h2>Mutations</h2></td></tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@753b09ff_34'>34</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@753b09ff_34'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>revisionOf<br/><b>Killed by : </b>org.axonframework.serialization.AnnotationRevisionResolverTest.[engine:junit-jupiter]/[class:org.axonframework.serialization.AnnotationRevisionResolverTest]/[method:revisionOfAnnotatedClass()]</span></span> removed conditional - replaced equality check with false &rarr; KILLED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>revisionOf<br/><b>Killed by : </b>org.axonframework.serialization.AnnotationRevisionResolverTest.[engine:junit-jupiter]/[class:org.axonframework.serialization.AnnotationRevisionResolverTest]/[method:revisionOfNonAnnotatedClass()]</span></span> replaced return value with &#34;&#34; for org/axonframework/serialization/AnnotationRevisionResolver::revisionOf &rarr; KILLED</p> <p class='KILLED'><span class='pop'>3.<span><b>3</b><br/><b>Location : </b>revisionOf<br/><b>Killed by : </b>org.axonframework.serialization.AnnotationRevisionResolverTest.[engine:junit-jupiter]/[class:org.axonframework.serialization.AnnotationRevisionResolverTest]/[method:revisionOfNonAnnotatedClass()]</span></span> removed conditional - replaced equality check with true &rarr; KILLED</p> 
+</td>
+</tr>
+
+</table>
+
+
+<h2>Active mutators</h2>
+<ul>
+<li class='mutator'>CONDITIONALS_BOUNDARY</li>
+<li class='mutator'>EMPTY_RETURNS</li>
+<li class='mutator'>EXPERIMENTAL_SWITCH</li>
+<li class='mutator'>FALSE_RETURNS</li>
+<li class='mutator'>INCREMENTS</li>
+<li class='mutator'>INVERT_NEGS</li>
+<li class='mutator'>MATH</li>
+<li class='mutator'>NULL_RETURNS</li>
+<li class='mutator'>PRIMITIVE_RETURNS</li>
+<li class='mutator'>REACTOR_REACTIVE_MUTATOR</li>
+<li class='mutator'>REMOVE_CONDITIONALS_EQUAL_ELSE</li>
+<li class='mutator'>REMOVE_CONDITIONALS_EQUAL_IF</li>
+<li class='mutator'>REMOVE_CONDITIONALS_ORDER_ELSE</li>
+<li class='mutator'>REMOVE_CONDITIONALS_ORDER_IF</li>
+<li class='mutator'>TRUE_RETURNS</li>
+<li class='mutator'>VOID_METHOD_CALLS</li>
+
+</ul>
+
+<h2>Tests examined</h2>
+<ul>
+<li>org.axonframework.eventhandling.deadletter.jpa.EventMessageDeadLetterJpaConverterTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.deadletter.jpa.EventMessageDeadLetterJpaConverterTest]/[method:canConvertDomainEventMessageAndBackCorrectly()] (1 ms)</li><li>org.axonframework.eventhandling.scheduling.jobrunr.JobRunrScheduleTokenTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.scheduling.jobrunr.JobRunrScheduleTokenTest]/[test-template:tokenShouldBeSerializable(org.axonframework.serialization.TestSerializer)]/[test-template-invocation:#4] (2 ms)</li><li>org.axonframework.serialization.xml.XStreamSerializerTest.[engine:junit-jupiter]/[class:org.axonframework.serialization.xml.XStreamSerializerTest]/[method:packageAlias()] (3 ms)</li><li>org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest]/[method:processWithLetterPredicateReturnsFalseIfThereAreNoMatchingLetters()] (15 ms)</li><li>org.axonframework.eventhandling.tokenstore.legacyjpa.JpaTokenStoreTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.tokenstore.legacyjpa.JpaTokenStoreTest]/[method:identifierInitializedOnDemand()] (3 ms)</li><li>org.axonframework.eventhandling.tokenstore.legacyjpa.JpaTokenStoreTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.tokenstore.legacyjpa.JpaTokenStoreTest]/[method:querySegments()] (12 ms)</li><li>org.axonframework.serialization.upcasting.event.InitialEventRepresentationTest.[engine:junit-jupiter]/[class:org.axonframework.serialization.upcasting.event.InitialEventRepresentationTest]/[test-template:contentType(org.axonframework.serialization.Serializer)]/[test-template-invocation:#1] (1 ms)</li><li>org.axonframework.commandhandling.distributed.commandfilter.AndCommandMessageFilterSerializationTest.[engine:junit-jupiter]/[class:org.axonframework.commandhandling.distributed.commandfilter.AndCommandMessageFilterSerializationTest]/[test-template:andCommandMessageFilterShouldBeSerializable(org.axonframework.serialization.TestSerializer)]/[test-template-invocation:#3] (13 ms)</li><li>org.axonframework.eventhandling.ReplayTokenSerializationTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.ReplayTokenSerializationTest]/[test-template:tokenShouldBeSerializable(org.axonframework.serialization.TestSerializer)]/[test-template-invocation:#2] (2 ms)</li><li>org.axonframework.serialization.AnnotationRevisionResolverTest.[engine:junit-jupiter]/[class:org.axonframework.serialization.AnnotationRevisionResolverTest]/[method:revisionOfNonAnnotatedClass()] (0 ms)</li><li>org.axonframework.eventhandling.tokenstore.ConfigTokenTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.tokenstore.ConfigTokenTest]/[test-template:tokenShouldBeSerializable(org.axonframework.serialization.TestSerializer)]/[test-template-invocation:#3] (2 ms)</li><li>org.axonframework.serialization.upcasting.event.EventMultiUpcasterTest.[engine:junit-jupiter]/[class:org.axonframework.serialization.upcasting.event.EventMultiUpcasterTest]/[method:upcastsKnownType()] (5 ms)</li><li>org.axonframework.eventhandling.scheduling.java.SimpleScheduleTokenSerializationTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.scheduling.java.SimpleScheduleTokenSerializationTest]/[test-template:tokenShouldBeSerializable(org.axonframework.serialization.TestSerializer)]/[test-template-invocation:#2] (2 ms)</li><li>org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest]/[method:deadLettersInvocationReturnsAllEnqueuedDeadLetters()] (23 ms)</li><li>org.axonframework.commandhandling.distributed.commandfilter.DenyAllSerializationTest.[engine:junit-jupiter]/[class:org.axonframework.commandhandling.distributed.commandfilter.DenyAllSerializationTest]/[test-template:denyAllFilterShouldBeSerializable(org.axonframework.serialization.TestSerializer)]/[test-template-invocation:#2] (1 ms)</li><li>org.axonframework.eventhandling.scheduling.quartz.QuartzEventSchedulerTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.scheduling.quartz.QuartzEventSchedulerTest]/[method:cancelJob()] (506 ms)</li><li>org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest]/[method:processWithLetterPredicateReturnsFalseAndRequeuesTheLetter()] (18 ms)</li><li>org.axonframework.eventhandling.GlobalSequenceTrackingTokenSerializationTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.GlobalSequenceTrackingTokenSerializationTest]/[test-template:tokenShouldBeSerializable(org.axonframework.serialization.TestSerializer)]/[test-template-invocation:#4] (1 ms)</li><li>org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest]/[method:evictRemovesLetterFromQueue()] (18 ms)</li><li>org.axonframework.eventhandling.GapAwareTrackingTokenSerializationTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.GapAwareTrackingTokenSerializationTest]/[test-template:tokenShouldBeSerializable(org.axonframework.serialization.TestSerializer)]/[test-template-invocation:#3] (0 ms)</li><li>org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest]/[method:containsReturnsTrueForContainedLetter()] (7 ms)</li><li>org.axonframework.serialization.upcasting.event.EventTypeUpcasterTest.[engine:junit-jupiter]/[class:org.axonframework.serialization.upcasting.event.EventTypeUpcasterTest]/[test-template:canUpcastReturnsTrueForMatchingPayloadTypeAndRevision(org.axonframework.serialization.Serializer)]/[test-template-invocation:#3] (0 ms)</li><li>org.axonframework.serialization.upcasting.event.EventTypeUpcasterTest.[engine:junit-jupiter]/[class:org.axonframework.serialization.upcasting.event.EventTypeUpcasterTest]/[test-template:doUpcast(org.axonframework.serialization.Serializer)]/[test-template-invocation:#2] (0 ms)</li><li>org.axonframework.messaging.responsetypes.InstanceResponseTypeSerializationTest.[engine:junit-jupiter]/[class:org.axonframework.messaging.responsetypes.InstanceResponseTypeSerializationTest]/[test-template:responseTypeShouldBeSerializable(org.axonframework.serialization.TestSerializer)]/[test-template-invocation:#3] (4 ms)</li><li>org.axonframework.serialization.xml.XStreamSerializerTest.[engine:junit-jupiter]/[class:org.axonframework.serialization.xml.XStreamSerializerTest]/[method:revisionNumber()] (2 ms)</li><li>org.axonframework.serialization.AnnotationRevisionResolverTest.[engine:junit-jupiter]/[class:org.axonframework.serialization.AnnotationRevisionResolverTest]/[method:revisionOfAnnotatedClass()] (0 ms)</li><li>org.axonframework.commandhandling.distributed.ReplyMessageSerializationTest.[engine:junit-jupiter]/[class:org.axonframework.commandhandling.distributed.ReplyMessageSerializationTest]/[test-template:serializationDeserializationOfUnsuccessfulMessage(org.axonframework.serialization.TestSerializer)]/[test-template-invocation:#4] (2 ms)</li><li>org.axonframework.commandhandling.distributed.ReplyMessageSerializationTest.[engine:junit-jupiter]/[class:org.axonframework.commandhandling.distributed.ReplyMessageSerializationTest]/[test-template:deserializingOfTransientExceptions(org.axonframework.serialization.TestSerializer)]/[test-template-invocation:#2] (1 ms)</li><li>org.axonframework.serialization.xml.XStreamSerializerTest.[engine:junit-jupiter]/[class:org.axonframework.serialization.xml.XStreamSerializerTest]/[method:deserializeNullValue()] (2 ms)</li><li>org.axonframework.messaging.responsetypes.MultipleInstancesResponseTypeSerializationTest.[engine:junit-jupiter]/[class:org.axonframework.messaging.responsetypes.MultipleInstancesResponseTypeSerializationTest]/[test-template:responseTypeShouldBeSerializable(org.axonframework.serialization.TestSerializer)]/[test-template-invocation:#3] (1 ms)</li><li>org.axonframework.serialization.upcasting.event.SingleEventUpcasterTest.[engine:junit-jupiter]/[class:org.axonframework.serialization.upcasting.event.SingleEventUpcasterTest]/[method:ignoresWrongVersion()] (1 ms)</li><li>org.axonframework.eventhandling.MultiSourceTrackingTokenSerializationTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.MultiSourceTrackingTokenSerializationTest]/[test-template:tokenShouldBeSerializable(org.axonframework.serialization.TestSerializer)]/[test-template-invocation:#2] (2 ms)</li><li>org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest]/[method:sequenceSizeForSequenceIdentifierReturnsTheNumberOfContainedLettersForGivenSequenceIdentifier()] (20 ms)</li><li>org.axonframework.eventhandling.tokenstore.legacyjpa.JpaTokenStoreTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.tokenstore.legacyjpa.JpaTokenStoreTest]/[method:identifierReadIfAvailable()] (2 ms)</li><li>org.axonframework.serialization.json.JacksonSerializerTest.[engine:junit-jupiter]/[class:org.axonframework.serialization.json.JacksonSerializerTest]/[method:deserializeLenientIgnoresUnknownValues()] (4 ms)</li><li>org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest]/[method:processInvocationReturnsFalseAndRequeuesTheLetter()] (14 ms)</li><li>org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest]/[method:evictDoesNotChangeTheQueueForNonExistentSequenceIdentifier()] (16 ms)</li><li>org.axonframework.serialization.upcasting.event.EventTypeUpcasterTest.[engine:junit-jupiter]/[class:org.axonframework.serialization.upcasting.event.EventTypeUpcasterTest]/[test-template:shouldDeserializeToNewType(org.axonframework.serialization.Serializer)]/[test-template-invocation:#3] (0 ms)</li><li>org.axonframework.eventhandling.scheduling.quartz.DirectEventJobDataBinderTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.scheduling.quartz.DirectEventJobDataBinderTest]/[test-template:eventMessageToJobData(org.axonframework.serialization.Serializer, java.util.function.Function, java.util.function.Predicate)]/[test-template-invocation:#2] (1 ms)</li><li>org.axonframework.deadline.jobrunr.DeadlineDetailsSerializationTest.[engine:junit-jupiter]/[class:org.axonframework.deadline.jobrunr.DeadlineDetailsSerializationTest]/[method:whenSerializedAndDeserializedAllPropertiesShouldBeTheSameUsingXStream()] (5 ms)</li><li>org.axonframework.commandhandling.distributed.commandfilter.AndCommandMessageFilterSerializationTest.[engine:junit-jupiter]/[class:org.axonframework.commandhandling.distributed.commandfilter.AndCommandMessageFilterSerializationTest]/[test-template:andCommandMessageFilterShouldBeSerializable(org.axonframework.serialization.TestSerializer)]/[test-template-invocation:#2] (3 ms)</li><li>org.axonframework.serialization.upcasting.event.InitialEventRepresentationTest.[engine:junit-jupiter]/[class:org.axonframework.serialization.upcasting.event.InitialEventRepresentationTest]/[test-template:contentType(org.axonframework.serialization.Serializer)]/[test-template-invocation:#2] (1 ms)</li><li>org.axonframework.serialization.xml.XStreamSerializerTest.[engine:junit-jupiter]/[class:org.axonframework.serialization.xml.XStreamSerializerTest]/[method:alias()] (3 ms)</li><li>org.axonframework.eventhandling.tokenstore.ConfigTokenTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.tokenstore.ConfigTokenTest]/[test-template:tokenShouldBeSerializable(org.axonframework.serialization.TestSerializer)]/[test-template-invocation:#4] (2 ms)</li><li>org.axonframework.serialization.xml.XStreamSerializerTest.[engine:junit-jupiter]/[class:org.axonframework.serialization.xml.XStreamSerializerTest]/[method:serializeWithSpecialCharacters_WithoutUpcasters()] (3 ms)</li><li>org.axonframework.eventhandling.scheduling.quartz.QuartzEventSchedulerTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.scheduling.quartz.QuartzEventSchedulerTest]/[method:scheduleJob()] (506 ms)</li><li>org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest]/[method:enqueueIfPresentDoesNotEnqueueForNonExistentSequenceIdentifier()] (7 ms)</li><li>org.axonframework.serialization.json.JacksonSerializerTest.[engine:junit-jupiter]/[class:org.axonframework.serialization.json.JacksonSerializerTest]/[method:customObjectMapperRevisionResolverAndConverter()] (13 ms)</li><li>org.axonframework.serialization.upcasting.event.EventMultiUpcasterTest.[engine:junit-jupiter]/[class:org.axonframework.serialization.upcasting.event.EventMultiUpcasterTest]/[method:upcasterIgnoresWrongEventType()] (16 ms)</li><li>org.axonframework.serialization.upcasting.event.ContextAwareEventMultiUpcasterTest.[engine:junit-jupiter]/[class:org.axonframework.serialization.upcasting.event.ContextAwareEventMultiUpcasterTest]/[method:upcastsAddsContextValueFromFirstEvent()] (8 ms)</li><li>org.axonframework.serialization.upcasting.event.EventTypeUpcasterTest.[engine:junit-jupiter]/[class:org.axonframework.serialization.upcasting.event.EventTypeUpcasterTest]/[test-template:canUpcastReturnsFalseForIncorrectRevision(org.axonframework.serialization.Serializer)]/[test-template-invocation:#3] (1 ms)</li><li>org.axonframework.eventhandling.scheduling.jobrunr.JobRunrEventSchedulerTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.scheduling.jobrunr.JobRunrEventSchedulerTest]/[method:whenScheduleIsCalledThanShouldPublishEvent()] (21028 ms)</li><li>org.axonframework.serialization.json.JacksonSerializerTest.[engine:junit-jupiter]/[class:org.axonframework.serialization.json.JacksonSerializerTest]/[method:deserializeNullValue()] (1 ms)</li><li>org.axonframework.serialization.upcasting.event.IntermediateRepresentationTest.[engine:junit-jupiter]/[class:org.axonframework.serialization.upcasting.event.IntermediateRepresentationTest]/[method:canConvertDataTo()] (6 ms)</li><li>org.axonframework.eventhandling.GlobalSequenceTrackingTokenSerializationTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.GlobalSequenceTrackingTokenSerializationTest]/[test-template:tokenShouldBeSerializable(org.axonframework.serialization.TestSerializer)]/[test-template-invocation:#3] (2 ms)</li><li>org.axonframework.eventhandling.tokenstore.legacyjpa.JpaTokenStoreTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.tokenstore.legacyjpa.JpaTokenStoreTest]/[method:stealToken()] (6 ms)</li><li>org.axonframework.eventhandling.GapAwareTrackingTokenSerializationTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.GapAwareTrackingTokenSerializationTest]/[test-template:tokenShouldBeSerializable(org.axonframework.serialization.TestSerializer)]/[test-template-invocation:#2] (1 ms)</li><li>org.axonframework.serialization.upcasting.event.EventTypeUpcasterTest.[engine:junit-jupiter]/[class:org.axonframework.serialization.upcasting.event.EventTypeUpcasterTest]/[test-template:canUpcastReturnsTrueForMatchingPayloadTypeAndRevision(org.axonframework.serialization.Serializer)]/[test-template-invocation:#2] (1 ms)</li><li>org.axonframework.messaging.responsetypes.InstanceResponseTypeSerializationTest.[engine:junit-jupiter]/[class:org.axonframework.messaging.responsetypes.InstanceResponseTypeSerializationTest]/[test-template:responseTypeShouldBeSerializable(org.axonframework.serialization.TestSerializer)]/[test-template-invocation:#4] (2 ms)</li><li>org.axonframework.commandhandling.distributed.ReplyMessageSerializationTest.[engine:junit-jupiter]/[class:org.axonframework.commandhandling.distributed.ReplyMessageSerializationTest]/[test-template:deserializingOfTransientExceptions(org.axonframework.serialization.TestSerializer)]/[test-template-invocation:#3] (1 ms)</li><li>org.axonframework.serialization.upcasting.event.EventTypeUpcasterTest.[engine:junit-jupiter]/[class:org.axonframework.serialization.upcasting.event.EventTypeUpcasterTest]/[test-template:doUpcast(org.axonframework.serialization.Serializer)]/[test-template-invocation:#3] (0 ms)</li><li>org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest]/[method:processWithLetterPredicateReturnsTrueAndEvictsTheLetter()] (16 ms)</li><li>org.axonframework.deadline.jobrunr.LabelUtilsTest.[engine:junit-jupiter]/[class:org.axonframework.deadline.jobrunr.LabelUtilsTest]/[method:combinedScopeShouldBeConsistentAndShorterThan45Characters()] (1 ms)</li><li>org.axonframework.messaging.responsetypes.MultipleInstancesResponseTypeSerializationTest.[engine:junit-jupiter]/[class:org.axonframework.messaging.responsetypes.MultipleInstancesResponseTypeSerializationTest]/[test-template:responseTypeShouldBeSerializable(org.axonframework.serialization.TestSerializer)]/[test-template-invocation:#2] (1 ms)</li><li>org.axonframework.eventhandling.MultiSourceTrackingTokenSerializationTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.MultiSourceTrackingTokenSerializationTest]/[test-template:tokenShouldBeSerializable(org.axonframework.serialization.TestSerializer)]/[test-template-invocation:#3] (2 ms)</li><li>org.axonframework.eventhandling.tokenstore.legacyjpa.JpaTokenStoreTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.tokenstore.legacyjpa.JpaTokenStoreTest]/[method:claimAndUpdateToken()] (9 ms)</li><li>org.axonframework.serialization.xml.XStreamSerializerTest.[engine:junit-jupiter]/[class:org.axonframework.serialization.xml.XStreamSerializerTest]/[method:serializeAndDeserializeDomainEvent_WithDom4JUpcasters()] (5 ms)</li><li>org.axonframework.commandhandling.distributed.commandfilter.AcceptAllSerializationTest.[engine:junit-jupiter]/[class:org.axonframework.commandhandling.distributed.commandfilter.AcceptAllSerializationTest]/[test-template:acceptAllShouldBeSerializable(org.axonframework.serialization.TestSerializer)]/[test-template-invocation:#2] (1 ms)</li><li>org.axonframework.commandhandling.distributed.ReplyMessageSerializationTest.[engine:junit-jupiter]/[class:org.axonframework.commandhandling.distributed.ReplyMessageSerializationTest]/[test-template:serializationDeserializationOfSuccessfulMessage(org.axonframework.serialization.TestSerializer)]/[test-template-invocation:#2] (21 ms)</li><li>org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest]/[method:enqueueThrowsDeadLetterQueueOverflowExceptionWhenMaxSequenceSizeIsReached()] (121 ms)</li><li>org.axonframework.serialization.upcasting.event.EventTypeUpcasterTest.[engine:junit-jupiter]/[class:org.axonframework.serialization.upcasting.event.EventTypeUpcasterTest]/[test-template:shouldDeserializeToNewType(org.axonframework.serialization.Serializer)]/[test-template-invocation:#2] (1 ms)</li><li>org.axonframework.serialization.json.JacksonSerializerTest.[engine:junit-jupiter]/[class:org.axonframework.serialization.json.JacksonSerializerTest]/[method:customObjectMapperAndRevisionResolver()] (226 ms)</li><li>org.axonframework.deadline.quartz.DeadlineJobDataBinderTest.[engine:junit-jupiter]/[class:org.axonframework.deadline.quartz.DeadlineJobDataBinderTest]/[test-template:toJobDataTest(org.axonframework.serialization.Serializer, java.util.function.Function, java.util.function.Predicate)]/[test-template-invocation:#3] (2 ms)</li><li>org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest]/[method:requeueReentersLetterToQueueWithUpdatedLastTouchedAndCause()] (47 ms)</li><li>org.axonframework.commandhandling.distributed.commandfilter.DenyAllSerializationTest.[engine:junit-jupiter]/[class:org.axonframework.commandhandling.distributed.commandfilter.DenyAllSerializationTest]/[test-template:denyAllFilterShouldBeSerializable(org.axonframework.serialization.TestSerializer)]/[test-template-invocation:#4] (7 ms)</li><li>org.axonframework.eventhandling.scheduling.jobrunr.JobRunrEventSchedulerTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.scheduling.jobrunr.JobRunrEventSchedulerTest]/[method:whenScheduleIsCalledWithEventMessageMetadataShouldBePreserved()] (1131 ms)</li><li>org.axonframework.deadline.jobrunr.DeadlineDetailsSerializationTest.[engine:junit-jupiter]/[class:org.axonframework.deadline.jobrunr.DeadlineDetailsSerializationTest]/[method:whenSerializedAndDeserializedAllPropertiesShouldBeTheSameUsingJackson()] (8 ms)</li><li>org.axonframework.commandhandling.distributed.commandfilter.CommandNameFilterSerializationTest.[engine:junit-jupiter]/[class:org.axonframework.commandhandling.distributed.commandfilter.CommandNameFilterSerializationTest]/[test-template:commandNameFilterShouldBeSerializable(org.axonframework.serialization.TestSerializer)]/[test-template-invocation:#3] (1 ms)</li><li>org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest]/[method:enqueueIfPresentThrowsDeadLetterQueueOverflowExceptionForFullQueue()] (351 ms)</li><li>org.axonframework.serialization.upcasting.event.EventTypeUpcasterTest.[engine:junit-jupiter]/[class:org.axonframework.serialization.upcasting.event.EventTypeUpcasterTest]/[test-template:canUpcastReturnsFalseForIncorrectRevision(org.axonframework.serialization.Serializer)]/[test-template-invocation:#2] (0 ms)</li><li>org.axonframework.eventhandling.tokenstore.jdbc.JdbcTokenStoreTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.tokenstore.jdbc.JdbcTokenStoreTest]/[method:claimAndUpdateToken()] (5 ms)</li><li>org.axonframework.serialization.upcasting.event.SingleEventUpcasterTest.[engine:junit-jupiter]/[class:org.axonframework.serialization.upcasting.event.SingleEventUpcasterTest]/[method:upcastingDomainEventData()] (1 ms)</li><li>org.axonframework.eventhandling.MultiSourceTrackingTokenSerializationTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.MultiSourceTrackingTokenSerializationTest]/[test-template:tokenShouldBeSerializable(org.axonframework.serialization.TestSerializer)]/[test-template-invocation:#4] (1 ms)</li><li>org.axonframework.serialization.json.JacksonSerializerTest.[engine:junit-jupiter]/[class:org.axonframework.serialization.json.JacksonSerializerTest]/[method:customObjectMapper()] (2 ms)</li><li>org.axonframework.eventhandling.tokenstore.jdbc.JdbcTokenStoreTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.tokenstore.jdbc.JdbcTokenStoreTest]/[method:stealToken()] (7 ms)</li><li>org.axonframework.commandhandling.distributed.ReplyMessageSerializationTest.[engine:junit-jupiter]/[class:org.axonframework.commandhandling.distributed.ReplyMessageSerializationTest]/[test-template:serializationDeserializationOfUnsuccessfulMessage(org.axonframework.serialization.TestSerializer)]/[test-template-invocation:#2] (5 ms)</li><li>org.axonframework.eventhandling.tokenstore.jdbc.JdbcTokenStoreTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.tokenstore.jdbc.JdbcTokenStoreTest]/[method:identifierInitializedOnDemand()] (5 ms)</li><li>org.axonframework.eventhandling.deadletter.jpa.EventMessageDeadLetterJpaConverterTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.deadletter.jpa.EventMessageDeadLetterJpaConverterTest]/[method:canConvertTrackedEventMessageWithGlobalSequenceTokenAndBackCorrectly()] (2 ms)</li><li>org.axonframework.commandhandling.distributed.ReplyMessageSerializationTest.[engine:junit-jupiter]/[class:org.axonframework.commandhandling.distributed.ReplyMessageSerializationTest]/[test-template:serializationDeserializationOfSuccessfulMessage(org.axonframework.serialization.TestSerializer)]/[test-template-invocation:#3] (139 ms)</li><li>org.axonframework.serialization.xml.XStreamSerializerTest.[engine:junit-jupiter]/[class:org.axonframework.serialization.xml.XStreamSerializerTest]/[method:serializeAndDeserializeArray()] (5 ms)</li><li>org.axonframework.commandhandling.distributed.commandfilter.AndCommandMessageFilterSerializationTest.[engine:junit-jupiter]/[class:org.axonframework.commandhandling.distributed.commandfilter.AndCommandMessageFilterSerializationTest]/[test-template:andCommandMessageFilterShouldBeSerializable(org.axonframework.serialization.TestSerializer)]/[test-template-invocation:#4] (11 ms)</li><li>org.axonframework.messaging.responsetypes.InstanceResponseTypeSerializationTest.[engine:junit-jupiter]/[class:org.axonframework.messaging.responsetypes.InstanceResponseTypeSerializationTest]/[test-template:responseTypeShouldBeSerializable(org.axonframework.serialization.TestSerializer)]/[test-template-invocation:#2] (2 ms)</li><li>org.axonframework.eventhandling.scheduling.jobrunr.JobRunrEventSchedulerTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.scheduling.jobrunr.JobRunrEventSchedulerTest]/[method:rescheduleWithDurationShouldWork()] (1034 ms)</li><li>org.axonframework.eventhandling.tokenstore.ConfigTokenTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.tokenstore.ConfigTokenTest]/[test-template:tokenShouldBeSerializable(org.axonframework.serialization.TestSerializer)]/[test-template-invocation:#2] (2 ms)</li><li>org.axonframework.deadline.quartz.DeadlineJobDataBinderTest.[engine:junit-jupiter]/[class:org.axonframework.deadline.quartz.DeadlineJobDataBinderTest]/[test-template:toJobDataTest(org.axonframework.serialization.Serializer, java.util.function.Function, java.util.function.Predicate)]/[test-template-invocation:#2] (3 ms)</li><li>org.axonframework.eventhandling.tokenstore.jdbc.JdbcTokenStoreTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.tokenstore.jdbc.JdbcTokenStoreTest]/[method:storeAndLoadAcrossTransactions()] (8 ms)</li><li>org.axonframework.commandhandling.distributed.commandfilter.DenyAllSerializationTest.[engine:junit-jupiter]/[class:org.axonframework.commandhandling.distributed.commandfilter.DenyAllSerializationTest]/[test-template:denyAllFilterShouldBeSerializable(org.axonframework.serialization.TestSerializer)]/[test-template-invocation:#3] (2 ms)</li><li>org.axonframework.serialization.json.JacksonSerializerTest.[engine:junit-jupiter]/[class:org.axonframework.serialization.json.JacksonSerializerTest]/[method:serializeAndDeserializeList()] (3 ms)</li><li>org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest]/[method:processInvocationReturnsFalseIfAllLetterSequencesAreClaimed()] (14 ms)</li><li>org.axonframework.messaging.RemoteExceptionDescriptionSerializationTest.[engine:junit-jupiter]/[class:org.axonframework.messaging.RemoteExceptionDescriptionSerializationTest]/[test-template:tokenShouldBeSerializableWithJackson(org.axonframework.serialization.TestSerializer)]/[test-template-invocation:#4] (1 ms)</li><li>org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest]/[method:processInvocationInvokesProcessingTaskInLastTouchedOrderOfLetters()] (24 ms)</li><li>org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest]/[method:amountOfSequencesReturnsTheNumberOfUniqueSequences()] (21 ms)</li><li>org.axonframework.eventhandling.tokenstore.jdbc.JdbcTokenStoreTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.tokenstore.jdbc.JdbcTokenStoreTest]/[method:claimAndUpdateTokenWithoutTransaction()] (4 ms)</li><li>org.axonframework.commandhandling.distributed.commandfilter.DenyCommandNameFilterSerializationTest.[engine:junit-jupiter]/[class:org.axonframework.commandhandling.distributed.commandfilter.DenyCommandNameFilterSerializationTest]/[test-template:denyCommandNameFilterShouldBeSerializable(org.axonframework.serialization.TestSerializer)]/[test-template-invocation:#2] (4 ms)</li><li>org.axonframework.commandhandling.distributed.commandfilter.CommandNameFilterSerializationTest.[engine:junit-jupiter]/[class:org.axonframework.commandhandling.distributed.commandfilter.CommandNameFilterSerializationTest]/[test-template:commandNameFilterShouldBeSerializable(org.axonframework.serialization.TestSerializer)]/[test-template-invocation:#4] (1 ms)</li><li>org.axonframework.messaging.GenericMessageTest.[engine:junit-jupiter]/[class:org.axonframework.messaging.GenericMessageTest]/[method:messageSerialization()] (2 ms)</li><li>org.axonframework.serialization.upcasting.event.EventTypeUpcasterTest.[engine:junit-jupiter]/[class:org.axonframework.serialization.upcasting.event.EventTypeUpcasterTest]/[test-template:canUpcastReturnsFalseForIncorrectRevision(org.axonframework.serialization.Serializer)]/[test-template-invocation:#1] (0 ms)</li><li>org.axonframework.serialization.xml.XStreamSerializerTest.[engine:junit-jupiter]/[class:org.axonframework.serialization.xml.XStreamSerializerTest]/[method:serializedTypeUsesClassAlias()] (2 ms)</li><li>org.axonframework.eventhandling.scheduling.quartz.QuartzEventSchedulerTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.scheduling.quartz.QuartzEventSchedulerTest]/[method:scheduleJobTransactionalUnitOfWorkFailingTransaction()] (538 ms)</li><li>org.axonframework.messaging.GenericResultMessageTest.[engine:junit-jupiter]/[class:org.axonframework.messaging.GenericResultMessageTest]/[method:exceptionSerialization()] (2 ms)</li><li>org.axonframework.commandhandling.distributed.ReplyMessageSerializationTest.[engine:junit-jupiter]/[class:org.axonframework.commandhandling.distributed.ReplyMessageSerializationTest]/[test-template:serializationDeserializationOfUnsuccessfulMessage(org.axonframework.serialization.TestSerializer)]/[test-template-invocation:#3] (9 ms)</li><li>org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest]/[method:deadLettersInvocationPerSequenceIdentifierReturnsEnqueuedLettersMatchingGivenSequenceIdentifier()] (8 ms)</li><li>org.axonframework.messaging.responsetypes.MultipleInstancesResponseTypeSerializationTest.[engine:junit-jupiter]/[class:org.axonframework.messaging.responsetypes.MultipleInstancesResponseTypeSerializationTest]/[test-template:responseTypeShouldBeSerializable(org.axonframework.serialization.TestSerializer)]/[test-template-invocation:#4] (2 ms)</li><li>org.axonframework.eventhandling.tokenstore.legacyjpa.JpaTokenStoreTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.tokenstore.legacyjpa.JpaTokenStoreTest]/[method:queryAvailableSegments()] (36 ms)</li><li>org.axonframework.serialization.json.JacksonSerializerTest.[engine:junit-jupiter]/[class:org.axonframework.serialization.json.JacksonSerializerTest]/[method:serializeAndDeserializeObjectUnknownType()] (3 ms)</li><li>org.axonframework.eventhandling.GapAwareTrackingTokenSerializationTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.GapAwareTrackingTokenSerializationTest]/[test-template:tokenWithoutGapsShouldBeSerializable(org.axonframework.serialization.TestSerializer)]/[test-template-invocation:#3] (6 ms)</li><li>org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest]/[method:processInvocationReturnsTrueAndEvictsTheLetter()] (34 ms)</li><li>org.axonframework.eventhandling.scheduling.jobrunr.JobRunrEventSchedulerTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.scheduling.jobrunr.JobRunrEventSchedulerTest]/[method:rescheduleWithInstantShouldWork()] (21054 ms)</li><li>org.axonframework.commandhandling.distributed.ReplyMessageSerializationTest.[engine:junit-jupiter]/[class:org.axonframework.commandhandling.distributed.ReplyMessageSerializationTest]/[test-template:serializationDeserializationOfSuccessfulMessage(org.axonframework.serialization.TestSerializer)]/[test-template-invocation:#4] (6 ms)</li><li>org.axonframework.commandhandling.distributed.commandfilter.AcceptAllSerializationTest.[engine:junit-jupiter]/[class:org.axonframework.commandhandling.distributed.commandfilter.AcceptAllSerializationTest]/[test-template:acceptAllShouldBeSerializable(org.axonframework.serialization.TestSerializer)]/[test-template-invocation:#4] (1 ms)</li><li>org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest]/[method:requeueThrowsNoSuchDeadLetterExceptionForNonExistentLetterIdentifier()] (5 ms)</li><li>org.axonframework.eventhandling.tokenstore.jdbc.JdbcTokenStoreTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.tokenstore.jdbc.JdbcTokenStoreTest]/[method:identifierReadIfAvailable()] (6 ms)</li><li>org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest]/[method:enqueueThrowsDeadLetterQueueOverflowExceptionWhenMaxSequencesIsReached()] (117 ms)</li><li>org.axonframework.eventhandling.MergedTrackingTokenSerializationTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.MergedTrackingTokenSerializationTest]/[test-template:tokenShouldBeSerializable(org.axonframework.serialization.TestSerializer)]/[test-template-invocation:#2] (1 ms)</li><li>org.axonframework.serialization.upcasting.event.SingleEventUpcasterTest.[engine:junit-jupiter]/[class:org.axonframework.serialization.upcasting.event.SingleEventUpcasterTest]/[method:upcastsKnownType()] (41 ms)</li><li>org.axonframework.serialization.upcasting.event.EventMultiUpcasterTest.[engine:junit-jupiter]/[class:org.axonframework.serialization.upcasting.event.EventMultiUpcasterTest]/[method:upcastingDomainEventData()] (2 ms)</li><li>org.axonframework.commandhandling.distributed.ReplyMessageSerializationTest.[engine:junit-jupiter]/[class:org.axonframework.commandhandling.distributed.ReplyMessageSerializationTest]/[test-template:deserializingOfPersistentExceptions(org.axonframework.serialization.TestSerializer)]/[test-template-invocation:#3] (15 ms)</li><li>org.axonframework.eventhandling.scheduling.quartz.QuartzScheduleTokenSerializationTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.scheduling.quartz.QuartzScheduleTokenSerializationTest]/[test-template:tokenShouldBeSerializable(org.axonframework.serialization.TestSerializer)]/[test-template-invocation:#4] (2 ms)</li><li>org.axonframework.serialization.xml.XStreamSerializerTest.[engine:junit-jupiter]/[class:org.axonframework.serialization.xml.XStreamSerializerTest]/[method:serializeAndDeserializeList()] (3 ms)</li><li>org.axonframework.serialization.upcasting.event.ContextAwareSingleEventUpcasterTest.[engine:junit-jupiter]/[class:org.axonframework.serialization.upcasting.event.ContextAwareSingleEventUpcasterTest]/[method:upcastsAddsContextValueFromFirstEvent()] (4 ms)</li><li>org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest]/[method:processWithLetterPredicateHandlesAllLettersInSequence()] (31 ms)</li><li>org.axonframework.eventhandling.deadletter.jpa.EventMessageDeadLetterJpaConverterTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.deadletter.jpa.EventMessageDeadLetterJpaConverterTest]/[method:canConvertTrackedDomainEventMessageWithGapAwareTokenAndBackCorrectly()] (3 ms)</li><li>org.axonframework.messaging.RemoteExceptionDescriptionSerializationTest.[engine:junit-jupiter]/[class:org.axonframework.messaging.RemoteExceptionDescriptionSerializationTest]/[test-template:tokenShouldBeSerializableWithJackson(org.axonframework.serialization.TestSerializer)]/[test-template-invocation:#3] (1 ms)</li><li>org.axonframework.eventhandling.deadletter.jpa.EventMessageDeadLetterJpaConverterTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.deadletter.jpa.EventMessageDeadLetterJpaConverterTest]/[method:canConvertGenericEventMessageAndBackCorrectly()] (1 ms)</li><li>org.axonframework.serialization.json.JacksonSerializerTest.[engine:junit-jupiter]/[class:org.axonframework.serialization.json.JacksonSerializerTest]/[method:serializeMetaData()] (2 ms)</li><li>org.axonframework.commandhandling.distributed.commandfilter.OrCommandMessageFilterSerializationTest.[engine:junit-jupiter]/[class:org.axonframework.commandhandling.distributed.commandfilter.OrCommandMessageFilterSerializationTest]/[test-template:orCommandMessageFilterShouldBeSerializable(org.axonframework.serialization.TestSerializer)]/[test-template-invocation:#4] (2 ms)</li><li>org.axonframework.commandhandling.distributed.commandfilter.DenyCommandNameFilterSerializationTest.[engine:junit-jupiter]/[class:org.axonframework.commandhandling.distributed.commandfilter.DenyCommandNameFilterSerializationTest]/[test-template:denyCommandNameFilterShouldBeSerializable(org.axonframework.serialization.TestSerializer)]/[test-template-invocation:#3] (5 ms)</li><li>org.axonframework.serialization.upcasting.event.EventMultiUpcasterTest.[engine:junit-jupiter]/[class:org.axonframework.serialization.upcasting.event.EventMultiUpcasterTest]/[method:upcasterIgnoresWrongEventRevision()] (14 ms)</li><li>org.axonframework.eventhandling.deadletter.jpa.EventMessageDeadLetterJpaConverterTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.deadletter.jpa.EventMessageDeadLetterJpaConverterTest]/[method:canConvertTrackedEventMessageWithGapAwareTokenAndBackCorrectly()] (2 ms)</li><li>org.axonframework.commandhandling.distributed.commandfilter.NegateCommandMessageFilterSerializationTest.[engine:junit-jupiter]/[class:org.axonframework.commandhandling.distributed.commandfilter.NegateCommandMessageFilterSerializationTest]/[test-template:negateCommandMessageFilterShouldBeSerializable(org.axonframework.serialization.TestSerializer)]/[test-template-invocation:#4] (3 ms)</li><li>org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest]/[method:sizeReturnsOverallNumberOfContainedDeadLetters()] (12 ms)</li><li>org.axonframework.eventhandling.scheduling.quartz.DirectEventJobDataBinderTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.scheduling.quartz.DirectEventJobDataBinderTest]/[test-template:eventMessageFromJobData(org.axonframework.serialization.Serializer, java.util.function.Function, java.util.function.Predicate)]/[test-template-invocation:#3] (2 ms)</li><li>org.axonframework.eventhandling.GapAwareTrackingTokenSerializationTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.GapAwareTrackingTokenSerializationTest]/[test-template:tokenWithoutGapsShouldBeSerializable(org.axonframework.serialization.TestSerializer)]/[test-template-invocation:#4] (2 ms)</li><li>org.axonframework.commandhandling.distributed.commandfilter.AcceptAllSerializationTest.[engine:junit-jupiter]/[class:org.axonframework.commandhandling.distributed.commandfilter.AcceptAllSerializationTest]/[test-template:acceptAllShouldBeSerializable(org.axonframework.serialization.TestSerializer)]/[test-template-invocation:#3] (14 ms)</li><li>org.axonframework.messaging.responsetypes.OptionalResponseTypeSerializationTest.[engine:junit-jupiter]/[class:org.axonframework.messaging.responsetypes.OptionalResponseTypeSerializationTest]/[test-template:responseTypeShouldBeSerializable(org.axonframework.serialization.TestSerializer)]/[test-template-invocation:#2] (2 ms)</li><li>org.axonframework.eventhandling.MergedTrackingTokenSerializationTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.MergedTrackingTokenSerializationTest]/[test-template:tokenShouldBeSerializable(org.axonframework.serialization.TestSerializer)]/[test-template-invocation:#3] (3 ms)</li><li>org.axonframework.eventhandling.scheduling.jobrunr.JobRunrEventSchedulerTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.scheduling.jobrunr.JobRunrEventSchedulerTest]/[method:whenScheduleIsCalledAndThereIsARevisionThanShouldPublishEvent()] (1048 ms)</li><li>org.axonframework.commandhandling.distributed.ReplyMessageSerializationTest.[engine:junit-jupiter]/[class:org.axonframework.commandhandling.distributed.ReplyMessageSerializationTest]/[test-template:deserializingOfPersistentExceptions(org.axonframework.serialization.TestSerializer)]/[test-template-invocation:#2] (3 ms)</li><li>org.axonframework.serialization.json.JacksonSerializerTest.[engine:junit-jupiter]/[class:org.axonframework.serialization.json.JacksonSerializerTest]/[method:serializeAndDeserializeObject_StringFormat()] (2 ms)</li><li>org.axonframework.messaging.RemoteExceptionDescriptionSerializationTest.[engine:junit-jupiter]/[class:org.axonframework.messaging.RemoteExceptionDescriptionSerializationTest]/[test-template:tokenShouldBeSerializableWithJackson(org.axonframework.serialization.TestSerializer)]/[test-template-invocation:#2] (1 ms)</li><li>org.axonframework.commandhandling.distributed.commandfilter.OrCommandMessageFilterSerializationTest.[engine:junit-jupiter]/[class:org.axonframework.commandhandling.distributed.commandfilter.OrCommandMessageFilterSerializationTest]/[test-template:orCommandMessageFilterShouldBeSerializable(org.axonframework.serialization.TestSerializer)]/[test-template-invocation:#3] (3 ms)</li><li>org.axonframework.commandhandling.distributed.commandfilter.DenyCommandNameFilterSerializationTest.[engine:junit-jupiter]/[class:org.axonframework.commandhandling.distributed.commandfilter.DenyCommandNameFilterSerializationTest]/[test-template:denyCommandNameFilterShouldBeSerializable(org.axonframework.serialization.TestSerializer)]/[test-template-invocation:#4] (4 ms)</li><li>org.axonframework.eventhandling.tokenstore.jdbc.JdbcTokenStoreTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.tokenstore.jdbc.JdbcTokenStoreTest]/[method:querySegments()] (30 ms)</li><li>org.axonframework.commandhandling.distributed.commandfilter.CommandNameFilterSerializationTest.[engine:junit-jupiter]/[class:org.axonframework.commandhandling.distributed.commandfilter.CommandNameFilterSerializationTest]/[test-template:commandNameFilterShouldBeSerializable(org.axonframework.serialization.TestSerializer)]/[test-template-invocation:#2] (1 ms)</li><li>org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest]/[method:clearInvocationRemovesAllEntries()] (12 ms)</li><li>org.axonframework.serialization.json.JacksonSerializerTest.[engine:junit-jupiter]/[class:org.axonframework.serialization.json.JacksonSerializerTest]/[method:serializeAndDeserializeObject_JsonNodeFormat()] (2 ms)</li><li>org.axonframework.serialization.xml.XStreamSerializerTest.[engine:junit-jupiter]/[class:org.axonframework.serialization.xml.XStreamSerializerTest]/[method:fieldAlias()] (3 ms)</li><li>org.axonframework.deadline.quartz.DeadlineJobDataBinderTest.[engine:junit-jupiter]/[class:org.axonframework.deadline.quartz.DeadlineJobDataBinderTest]/[test-template:retrievingDeadlineScope(org.axonframework.serialization.Serializer)]/[test-template-invocation:#2] (6 ms)</li><li>org.axonframework.commandhandling.distributed.commandfilter.NegateCommandMessageFilterSerializationTest.[engine:junit-jupiter]/[class:org.axonframework.commandhandling.distributed.commandfilter.NegateCommandMessageFilterSerializationTest]/[test-template:negateCommandMessageFilterShouldBeSerializable(org.axonframework.serialization.TestSerializer)]/[test-template-invocation:#3] (3 ms)</li><li>org.axonframework.serialization.upcasting.event.EventTypeUpcasterTest.[engine:junit-jupiter]/[class:org.axonframework.serialization.upcasting.event.EventTypeUpcasterTest]/[test-template:canUpcastReturnsFalseForIncorrectPayloadType(org.axonframework.serialization.Serializer)]/[test-template-invocation:#3] (1 ms)</li><li>org.axonframework.eventhandling.scheduling.quartz.DirectEventJobDataBinderTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.scheduling.quartz.DirectEventJobDataBinderTest]/[test-template:eventMessageFromJobData(org.axonframework.serialization.Serializer, java.util.function.Function, java.util.function.Predicate)]/[test-template-invocation:#2] (1 ms)</li><li>org.axonframework.serialization.upcasting.event.InitialEventRepresentationTest.[engine:junit-jupiter]/[class:org.axonframework.serialization.upcasting.event.InitialEventRepresentationTest]/[test-template:contentType(org.axonframework.serialization.Serializer)]/[test-template-invocation:#3] (1 ms)</li><li>org.axonframework.serialization.json.JacksonSerializerTest.[engine:junit-jupiter]/[class:org.axonframework.serialization.json.JacksonSerializerTest]/[method:serializeAndDeserializeObjectObjectNodeFormat()] (5 ms)</li><li>org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest]/[method:isFullReturnsTrueAfterMaximumAmountOfSequencesIsReached()] (146 ms)</li><li>org.axonframework.serialization.upcasting.event.EventTypeUpcasterTest.[engine:junit-jupiter]/[class:org.axonframework.serialization.upcasting.event.EventTypeUpcasterTest]/[test-template:canUpcastReturnsFalseForIncorrectPayloadType(org.axonframework.serialization.Serializer)]/[test-template-invocation:#1] (1 ms)</li><li>org.axonframework.messaging.responsetypes.OptionalResponseTypeSerializationTest.[engine:junit-jupiter]/[class:org.axonframework.messaging.responsetypes.OptionalResponseTypeSerializationTest]/[test-template:responseTypeShouldBeSerializable(org.axonframework.serialization.TestSerializer)]/[test-template-invocation:#3] (1 ms)</li><li>org.axonframework.eventhandling.scheduling.jobrunr.JobRunrScheduleTokenTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.scheduling.jobrunr.JobRunrScheduleTokenTest]/[test-template:tokenShouldBeSerializable(org.axonframework.serialization.TestSerializer)]/[test-template-invocation:#2] (2 ms)</li><li>org.axonframework.eventhandling.MergedTrackingTokenSerializationTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.MergedTrackingTokenSerializationTest]/[test-template:tokenShouldBeSerializable(org.axonframework.serialization.TestSerializer)]/[test-template-invocation:#4] (3 ms)</li><li>org.axonframework.eventhandling.scheduling.jobrunr.JobRunrEventSchedulerTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.scheduling.jobrunr.JobRunrEventSchedulerTest]/[method:whenScheduledInPastIsCalledThanShouldPublishEvent()] (1133 ms)</li><li>org.axonframework.serialization.json.JacksonSerializerTest.[engine:junit-jupiter]/[class:org.axonframework.serialization.json.JacksonSerializerTest]/[method:serializeCollectionOfObjects()] (3 ms)</li><li>org.axonframework.eventhandling.scheduling.quartz.QuartzScheduleTokenSerializationTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.scheduling.quartz.QuartzScheduleTokenSerializationTest]/[test-template:tokenShouldBeSerializable(org.axonframework.serialization.TestSerializer)]/[test-template-invocation:#2] (1 ms)</li><li>org.axonframework.eventhandling.ReplayTokenSerializationTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.ReplayTokenSerializationTest]/[test-template:tokenShouldBeSerializable(org.axonframework.serialization.TestSerializer)]/[test-template-invocation:#4] (3 ms)</li><li>org.axonframework.eventhandling.scheduling.java.SimpleScheduleTokenSerializationTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.scheduling.java.SimpleScheduleTokenSerializationTest]/[test-template:tokenShouldBeSerializable(org.axonframework.serialization.TestSerializer)]/[test-template-invocation:#4] (3 ms)</li><li>org.axonframework.eventhandling.tokenstore.jdbc.JdbcTokenStoreTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.tokenstore.jdbc.JdbcTokenStoreTest]/[method:initializeTokensAtGivenPosition()] (9 ms)</li><li>org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest]/[method:isFullReturnsTrueAfterMaximumSequenceSizeIsReached()] (230 ms)</li><li>org.axonframework.eventhandling.scheduling.jobrunr.JobRunrEventSchedulerTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.scheduling.jobrunr.JobRunrEventSchedulerTest]/[method:whenScheduleIsCalledWithEventThatHasARevisionPayloadMessageMetadataShouldBePreserved()] (1031 ms)</li><li>org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest]/[method:processWithLetterPredicateInvokesProcessingTaskWithMatchingLetter()] (25 ms)</li><li>org.axonframework.deadline.quartz.DeadlineJobDataBinderTest.[engine:junit-jupiter]/[class:org.axonframework.deadline.quartz.DeadlineJobDataBinderTest]/[test-template:retrievingDeadlineMessage(org.axonframework.serialization.Serializer, java.util.function.Function, java.util.function.Predicate)]/[test-template-invocation:#2] (2 ms)</li><li>org.axonframework.commandhandling.distributed.commandfilter.OrCommandMessageFilterSerializationTest.[engine:junit-jupiter]/[class:org.axonframework.commandhandling.distributed.commandfilter.OrCommandMessageFilterSerializationTest]/[test-template:orCommandMessageFilterShouldBeSerializable(org.axonframework.serialization.TestSerializer)]/[test-template-invocation:#2] (5 ms)</li><li>org.axonframework.serialization.xml.XStreamSerializerTest.[engine:junit-jupiter]/[class:org.axonframework.serialization.xml.XStreamSerializerTest]/[method:unknownPropertiesAreIgnoredWhenConfiguringLenientDeserialization()] (6 ms)</li><li>org.axonframework.eventhandling.GlobalSequenceTrackingTokenSerializationTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.GlobalSequenceTrackingTokenSerializationTest]/[test-template:tokenShouldBeSerializable(org.axonframework.serialization.TestSerializer)]/[test-template-invocation:#2] (2 ms)</li><li>org.axonframework.eventhandling.deadletter.jpa.EventMessageDeadLetterJpaConverterTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.deadletter.jpa.EventMessageDeadLetterJpaConverterTest]/[method:canConvertTrackedDomainEventMessageWithGlobalSequenceTokenAndBackCorrectly()] (6 ms)</li><li>org.axonframework.serialization.upcasting.event.EventTypeUpcasterTest.[engine:junit-jupiter]/[class:org.axonframework.serialization.upcasting.event.EventTypeUpcasterTest]/[test-template:canUpcastReturnsTrueForMatchingPayloadTypeAndRevision(org.axonframework.serialization.Serializer)]/[test-template-invocation:#1] (1 ms)</li><li>org.axonframework.eventhandling.scheduling.quartz.DirectEventJobDataBinderTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.scheduling.quartz.DirectEventJobDataBinderTest]/[test-template:eventMessageToJobData(org.axonframework.serialization.Serializer, java.util.function.Function, java.util.function.Predicate)]/[test-template-invocation:#3] (2 ms)</li><li>org.axonframework.eventhandling.scheduling.quartz.QuartzEventSchedulerTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.scheduling.quartz.QuartzEventSchedulerTest]/[method:scheduleJobTransactionalUnitOfWork()] (544 ms)</li><li>org.axonframework.commandhandling.distributed.ReplyMessageSerializationTest.[engine:junit-jupiter]/[class:org.axonframework.commandhandling.distributed.ReplyMessageSerializationTest]/[test-template:deserializingOfTransientExceptions(org.axonframework.serialization.TestSerializer)]/[test-template-invocation:#4] (2 ms)</li><li>org.axonframework.serialization.json.JacksonSerializerTest.[engine:junit-jupiter]/[class:org.axonframework.serialization.json.JacksonSerializerTest]/[method:serializeAndDeserializeObject_ByteArrayFormat()] (3 ms)</li><li>org.axonframework.serialization.upcasting.event.SingleEventUpcasterTest.[engine:junit-jupiter]/[class:org.axonframework.serialization.upcasting.event.SingleEventUpcasterTest]/[method:ignoresUnknownType()] (1 ms)</li><li>org.axonframework.deadline.quartz.DeadlineJobDataBinderTest.[engine:junit-jupiter]/[class:org.axonframework.deadline.quartz.DeadlineJobDataBinderTest]/[test-template:retrievingDeadlineScope(org.axonframework.serialization.Serializer)]/[test-template-invocation:#3] (3 ms)</li><li>org.axonframework.serialization.upcasting.event.EventTypeUpcasterTest.[engine:junit-jupiter]/[class:org.axonframework.serialization.upcasting.event.EventTypeUpcasterTest]/[test-template:canUpcastReturnsFalseForIncorrectPayloadType(org.axonframework.serialization.Serializer)]/[test-template-invocation:#2] (1 ms)</li><li>org.axonframework.commandhandling.distributed.commandfilter.NegateCommandMessageFilterSerializationTest.[engine:junit-jupiter]/[class:org.axonframework.commandhandling.distributed.commandfilter.NegateCommandMessageFilterSerializationTest]/[test-template:negateCommandMessageFilterShouldBeSerializable(org.axonframework.serialization.TestSerializer)]/[test-template-invocation:#2] (2 ms)</li><li>org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest]/[method:evictDoesNotChangeTheQueueForNonExistentLetterIdentifier()] (19 ms)</li><li>org.axonframework.serialization.xml.XStreamSerializerTest.[engine:junit-jupiter]/[class:org.axonframework.serialization.xml.XStreamSerializerTest]/[method:unknownPropertiesFailDeserializationByDefault()] (6 ms)</li><li>org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest]/[method:enqueueIfPresentEnqueuesForExistingSequenceIdentifier()] (13 ms)</li><li>org.axonframework.messaging.responsetypes.OptionalResponseTypeSerializationTest.[engine:junit-jupiter]/[class:org.axonframework.messaging.responsetypes.OptionalResponseTypeSerializationTest]/[test-template:responseTypeShouldBeSerializable(org.axonframework.serialization.TestSerializer)]/[test-template-invocation:#4] (3 ms)</li><li>org.axonframework.eventhandling.GapAwareTrackingTokenSerializationTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.GapAwareTrackingTokenSerializationTest]/[test-template:tokenWithoutGapsShouldBeSerializable(org.axonframework.serialization.TestSerializer)]/[test-template-invocation:#2] (1 ms)</li><li>org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest]/[method:processInvocationHandlesAllLettersInSequence()] (28 ms)</li><li>org.axonframework.serialization.json.JacksonSerializerTest.[engine:junit-jupiter]/[class:org.axonframework.serialization.json.JacksonSerializerTest]/[method:serializeAndDeserializeArray()] (3 ms)</li><li>org.axonframework.eventhandling.scheduling.jobrunr.JobRunrScheduleTokenTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.scheduling.jobrunr.JobRunrScheduleTokenTest]/[test-template:tokenShouldBeSerializable(org.axonframework.serialization.TestSerializer)]/[test-template-invocation:#3] (3 ms)</li><li>org.axonframework.eventhandling.tokenstore.jdbc.JdbcTokenStoreTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.tokenstore.jdbc.JdbcTokenStoreTest]/[method:queryAvailableSegments()] (51 ms)</li><li>org.axonframework.eventhandling.ReplayTokenSerializationTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.ReplayTokenSerializationTest]/[test-template:tokenShouldBeSerializable(org.axonframework.serialization.TestSerializer)]/[test-template-invocation:#3] (4 ms)</li><li>org.axonframework.commandhandling.distributed.ReplyMessageSerializationTest.[engine:junit-jupiter]/[class:org.axonframework.commandhandling.distributed.ReplyMessageSerializationTest]/[test-template:deserializingOfPersistentExceptions(org.axonframework.serialization.TestSerializer)]/[test-template-invocation:#4] (2 ms)</li><li>org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest]/[method:processHandlesMassiveAmountOfLettersInSequence()] (306 ms)</li><li>org.axonframework.eventhandling.scheduling.quartz.QuartzScheduleTokenSerializationTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.scheduling.quartz.QuartzScheduleTokenSerializationTest]/[test-template:tokenShouldBeSerializable(org.axonframework.serialization.TestSerializer)]/[test-template-invocation:#3] (2 ms)</li><li>org.axonframework.eventhandling.scheduling.java.SimpleScheduleTokenSerializationTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.scheduling.java.SimpleScheduleTokenSerializationTest]/[test-template:tokenShouldBeSerializable(org.axonframework.serialization.TestSerializer)]/[test-template-invocation:#3] (3 ms)</li><li>org.axonframework.serialization.xml.XStreamSerializerTest.[engine:junit-jupiter]/[class:org.axonframework.serialization.xml.XStreamSerializerTest]/[method:serializeAndDeserializeDomainEvent_WithXomUpcasters()] (4 ms)</li><li>org.axonframework.serialization.xml.XStreamSerializerTest.[engine:junit-jupiter]/[class:org.axonframework.serialization.xml.XStreamSerializerTest]/[method:serializeAndDeserializeDomainEvent()] (2 ms)</li><li>org.axonframework.eventhandling.tokenstore.legacyjpa.JpaTokenStoreTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.tokenstore.legacyjpa.JpaTokenStoreTest]/[method:storeAndLoadAcrossTransactions()] (9 ms)</li><li>org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest]/[method:processWithLetterPredicateReturnsFalseIfAllLetterSequencesAreClaimed()] (23 ms)</li><li>org.axonframework.deadline.quartz.DeadlineJobDataBinderTest.[engine:junit-jupiter]/[class:org.axonframework.deadline.quartz.DeadlineJobDataBinderTest]/[test-template:retrievingDeadlineMessage(org.axonframework.serialization.Serializer, java.util.function.Function, java.util.function.Predicate)]/[test-template-invocation:#3] (2 ms)</li><li>org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest]/[method:enqueueAddsDeadLetter()] (10 ms)</li><li>org.axonframework.eventhandling.GapAwareTrackingTokenSerializationTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.GapAwareTrackingTokenSerializationTest]/[test-template:tokenShouldBeSerializable(org.axonframework.serialization.TestSerializer)]/[test-template-invocation:#4] (0 ms)</li><li>org.axonframework.serialization.xml.XStreamSerializerTest.[engine:junit-jupiter]/[class:org.axonframework.serialization.xml.XStreamSerializerTest]/[method:serializeWithSpecialCharacters_WithDom4JUpcasters()] (3 ms)</li><li>org.axonframework.serialization.upcasting.event.EventTypeUpcasterTest.[engine:junit-jupiter]/[class:org.axonframework.serialization.upcasting.event.EventTypeUpcasterTest]/[test-template:doUpcast(org.axonframework.serialization.Serializer)]/[test-template-invocation:#1] (1 ms)</li><li>org.axonframework.eventhandling.tokenstore.legacyjpa.JpaTokenStoreTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.tokenstore.legacyjpa.JpaTokenStoreTest]/[method:initializeTokensAtGivenPosition()] (8 ms)</li><li>org.axonframework.serialization.json.JacksonSerializerTest.[engine:junit-jupiter]/[class:org.axonframework.serialization.json.JacksonSerializerTest]/[method:serializeMetaDataWithComplexObjects()] (2 ms)</li>
+</ul>
+
+<br/>
+
+Report generated by <a href='https://pitest.org'>PIT</a> pitest-reactor
+
+</body>
+</html>

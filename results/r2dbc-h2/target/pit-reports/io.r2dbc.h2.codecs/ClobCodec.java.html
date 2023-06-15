@@ -1,0 +1,1959 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+<body>
+
+
+<h1>ClobCodec.java</h1>
+
+<table class="src">
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5fe742ff_1'/>
+1
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_1'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>/*</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5fe742ff_2'/>
+2
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_2'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * Copyright 2019 the original author or authors.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5fe742ff_3'/>
+3
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_3'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> *</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5fe742ff_4'/>
+4
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_4'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * Licensed under the Apache License, Version 2.0 (the &#34;License&#34;);</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5fe742ff_5'/>
+5
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_5'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * you may not use this file except in compliance with the License.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5fe742ff_6'/>
+6
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_6'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * You may obtain a copy of the License at</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5fe742ff_7'/>
+7
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_7'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> *</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5fe742ff_8'/>
+8
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_8'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> *      https://www.apache.org/licenses/LICENSE-2.0</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5fe742ff_9'/>
+9
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_9'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> *</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5fe742ff_10'/>
+10
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_10'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * Unless required by applicable law or agreed to in writing, software</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5fe742ff_11'/>
+11
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_11'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * distributed under the License is distributed on an &#34;AS IS&#34; BASIS,</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5fe742ff_12'/>
+12
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_12'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5fe742ff_13'/>
+13
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_13'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * See the License for the specific language governing permissions and</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5fe742ff_14'/>
+14
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_14'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * limitations under the License.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5fe742ff_15'/>
+15
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_15'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5fe742ff_16'/>
+16
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_16'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5fe742ff_17'/>
+17
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_17'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>package io.r2dbc.h2.codecs;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5fe742ff_18'/>
+18
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_18'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5fe742ff_19'/>
+19
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_19'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import io.r2dbc.h2.client.Client;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5fe742ff_20'/>
+20
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_20'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import io.r2dbc.h2.util.Assert;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5fe742ff_21'/>
+21
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_21'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import io.r2dbc.spi.Clob;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5fe742ff_22'/>
+22
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_22'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.h2.value.Value;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5fe742ff_23'/>
+23
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_23'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.h2.value.ValueClob;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5fe742ff_24'/>
+24
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_24'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.h2.value.ValueNull;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5fe742ff_25'/>
+25
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_25'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import reactor.core.publisher.Flux;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5fe742ff_26'/>
+26
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_26'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5fe742ff_27'/>
+27
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_27'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import java.io.CharArrayReader;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5fe742ff_28'/>
+28
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_28'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import java.io.IOException;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5fe742ff_29'/>
+29
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_29'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import java.io.Reader;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5fe742ff_30'/>
+30
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_30'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import java.nio.CharBuffer;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5fe742ff_31'/>
+31
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_31'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import java.util.Iterator;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5fe742ff_32'/>
+32
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_32'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5fe742ff_33'/>
+33
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_33'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>final class ClobCodec extends AbstractCodec&#60;Clob&#62; {</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5fe742ff_34'/>
+34
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_34'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5fe742ff_35'/>
+35
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_35'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    private final Client client;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5fe742ff_36'/>
+36
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_36'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5fe742ff_37'/>
+37
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_37'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    ClobCodec(Client client) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5fe742ff_38'/>
+38
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_38'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        super(Clob.class);</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5fe742ff_39'/>
+39
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_39'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        this.client = client;</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5fe742ff_40'/>
+40
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_40'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5fe742ff_41'/>
+41
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_41'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5fe742ff_42'/>
+42
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_42'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    @Override</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5fe742ff_43'/>
+43
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_43'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    boolean doCanDecode(int dataType) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5fe742ff_44'/>
+44
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_44'>3</a>
+<span>
+1. doCanDecode : removed conditional - replaced equality check with false &rarr; KILLED<br/>
+2. doCanDecode : removed conditional - replaced equality check with true &rarr; KILLED<br/>
+3. doCanDecode : replaced boolean return with true for io/r2dbc/h2/codecs/ClobCodec::doCanDecode &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        return dataType == Value.CLOB;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5fe742ff_45'/>
+45
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_45'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5fe742ff_46'/>
+46
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_46'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5fe742ff_47'/>
+47
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_47'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    @Override</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5fe742ff_48'/>
+48
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_48'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    Clob doDecode(Value value, Class&#60;? extends Clob&#62; type) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5fe742ff_49'/>
+49
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_49'>4</a>
+<span>
+1. doDecode : removed conditional - replaced equality check with false &rarr; SURVIVED<br/>
+2. doDecode : removed conditional - replaced equality check with true &rarr; KILLED<br/>
+3. doDecode : removed conditional - replaced equality check with true &rarr; KILLED<br/>
+4. doDecode : removed conditional - replaced equality check with false &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='survived'>        if (value == null || value instanceof ValueNull) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5fe742ff_50'/>
+50
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_50'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>            return null;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5fe742ff_51'/>
+51
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_51'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5fe742ff_52'/>
+52
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_52'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5fe742ff_53'/>
+53
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_53'>1</a>
+<span>
+1. doDecode : replaced return value with null for io/r2dbc/h2/codecs/ClobCodec::doDecode &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        return new ValueLobClob(value);</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5fe742ff_54'/>
+54
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_54'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5fe742ff_55'/>
+55
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_55'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5fe742ff_56'/>
+56
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_56'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    @Override</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5fe742ff_57'/>
+57
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_57'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    Value doEncode(Clob value) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5fe742ff_58'/>
+58
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_58'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        Assert.requireNonNull(value, &#34;value must not be null&#34;);</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5fe742ff_59'/>
+59
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_59'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5fe742ff_60'/>
+60
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_60'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        ValueClob clob = this.client.getSession().getDataHandler().getLobStorage().createClob(</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5fe742ff_61'/>
+61
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_61'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>            new AggregateCharArrayReader(value), -1);</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5fe742ff_62'/>
+62
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_62'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5fe742ff_63'/>
+63
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_63'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        this.client.getSession().addTemporaryLob(clob);</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5fe742ff_64'/>
+64
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_64'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5fe742ff_65'/>
+65
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_65'>1</a>
+<span>
+1. doEncode : replaced return value with null for io/r2dbc/h2/codecs/ClobCodec::doEncode &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        return clob;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5fe742ff_66'/>
+66
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_66'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5fe742ff_67'/>
+67
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_67'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5fe742ff_68'/>
+68
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_68'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    /**</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5fe742ff_69'/>
+69
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_69'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * Converts a {@link Flux} of {@link Clob}s into a {@link Reader} of {@link CharArrayReader}s.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5fe742ff_70'/>
+70
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_70'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5fe742ff_71'/>
+71
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_71'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    private final class AggregateCharArrayReader extends Reader {</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5fe742ff_72'/>
+72
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_72'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5fe742ff_73'/>
+73
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_73'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        private final Iterator&#60;CharArrayReader&#62; readers;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5fe742ff_74'/>
+74
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_74'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5fe742ff_75'/>
+75
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_75'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        private CharArrayReader current;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5fe742ff_76'/>
+76
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_76'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5fe742ff_77'/>
+77
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_77'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        private AggregateCharArrayReader(Clob value) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5fe742ff_78'/>
+78
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_78'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>            this.readers = Flux.from(value.stream())</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5fe742ff_79'/>
+79
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_79'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>                .map(CharBuffer::wrap)</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5fe742ff_80'/>
+80
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_80'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>                .map(charBuffer -&#62; {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5fe742ff_81'/>
+81
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_81'>2</a>
+<span>
+1. lambda$new$0 : removed conditional - replaced equality check with false &rarr; SURVIVED<br/>
+2. lambda$new$0 : removed conditional - replaced equality check with true &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='survived'>                    if (charBuffer.hasArray()) {</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5fe742ff_82'/>
+82
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_82'>1</a>
+<span>
+1. lambda$new$0 : replaced return value with null for io/r2dbc/h2/codecs/ClobCodec$AggregateCharArrayReader::lambda$new$0 &rarr; NO_COVERAGE<br/>
+
+</span>
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>                        return charBuffer.array();</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5fe742ff_83'/>
+83
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_83'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>                    } else {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5fe742ff_84'/>
+84
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_84'>1</a>
+<span>
+1. lambda$new$0 : replaced return value with null for io/r2dbc/h2/codecs/ClobCodec$AggregateCharArrayReader::lambda$new$0 &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>                        return charBuffer.toString().toCharArray();</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5fe742ff_85'/>
+85
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_85'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>                    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5fe742ff_86'/>
+86
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_86'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>                })</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5fe742ff_87'/>
+87
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_87'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>                .map(CharArrayReader::new)</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5fe742ff_88'/>
+88
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_88'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>                .toIterable()</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5fe742ff_89'/>
+89
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_89'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>                .iterator();</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5fe742ff_90'/>
+90
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_90'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5fe742ff_91'/>
+91
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_91'>2</a>
+<span>
+1. &#60;init&#62; : removed conditional - replaced equality check with true &rarr; SURVIVED<br/>
+2. &#60;init&#62; : removed conditional - replaced equality check with false &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='survived'>            if (this.readers.hasNext()) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5fe742ff_92'/>
+92
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_92'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>                this.current = this.readers.next();</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5fe742ff_93'/>
+93
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_93'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>            }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5fe742ff_94'/>
+94
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_94'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5fe742ff_95'/>
+95
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_95'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5fe742ff_96'/>
+96
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_96'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5fe742ff_97'/>
+97
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_97'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        @Override</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5fe742ff_98'/>
+98
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_98'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        public int read(char[] cbuf, int off, int len) throws IOException {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5fe742ff_99'/>
+99
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_99'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>            int results = this.current.read(cbuf, off, len);</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5fe742ff_100'/>
+100
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_100'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5fe742ff_101'/>
+101
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_101'>2</a>
+<span>
+1. read : removed conditional - replaced equality check with false &rarr; KILLED<br/>
+2. read : removed conditional - replaced equality check with true &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>            if (results == -1) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5fe742ff_102'/>
+102
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_102'>2</a>
+<span>
+1. read : removed conditional - replaced equality check with true &rarr; KILLED<br/>
+2. read : removed conditional - replaced equality check with false &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>                if (this.readers.hasNext()) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5fe742ff_103'/>
+103
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_103'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>                    this.current = this.readers.next();</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5fe742ff_104'/>
+104
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_104'>1</a>
+<span>
+1. read : replaced int return with 0 for io/r2dbc/h2/codecs/ClobCodec$AggregateCharArrayReader::read &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>                    return read(cbuf, off, len);</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5fe742ff_105'/>
+105
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_105'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>                }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5fe742ff_106'/>
+106
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_106'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>            }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5fe742ff_107'/>
+107
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_107'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5fe742ff_108'/>
+108
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_108'>1</a>
+<span>
+1. read : replaced int return with 0 for io/r2dbc/h2/codecs/ClobCodec$AggregateCharArrayReader::read &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>            return results;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5fe742ff_109'/>
+109
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_109'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5fe742ff_110'/>
+110
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_110'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5fe742ff_111'/>
+111
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_111'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        @Override</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5fe742ff_112'/>
+112
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_112'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        public void close() {</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5fe742ff_113'/>
+113
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_113'>1</a>
+<span>
+1. close : removed call to java/io/CharArrayReader::close &rarr; NO_COVERAGE<br/>
+
+</span>
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>            this.current.close();</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5fe742ff_114'/>
+114
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_114'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='uncovered'><pre><span  class=''>        }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5fe742ff_115'/>
+115
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_115'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5fe742ff_116'/>
+116
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_116'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>}</span></pre></td></tr>
+
+
+
+<tr><td></td><td></td><td><h2>Mutations</h2></td></tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@5fe742ff_44'>44</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_44'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>doCanDecode<br/><b>Killed by : </b>io.r2dbc.h2.codecs.ClobCodecTest.[engine:junit-jupiter]/[class:io.r2dbc.h2.codecs.ClobCodecTest]/[method:doCanDecode()]</span></span> removed conditional - replaced equality check with false &rarr; KILLED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>doCanDecode<br/><b>Killed by : </b>io.r2dbc.h2.codecs.ClobCodecTest.[engine:junit-jupiter]/[class:io.r2dbc.h2.codecs.ClobCodecTest]/[method:doCanDecode()]</span></span> removed conditional - replaced equality check with true &rarr; KILLED</p> <p class='KILLED'><span class='pop'>3.<span><b>3</b><br/><b>Location : </b>doCanDecode<br/><b>Killed by : </b>io.r2dbc.h2.codecs.ClobCodecTest.[engine:junit-jupiter]/[class:io.r2dbc.h2.codecs.ClobCodecTest]/[method:doCanDecode()]</span></span> replaced boolean return with true for io/r2dbc/h2/codecs/ClobCodec::doCanDecode &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@5fe742ff_49'>49</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_49'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>doDecode<br/><b>Killed by : </b>io.r2dbc.h2.codecs.ClobCodecTest.[engine:junit-jupiter]/[class:io.r2dbc.h2.codecs.ClobCodecTest]/[method:decodeNull()]</span></span> removed conditional - replaced equality check with true &rarr; KILLED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>doDecode<br/><b>Killed by : </b>io.r2dbc.h2.codecs.ClobCodecTest.[engine:junit-jupiter]/[class:io.r2dbc.h2.codecs.ClobCodecTest]/[method:decode()]</span></span> removed conditional - replaced equality check with true &rarr; KILLED</p> <p class='KILLED'><span class='pop'>3.<span><b>3</b><br/><b>Location : </b>doDecode<br/><b>Killed by : </b>io.r2dbc.h2.codecs.ClobCodecTest.[engine:junit-jupiter]/[class:io.r2dbc.h2.codecs.ClobCodecTest]/[method:decode()]</span></span> removed conditional - replaced equality check with false &rarr; KILLED</p> <p class='SURVIVED'><span class='pop'>4.<span><b>4</b><br/><b>Location : </b>doDecode<br/><b>Killed by : </b>none</span></span> removed conditional - replaced equality check with false &rarr; SURVIVED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@5fe742ff_53'>53</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_53'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>doDecode<br/><b>Killed by : </b>io.r2dbc.h2.codecs.ClobCodecTest.[engine:junit-jupiter]/[class:io.r2dbc.h2.codecs.ClobCodecTest]/[method:decode()]</span></span> replaced return value with null for io/r2dbc/h2/codecs/ClobCodec::doDecode &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@5fe742ff_65'>65</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_65'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>doEncode<br/><b>Killed by : </b>io.r2dbc.h2.H2PostgresqlTestKit.[engine:junit-jupiter]/[class:io.r2dbc.h2.H2PostgresqlTestKit]/[method:clobInsert()]</span></span> replaced return value with null for io/r2dbc/h2/codecs/ClobCodec::doEncode &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@5fe742ff_81'>81</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_81'/> 
+
+<p class='SURVIVED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>lambda$new$0<br/><b>Killed by : </b>none</span></span> removed conditional - replaced equality check with false &rarr; SURVIVED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>lambda$new$0<br/><b>Killed by : </b>io.r2dbc.h2.H2PostgresqlTestKit.[engine:junit-jupiter]/[class:io.r2dbc.h2.H2PostgresqlTestKit]/[method:clobInsert()]</span></span> removed conditional - replaced equality check with true &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@5fe742ff_82'>82</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_82'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>lambda$new$0<br/><b>Killed by : </b>none</span></span> replaced return value with null for io/r2dbc/h2/codecs/ClobCodec$AggregateCharArrayReader::lambda$new$0 &rarr; NO_COVERAGE</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@5fe742ff_84'>84</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_84'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>lambda$new$0<br/><b>Killed by : </b>io.r2dbc.h2.H2PostgresqlTestKit.[engine:junit-jupiter]/[class:io.r2dbc.h2.H2PostgresqlTestKit]/[method:clobInsert()]</span></span> replaced return value with null for io/r2dbc/h2/codecs/ClobCodec$AggregateCharArrayReader::lambda$new$0 &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@5fe742ff_91'>91</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_91'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>&#60;init&#62;<br/><b>Killed by : </b>io.r2dbc.h2.H2PostgresqlTestKit.[engine:junit-jupiter]/[class:io.r2dbc.h2.H2PostgresqlTestKit]/[method:clobInsert()]</span></span> removed conditional - replaced equality check with false &rarr; KILLED</p> <p class='SURVIVED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>&#60;init&#62;<br/><b>Killed by : </b>none</span></span> removed conditional - replaced equality check with true &rarr; SURVIVED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@5fe742ff_101'>101</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_101'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>read<br/><b>Killed by : </b>io.r2dbc.h2.H2LobIntegrationTest.[engine:junit-jupiter]/[class:io.r2dbc.h2.H2LobIntegrationTest]/[method:testCharacterLargeObject()]</span></span> removed conditional - replaced equality check with false &rarr; KILLED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>read<br/><b>Killed by : </b>io.r2dbc.h2.H2LobIntegrationTest.[engine:junit-jupiter]/[class:io.r2dbc.h2.H2LobIntegrationTest]/[method:testCharacterLargeObject()]</span></span> removed conditional - replaced equality check with true &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@5fe742ff_102'>102</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_102'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>read<br/><b>Killed by : </b>io.r2dbc.h2.H2PostgresqlTestKit.[engine:junit-jupiter]/[class:io.r2dbc.h2.H2PostgresqlTestKit]/[method:clobInsert()]</span></span> removed conditional - replaced equality check with true &rarr; KILLED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>read<br/><b>Killed by : </b>io.r2dbc.h2.H2LobIntegrationTest.[engine:junit-jupiter]/[class:io.r2dbc.h2.H2LobIntegrationTest]/[method:testCharacterLargeObject()]</span></span> removed conditional - replaced equality check with false &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@5fe742ff_104'>104</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_104'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>read<br/><b>Killed by : </b>io.r2dbc.h2.H2LobIntegrationTest.[engine:junit-jupiter]/[class:io.r2dbc.h2.H2LobIntegrationTest]/[method:testCharacterLargeObject()]</span></span> replaced int return with 0 for io/r2dbc/h2/codecs/ClobCodec$AggregateCharArrayReader::read &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@5fe742ff_108'>108</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_108'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>read<br/><b>Killed by : </b>io.r2dbc.h2.H2LobIntegrationTest.[engine:junit-jupiter]/[class:io.r2dbc.h2.H2LobIntegrationTest]/[method:testCharacterLargeObject()]</span></span> replaced int return with 0 for io/r2dbc/h2/codecs/ClobCodec$AggregateCharArrayReader::read &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@5fe742ff_113'>113</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@5fe742ff_113'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>close<br/><b>Killed by : </b>none</span></span> removed call to java/io/CharArrayReader::close &rarr; NO_COVERAGE</p> 
+</td>
+</tr>
+
+</table>
+
+
+<h2>Active mutators</h2>
+<ul>
+<li class='mutator'>CONDITIONALS_BOUNDARY</li>
+<li class='mutator'>EMPTY_RETURNS</li>
+<li class='mutator'>EXPERIMENTAL_SWITCH</li>
+<li class='mutator'>FALSE_RETURNS</li>
+<li class='mutator'>INCREMENTS</li>
+<li class='mutator'>INVERT_NEGS</li>
+<li class='mutator'>MATH</li>
+<li class='mutator'>NULL_RETURNS</li>
+<li class='mutator'>PRIMITIVE_RETURNS</li>
+<li class='mutator'>REACTOR_REACTIVE_MUTATOR</li>
+<li class='mutator'>REMOVE_CONDITIONALS_EQUAL_ELSE</li>
+<li class='mutator'>REMOVE_CONDITIONALS_EQUAL_IF</li>
+<li class='mutator'>REMOVE_CONDITIONALS_ORDER_ELSE</li>
+<li class='mutator'>REMOVE_CONDITIONALS_ORDER_IF</li>
+<li class='mutator'>TRUE_RETURNS</li>
+<li class='mutator'>VOID_METHOD_CALLS</li>
+
+</ul>
+
+<h2>Tests examined</h2>
+<ul>
+<li>io.r2dbc.h2.H2PostgresqlTestKit.[engine:junit-jupiter]/[class:io.r2dbc.h2.H2PostgresqlTestKit]/[method:duplicateColumnNames()] (4 ms)</li><li>io.r2dbc.h2.codecs.CodecIntegrationTests.[engine:junit-jupiter]/[class:io.r2dbc.h2.codecs.CodecIntegrationTests]/[method:shouldEncodePeriodAsIntervalYear()] (3 ms)</li><li>io.r2dbc.h2.H2NamedParameterStyleTestKit.[engine:junit-jupiter]/[class:io.r2dbc.h2.H2NamedParameterStyleTestKit]/[method:segmentSelectWithEmitsRow()] (5 ms)</li><li>io.r2dbc.h2.codecs.CodecIntegrationTests.[engine:junit-jupiter]/[class:io.r2dbc.h2.codecs.CodecIntegrationTests]/[method:shouldEncodeDurationAsIntervalHourToMinute()] (3 ms)</li><li>io.r2dbc.h2.codecs.CodecIntegrationTests.[engine:junit-jupiter]/[class:io.r2dbc.h2.codecs.CodecIntegrationTests]/[method:shouldEncodeIntervalAsIntervalMinuteToSecond()] (6 ms)</li><li>io.r2dbc.h2.H2RowMetadataTest.[engine:junit-jupiter]/[class:io.r2dbc.h2.H2RowMetadataTest]/[method:toRowMetadataNoResult()] (1 ms)</li><li>io.r2dbc.h2.H2NamedParameterStyleTestKit.[engine:junit-jupiter]/[class:io.r2dbc.h2.H2NamedParameterStyleTestKit]/[method:clobSelect()] (13 ms)</li><li>io.r2dbc.h2.H2NamedParameterStyleTestKit.[engine:junit-jupiter]/[class:io.r2dbc.h2.H2NamedParameterStyleTestKit]/[method:transactionRollback()] (54 ms)</li><li>io.r2dbc.h2.codecs.CodecIntegrationTests.[engine:junit-jupiter]/[class:io.r2dbc.h2.codecs.CodecIntegrationTests]/[method:shouldEncodeDurationAsIntervalHour()] (2 ms)</li><li>io.r2dbc.h2.H2NamedParameterStyleTestKit.[engine:junit-jupiter]/[class:io.r2dbc.h2.H2NamedParameterStyleTestKit]/[method:segmentSelectWithFilterCompletesWithoutOnNext()] (5 ms)</li><li>io.r2dbc.h2.codecs.CodecIntegrationTests.[engine:junit-jupiter]/[class:io.r2dbc.h2.codecs.CodecIntegrationTests]/[method:shouldEncodeShortAsSmallint()] (6 ms)</li><li>io.r2dbc.h2.codecs.CodecIntegrationTests.[engine:junit-jupiter]/[class:io.r2dbc.h2.codecs.CodecIntegrationTests]/[method:shouldEncodeIntervalAsIntervalHourToMinute()] (7 ms)</li><li>io.r2dbc.h2.H2StatementTest.[engine:junit-jupiter]/[class:io.r2dbc.h2.H2StatementTest]/[method:returnGenerateValuesNoArguments()] (8 ms)</li><li>io.r2dbc.h2.codecs.CodecIntegrationTests.[engine:junit-jupiter]/[class:io.r2dbc.h2.codecs.CodecIntegrationTests]/[method:shouldEncodeDate()] (13 ms)</li><li>io.r2dbc.h2.codecs.CodecIntegrationTests.[engine:junit-jupiter]/[class:io.r2dbc.h2.codecs.CodecIntegrationTests]/[method:shouldEncodePeriodAsIntervalMonth()] (12 ms)</li><li>io.r2dbc.h2.H2NamedParameterStyleTestKit.[engine:junit-jupiter]/[class:io.r2dbc.h2.H2NamedParameterStyleTestKit]/[method:clobInsert()] (5 ms)</li><li>io.r2dbc.h2.codecs.CodecIntegrationTests.[engine:junit-jupiter]/[class:io.r2dbc.h2.codecs.CodecIntegrationTests]/[method:shouldEncodeDurationAsIntervalHourToSecond()] (3 ms)</li><li>io.r2dbc.h2.H2PostgresqlTestKit.[engine:junit-jupiter]/[class:io.r2dbc.h2.H2PostgresqlTestKit]/[method:compoundStatement()] (4 ms)</li><li>io.r2dbc.h2.H2PostgresqlTestKit.[engine:junit-jupiter]/[class:io.r2dbc.h2.H2PostgresqlTestKit]/[method:transactionCommit()] (4 ms)</li><li>io.r2dbc.h2.H2PostgresqlTestKit.[engine:junit-jupiter]/[class:io.r2dbc.h2.H2PostgresqlTestKit]/[method:batch()] (3 ms)</li><li>io.r2dbc.h2.codecs.CodecIntegrationTests.[engine:junit-jupiter]/[class:io.r2dbc.h2.codecs.CodecIntegrationTests]/[method:shouldEncodeDurationAsIntervalDayToSecond()] (3 ms)</li><li>io.r2dbc.h2.codecs.CodecIntegrationTests.[engine:junit-jupiter]/[class:io.r2dbc.h2.codecs.CodecIntegrationTests]/[method:shouldEncodeDoubleAsFloat()] (5 ms)</li><li>io.r2dbc.h2.codecs.CodecIntegrationTests.[engine:junit-jupiter]/[class:io.r2dbc.h2.codecs.CodecIntegrationTests]/[method:shouldEncodeIntervalAsIntervalMonth()] (5 ms)</li><li>io.r2dbc.h2.H2NamedParameterStyleTestKit.[engine:junit-jupiter]/[class:io.r2dbc.h2.H2NamedParameterStyleTestKit]/[method:row()] (7 ms)</li><li>io.r2dbc.h2.H2PostgresqlTestKit.[engine:junit-jupiter]/[class:io.r2dbc.h2.H2PostgresqlTestKit]/[method:segmentSelectWithFilterCompletesWithoutOnNext()] (4 ms)</li><li>io.r2dbc.h2.H2PostgresqlTestKit.[engine:junit-jupiter]/[class:io.r2dbc.h2.H2PostgresqlTestKit]/[method:transactionRollback()] (8 ms)</li><li>io.r2dbc.h2.codecs.CodecIntegrationTests.[engine:junit-jupiter]/[class:io.r2dbc.h2.codecs.CodecIntegrationTests]/[method:shouldEncodeIntervalAsIntervalHourToSecond()] (14 ms)</li><li>io.r2dbc.h2.codecs.CodecIntegrationTests.[engine:junit-jupiter]/[class:io.r2dbc.h2.codecs.CodecIntegrationTests]/[method:shouldEncodeStringAsVarchar()] (5 ms)</li><li>io.r2dbc.h2.codecs.DefaultCodecsTest.[engine:junit-jupiter]/[class:io.r2dbc.h2.codecs.DefaultCodecsTest]/[method:decodeDefaultType()] (1 ms)</li><li>io.r2dbc.h2.codecs.CodecIntegrationTests.[engine:junit-jupiter]/[class:io.r2dbc.h2.codecs.CodecIntegrationTests]/[method:shouldEncodeZonedDateTimeAsTimestampWithTimeZone()] (4 ms)</li><li>io.r2dbc.h2.codecs.CodecIntegrationTests.[engine:junit-jupiter]/[class:io.r2dbc.h2.codecs.CodecIntegrationTests]/[method:shouldEncodeDurationAsIntervalMinuteToSecond()] (3 ms)</li><li>io.r2dbc.h2.codecs.CodecIntegrationTests.[engine:junit-jupiter]/[class:io.r2dbc.h2.codecs.CodecIntegrationTests]/[method:shouldEncodeDurationAsIntervalDayToHour()] (3 ms)</li><li>io.r2dbc.h2.codecs.CodecIntegrationTests.[engine:junit-jupiter]/[class:io.r2dbc.h2.codecs.CodecIntegrationTests]/[method:shouldEncodeLongABigint()] (5 ms)</li><li>io.r2dbc.h2.codecs.ClobCodecTest.[engine:junit-jupiter]/[class:io.r2dbc.h2.codecs.ClobCodecTest]/[method:doCanDecode()] (0 ms)</li><li>io.r2dbc.h2.codecs.CodecIntegrationTests.[engine:junit-jupiter]/[class:io.r2dbc.h2.codecs.CodecIntegrationTests]/[method:shouldEncodeIntervalAsIntervalDayToHour()] (10 ms)</li><li>io.r2dbc.h2.H2PostgresqlTestKit.[engine:junit-jupiter]/[class:io.r2dbc.h2.H2PostgresqlTestKit]/[method:segmentSelectWithEmitsRow()] (3 ms)</li><li>io.r2dbc.h2.codecs.CodecIntegrationTests.[engine:junit-jupiter]/[class:io.r2dbc.h2.codecs.CodecIntegrationTests]/[method:shouldEncodeIntervalAsYearToMonth()] (5 ms)</li><li>io.r2dbc.h2.codecs.CodecIntegrationTests.[engine:junit-jupiter]/[class:io.r2dbc.h2.codecs.CodecIntegrationTests]/[method:shouldEncodePeriodAsYearToMonth()] (3 ms)</li><li>io.r2dbc.h2.H2PostgresqlTestKit.[engine:junit-jupiter]/[class:io.r2dbc.h2.H2PostgresqlTestKit]/[method:sameAutoCommitLeavesTransactionUnchanged()] (4 ms)</li><li>io.r2dbc.h2.H2NamedParameterStyleTestKit.[engine:junit-jupiter]/[class:io.r2dbc.h2.H2NamedParameterStyleTestKit]/[method:bindValueAsParameter()] (9 ms)</li><li>io.r2dbc.h2.codecs.CodecIntegrationTests.[engine:junit-jupiter]/[class:io.r2dbc.h2.codecs.CodecIntegrationTests]/[method:shouldEncodeDurationAsIntervalSecond()] (3 ms)</li><li>io.r2dbc.h2.codecs.CodecIntegrationTests.[engine:junit-jupiter]/[class:io.r2dbc.h2.codecs.CodecIntegrationTests]/[method:shouldEncodeIntervalAsIntervalSecond()] (6 ms)</li><li>io.r2dbc.h2.codecs.DefaultCodecsTest.[engine:junit-jupiter]/[class:io.r2dbc.h2.codecs.DefaultCodecsTest]/[method:canDecodeGeometry()] (19 ms)</li><li>io.r2dbc.h2.codecs.CodecIntegrationTests.[engine:junit-jupiter]/[class:io.r2dbc.h2.codecs.CodecIntegrationTests]/[method:shouldEncodeIntegerAsInt()] (5 ms)</li><li>io.r2dbc.h2.H2NamedParameterStyleTestKit.[engine:junit-jupiter]/[class:io.r2dbc.h2.H2NamedParameterStyleTestKit]/[method:duplicateColumnNames()] (7 ms)</li><li>io.r2dbc.h2.H2RowMetadataTest.[engine:junit-jupiter]/[class:io.r2dbc.h2.H2RowMetadataTest]/[method:getColumnMetadatas()] (1 ms)</li><li>io.r2dbc.h2.H2PostgresqlTestKit.[engine:junit-jupiter]/[class:io.r2dbc.h2.H2PostgresqlTestKit]/[method:changeAutoCommitCommitsTransaction()] (4 ms)</li><li>io.r2dbc.h2.H2RowMetadataTest.[engine:junit-jupiter]/[class:io.r2dbc.h2.H2RowMetadataTest]/[method:getColumnMetadataName()] (1 ms)</li><li>io.r2dbc.h2.codecs.CodecIntegrationTests.[engine:junit-jupiter]/[class:io.r2dbc.h2.codecs.CodecIntegrationTests]/[method:shouldEncodeDurationAsIntervalDayToMinute()] (3 ms)</li><li>io.r2dbc.h2.codecs.CodecIntegrationTests.[engine:junit-jupiter]/[class:io.r2dbc.h2.codecs.CodecIntegrationTests]/[method:shouldEncodeDurationAsIntervalDay()] (3 ms)</li><li>io.r2dbc.h2.codecs.CodecIntegrationTests.[engine:junit-jupiter]/[class:io.r2dbc.h2.codecs.CodecIntegrationTests]/[method:shouldEncodeOffsetDateTimeAsTimestampWithTimeZone()] (6 ms)</li><li>io.r2dbc.h2.codecs.CodecIntegrationTests.[engine:junit-jupiter]/[class:io.r2dbc.h2.codecs.CodecIntegrationTests]/[method:shouldEncodeTime()] (7 ms)</li><li>io.r2dbc.h2.codecs.CodecIntegrationTests.[engine:junit-jupiter]/[class:io.r2dbc.h2.codecs.CodecIntegrationTests]/[method:shouldEncodeIntervalAsIntervalHour()] (5 ms)</li><li>io.r2dbc.h2.H2PostgresqlTestKit.[engine:junit-jupiter]/[class:io.r2dbc.h2.H2PostgresqlTestKit]/[method:savePoint()] (5 ms)</li><li>io.r2dbc.h2.H2PostgresqlTestKit.[engine:junit-jupiter]/[class:io.r2dbc.h2.H2PostgresqlTestKit]/[method:clobInsert()] (3 ms)</li><li>io.r2dbc.h2.H2NamedParameterStyleTestKit.[engine:junit-jupiter]/[class:io.r2dbc.h2.H2NamedParameterStyleTestKit]/[method:changeAutoCommitCommitsTransaction()] (6 ms)</li><li>io.r2dbc.h2.H2LobIntegrationTest.[engine:junit-jupiter]/[class:io.r2dbc.h2.H2LobIntegrationTest]/[method:testCharacterLargeObject()] (21 ms)</li><li>io.r2dbc.h2.H2RowTest.[engine:junit-jupiter]/[class:io.r2dbc.h2.H2RowTest]/[method:selectWithoutAliases()] (4 ms)</li><li>io.r2dbc.h2.codecs.ClobCodecTest.[engine:junit-jupiter]/[class:io.r2dbc.h2.codecs.ClobCodecTest]/[method:decode()] (2 ms)</li><li>io.r2dbc.h2.H2PostgresqlTestKit.[engine:junit-jupiter]/[class:io.r2dbc.h2.H2PostgresqlTestKit]/[method:clobSelect()] (5 ms)</li><li>io.r2dbc.h2.H2RowMetadataTest.[engine:junit-jupiter]/[class:io.r2dbc.h2.H2RowMetadataTest]/[method:getColumnMetadataNoIdentifier()] (1 ms)</li><li>io.r2dbc.h2.H2RowMetadataTest.[engine:junit-jupiter]/[class:io.r2dbc.h2.H2RowMetadataTest]/[method:getColumnMetadataInvalidName()] (1 ms)</li><li>io.r2dbc.h2.H2RowMetadataTest.[engine:junit-jupiter]/[class:io.r2dbc.h2.H2RowMetadataTest]/[method:getColumnMetadataIndex()] (1 ms)</li><li>io.r2dbc.h2.codecs.CodecIntegrationTests.[engine:junit-jupiter]/[class:io.r2dbc.h2.codecs.CodecIntegrationTests]/[method:shouldEncodeIntervalAsIntervalYear()] (5 ms)</li><li>io.r2dbc.h2.H2NamedParameterStyleTestKit.[engine:junit-jupiter]/[class:io.r2dbc.h2.H2NamedParameterStyleTestKit]/[method:batch()] (6 ms)</li><li>io.r2dbc.h2.H2NamedParameterStyleTestKit.[engine:junit-jupiter]/[class:io.r2dbc.h2.H2NamedParameterStyleTestKit]/[method:compoundStatement()] (6 ms)</li><li>io.r2dbc.h2.H2NamedParameterStyleTestKit.[engine:junit-jupiter]/[class:io.r2dbc.h2.H2NamedParameterStyleTestKit]/[method:rowMetadata()] (5 ms)</li><li>io.r2dbc.h2.H2NamedParameterStyleTestKit.[engine:junit-jupiter]/[class:io.r2dbc.h2.H2NamedParameterStyleTestKit]/[method:sameAutoCommitLeavesTransactionUnchanged()] (6 ms)</li><li>io.r2dbc.h2.H2StatementTest.[engine:junit-jupiter]/[class:io.r2dbc.h2.H2StatementTest]/[method:returnGeneratedValuesSpecificColumn()] (6 ms)</li><li>io.r2dbc.h2.H2RowMetadataTest.[engine:junit-jupiter]/[class:io.r2dbc.h2.H2RowMetadataTest]/[method:getColumnMetadataInvalidIndex()] (0 ms)</li><li>io.r2dbc.h2.codecs.CodecIntegrationTests.[engine:junit-jupiter]/[class:io.r2dbc.h2.codecs.CodecIntegrationTests]/[method:shouldEncodeIntervalAsIntervalDayToSecond()] (4 ms)</li><li>io.r2dbc.h2.H2PostgresqlTestKit.[engine:junit-jupiter]/[class:io.r2dbc.h2.H2PostgresqlTestKit]/[method:row()] (4 ms)</li><li>io.r2dbc.h2.codecs.CodecIntegrationTests.[engine:junit-jupiter]/[class:io.r2dbc.h2.codecs.CodecIntegrationTests]/[method:shouldEncodeIntervalAsIntervalMinute()] (13 ms)</li><li>io.r2dbc.h2.codecs.CodecIntegrationTests.[engine:junit-jupiter]/[class:io.r2dbc.h2.codecs.CodecIntegrationTests]/[method:shouldEncodeDurationAsIntervalMinute()] (3 ms)</li><li>io.r2dbc.h2.codecs.CodecIntegrationTests.[engine:junit-jupiter]/[class:io.r2dbc.h2.codecs.CodecIntegrationTests]/[method:shouldEncodeIntervalAsIntervalDay()] (5 ms)</li><li>io.r2dbc.h2.H2NamedParameterStyleTestKit.[engine:junit-jupiter]/[class:io.r2dbc.h2.H2NamedParameterStyleTestKit]/[method:columnMetadata()] (5 ms)</li><li>io.r2dbc.h2.H2RowMetadataTest.[engine:junit-jupiter]/[class:io.r2dbc.h2.H2RowMetadataTest]/[method:toRowMetadata()] (8 ms)</li><li>io.r2dbc.h2.codecs.CodecIntegrationTests.[engine:junit-jupiter]/[class:io.r2dbc.h2.codecs.CodecIntegrationTests]/[method:shouldDecodeScalarNull()] (4 ms)</li><li>io.r2dbc.h2.codecs.CodecIntegrationTests.[engine:junit-jupiter]/[class:io.r2dbc.h2.codecs.CodecIntegrationTests]/[method:shouldEncodeDateTime()] (4 ms)</li><li>io.r2dbc.h2.H2NamedParameterStyleTestKit.[engine:junit-jupiter]/[class:io.r2dbc.h2.H2NamedParameterStyleTestKit]/[method:savePoint()] (11 ms)</li><li>io.r2dbc.h2.codecs.CodecIntegrationTests.[engine:junit-jupiter]/[class:io.r2dbc.h2.codecs.CodecIntegrationTests]/[method:shouldEncodeDateTime2()] (6 ms)</li><li>io.r2dbc.h2.H2RowMetadataTest.[engine:junit-jupiter]/[class:io.r2dbc.h2.H2RowMetadataTest]/[method:toRowMetadataNoCodecs()] (3 ms)</li><li>io.r2dbc.h2.codecs.CodecIntegrationTests.[engine:junit-jupiter]/[class:io.r2dbc.h2.codecs.CodecIntegrationTests]/[method:shouldEncodeFloatAsReal()] (5 ms)</li><li>io.r2dbc.h2.H2RowTest.[engine:junit-jupiter]/[class:io.r2dbc.h2.H2RowTest]/[method:selectWithAliases()] (10 ms)</li><li>io.r2dbc.h2.H2NamedParameterStyleTestKit.[engine:junit-jupiter]/[class:io.r2dbc.h2.H2NamedParameterStyleTestKit]/[method:transactionCommit()] (7 ms)</li><li>io.r2dbc.h2.H2PostgresqlTestKit.[engine:junit-jupiter]/[class:io.r2dbc.h2.H2PostgresqlTestKit]/[method:rowMetadata()] (3 ms)</li><li>io.r2dbc.h2.H2LobIntegrationTest.[engine:junit-jupiter]/[class:io.r2dbc.h2.H2LobIntegrationTest]/[method:testClob()] (24 ms)</li><li>io.r2dbc.h2.codecs.CodecIntegrationTests.[engine:junit-jupiter]/[class:io.r2dbc.h2.codecs.CodecIntegrationTests]/[method:shouldEncodeIntervalAsIntervalDayToMinute()] (5 ms)</li><li>io.r2dbc.h2.H2PostgresqlTestKit.[engine:junit-jupiter]/[class:io.r2dbc.h2.H2PostgresqlTestKit]/[method:columnMetadata()] (5 ms)</li><li>io.r2dbc.h2.codecs.CodecIntegrationTests.[engine:junit-jupiter]/[class:io.r2dbc.h2.codecs.CodecIntegrationTests]/[method:shouldEncodeStringAsNVarchar()] (5 ms)</li><li>io.r2dbc.h2.codecs.CodecIntegrationTests.[engine:junit-jupiter]/[class:io.r2dbc.h2.codecs.CodecIntegrationTests]/[method:shouldEncodeGuid()] (7 ms)</li><li>io.r2dbc.h2.codecs.CodecIntegrationTests.[engine:junit-jupiter]/[class:io.r2dbc.h2.codecs.CodecIntegrationTests]/[method:shouldEncodeOffsetTimeAsTimeWithTimeZone()] (5 ms)</li><li>io.r2dbc.h2.H2PostgresqlTestKit.[engine:junit-jupiter]/[class:io.r2dbc.h2.H2PostgresqlTestKit]/[method:bindValueAsParameter()] (5 ms)</li><li>io.r2dbc.h2.codecs.ClobCodecTest.[engine:junit-jupiter]/[class:io.r2dbc.h2.codecs.ClobCodecTest]/[method:decodeNull()] (0 ms)</li><li>io.r2dbc.h2.H2RowMetadataTest.[engine:junit-jupiter]/[class:io.r2dbc.h2.H2RowMetadataTest]/[method:constructorNoColumnMetadata()] (1 ms)</li>
+</ul>
+
+<br/>
+
+Report generated by <a href='https://pitest.org'>PIT</a> pitest-reactor
+
+</body>
+</html>

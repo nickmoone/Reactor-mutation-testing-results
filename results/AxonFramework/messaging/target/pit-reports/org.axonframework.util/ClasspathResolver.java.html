@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+<body>
+
+
+<h1>ClasspathResolver.java</h1>
+
+<table class="src">
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4b248c3f_1'/>
+1
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4b248c3f_1'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>/*</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4b248c3f_2'/>
+2
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4b248c3f_2'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * Copyright (c) 2010-2022. Axon Framework</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4b248c3f_3'/>
+3
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4b248c3f_3'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> *</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4b248c3f_4'/>
+4
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4b248c3f_4'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * Licensed under the Apache License, Version 2.0 (the &#34;License&#34;);</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4b248c3f_5'/>
+5
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4b248c3f_5'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * you may not use this file except in compliance with the License.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4b248c3f_6'/>
+6
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4b248c3f_6'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * You may obtain a copy of the License at</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4b248c3f_7'/>
+7
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4b248c3f_7'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> *</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4b248c3f_8'/>
+8
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4b248c3f_8'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> *    http://www.apache.org/licenses/LICENSE-2.0</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4b248c3f_9'/>
+9
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4b248c3f_9'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> *</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4b248c3f_10'/>
+10
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4b248c3f_10'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * Unless required by applicable law or agreed to in writing, software</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4b248c3f_11'/>
+11
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4b248c3f_11'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * distributed under the License is distributed on an &#34;AS IS&#34; BASIS,</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4b248c3f_12'/>
+12
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4b248c3f_12'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4b248c3f_13'/>
+13
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4b248c3f_13'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * See the License for the specific language governing permissions and</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4b248c3f_14'/>
+14
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4b248c3f_14'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * limitations under the License.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4b248c3f_15'/>
+15
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4b248c3f_15'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4b248c3f_16'/>
+16
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4b248c3f_16'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4b248c3f_17'/>
+17
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4b248c3f_17'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>package org.axonframework.util;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4b248c3f_18'/>
+18
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4b248c3f_18'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4b248c3f_19'/>
+19
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4b248c3f_19'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>/**</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4b248c3f_20'/>
+20
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4b248c3f_20'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * Resolves certain parameters from the classpath.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4b248c3f_21'/>
+21
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4b248c3f_21'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> *</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4b248c3f_22'/>
+22
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4b248c3f_22'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * @author Milan Savic</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4b248c3f_23'/>
+23
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4b248c3f_23'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * @since 4.6.0</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4b248c3f_24'/>
+24
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4b248c3f_24'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4b248c3f_25'/>
+25
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4b248c3f_25'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>public final class ClasspathResolver {</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4b248c3f_26'/>
+26
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4b248c3f_26'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4b248c3f_27'/>
+27
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4b248c3f_27'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    private static final boolean PROJECT_REACTOR_ON_CLASSPATH;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4b248c3f_28'/>
+28
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4b248c3f_28'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4b248c3f_29'/>
+29
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4b248c3f_29'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    static {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4b248c3f_30'/>
+30
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4b248c3f_30'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        boolean fluxOnClasspath = true;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4b248c3f_31'/>
+31
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4b248c3f_31'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        try {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4b248c3f_32'/>
+32
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4b248c3f_32'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>            Class.forName(&#34;reactor.core.publisher.Flux&#34;, false, ClasspathResolver.class.getClassLoader());</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4b248c3f_33'/>
+33
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4b248c3f_33'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='uncovered'><pre><span  class=''>        } catch (ClassNotFoundException e) {</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4b248c3f_34'/>
+34
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4b248c3f_34'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='uncovered'><pre><span  class=''>            fluxOnClasspath = false;</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4b248c3f_35'/>
+35
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4b248c3f_35'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        }</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4b248c3f_36'/>
+36
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4b248c3f_36'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        PROJECT_REACTOR_ON_CLASSPATH = fluxOnClasspath;</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4b248c3f_37'/>
+37
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4b248c3f_37'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4b248c3f_38'/>
+38
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4b248c3f_38'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4b248c3f_39'/>
+39
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4b248c3f_39'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    /**</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4b248c3f_40'/>
+40
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4b248c3f_40'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * Return {@code true} if Project Reactor is on classpath, {@code false} otherwise.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4b248c3f_41'/>
+41
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4b248c3f_41'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     *</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4b248c3f_42'/>
+42
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4b248c3f_42'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * @return {@code true} if Project Reactor is on classpath, {@code false} otherwise.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4b248c3f_43'/>
+43
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4b248c3f_43'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4b248c3f_44'/>
+44
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4b248c3f_44'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public static boolean projectReactorOnClasspath() {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4b248c3f_45'/>
+45
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4b248c3f_45'>2</a>
+<span>
+1. projectReactorOnClasspath : replaced boolean return with true for org/axonframework/util/ClasspathResolver::projectReactorOnClasspath &rarr; SURVIVED<br/>
+2. projectReactorOnClasspath : replaced boolean return with false for org/axonframework/util/ClasspathResolver::projectReactorOnClasspath &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='survived'>        return PROJECT_REACTOR_ON_CLASSPATH;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4b248c3f_46'/>
+46
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4b248c3f_46'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4b248c3f_47'/>
+47
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4b248c3f_47'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4b248c3f_48'/>
+48
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4b248c3f_48'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='uncovered'><pre><span  class=''>    private ClasspathResolver() {</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4b248c3f_49'/>
+49
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4b248c3f_49'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        // not to be instantiated</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4b248c3f_50'/>
+50
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4b248c3f_50'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='uncovered'><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4b248c3f_51'/>
+51
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4b248c3f_51'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>}</span></pre></td></tr>
+
+
+
+<tr><td></td><td></td><td><h2>Mutations</h2></td></tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@4b248c3f_45'>45</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@4b248c3f_45'/> 
+
+<p class='SURVIVED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>projectReactorOnClasspath<br/><b>Killed by : </b>none</span></span> replaced boolean return with true for org/axonframework/util/ClasspathResolver::projectReactorOnClasspath &rarr; SURVIVED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>projectReactorOnClasspath<br/><b>Killed by : </b>org.axonframework.queryhandling.StreamingQueryTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.StreamingQueryTest]/[method:streamingFluxResults()]</span></span> replaced boolean return with false for org/axonframework/util/ClasspathResolver::projectReactorOnClasspath &rarr; KILLED</p> 
+</td>
+</tr>
+
+</table>
+
+
+<h2>Active mutators</h2>
+<ul>
+<li class='mutator'>CONDITIONALS_BOUNDARY</li>
+<li class='mutator'>EMPTY_RETURNS</li>
+<li class='mutator'>EXPERIMENTAL_SWITCH</li>
+<li class='mutator'>FALSE_RETURNS</li>
+<li class='mutator'>INCREMENTS</li>
+<li class='mutator'>INVERT_NEGS</li>
+<li class='mutator'>MATH</li>
+<li class='mutator'>NULL_RETURNS</li>
+<li class='mutator'>PRIMITIVE_RETURNS</li>
+<li class='mutator'>REACTOR_REACTIVE_MUTATOR</li>
+<li class='mutator'>REMOVE_CONDITIONALS_EQUAL_ELSE</li>
+<li class='mutator'>REMOVE_CONDITIONALS_EQUAL_IF</li>
+<li class='mutator'>REMOVE_CONDITIONALS_ORDER_ELSE</li>
+<li class='mutator'>REMOVE_CONDITIONALS_ORDER_IF</li>
+<li class='mutator'>TRUE_RETURNS</li>
+<li class='mutator'>VOID_METHOD_CALLS</li>
+
+</ul>
+
+<h2>Tests examined</h2>
+<ul>
+<li>org.axonframework.messaging.responsetypes.OptionalResponseTypeTest.[engine:junit-jupiter]/[class:org.axonframework.messaging.responsetypes.OptionalResponseTypeTest]/[method:convertReturnsSingleResponseAsProvidedOptional()] (0 ms)</li><li>org.axonframework.messaging.responsetypes.MultipleInstancesResponseTypeTest.[engine:junit-jupiter]/[class:org.axonframework.messaging.responsetypes.MultipleInstancesResponseTypeTest]/[method:matchesReturnsNoMatchIfResponseTypeIsUnboundedGeneric()] (0 ms)</li><li>org.axonframework.queryhandling.StreamingQueryTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.StreamingQueryTest]/[method:emptyOptionalResults()] (1 ms)</li><li>org.axonframework.messaging.responsetypes.InstanceResponseTypeTest.[engine:junit-jupiter]/[class:org.axonframework.messaging.responsetypes.InstanceResponseTypeTest]/[method:matchesReturnsNoMatchIfResponseTypeIsBoundedGenericArrayOfProvidedType()] (0 ms)</li><li>org.axonframework.queryhandling.StreamingQueryTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.StreamingQueryTest]/[method:streamingStreamResults()] (2 ms)</li><li>org.axonframework.queryhandling.SimpleQueryBusTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.SimpleQueryBusTest]/[method:scatterGatherWithInterceptors()] (6 ms)</li><li>org.axonframework.messaging.responsetypes.InstanceResponseTypeTest.[engine:junit-jupiter]/[class:org.axonframework.messaging.responsetypes.InstanceResponseTypeTest]/[method:matchesReturnsMatchIfResponseTypeIsFutureOfProvidedType()] (1 ms)</li><li>org.axonframework.queryhandling.SimpleQueryBusTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.SimpleQueryBusTest]/[method:queryResultContainsCorrelationData()] (1 ms)</li><li>org.axonframework.queryhandling.SimpleQueryBusTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.SimpleQueryBusTest]/[method:queryForSingleResultWithUnsuitableHandlers()] (2 ms)</li><li>org.axonframework.messaging.responsetypes.MultipleInstancesResponseTypeTest.[engine:junit-jupiter]/[class:org.axonframework.messaging.responsetypes.MultipleInstancesResponseTypeTest]/[method:matchesReturnsSingleMatchIfResponseTypeIsMultiBoundedGenericOfProvidedType()] (1 ms)</li><li>org.axonframework.messaging.responsetypes.InstanceResponseTypeTest.[engine:junit-jupiter]/[class:org.axonframework.messaging.responsetypes.InstanceResponseTypeTest]/[method:matchesReturnsNoMatchIfResponseTypeIsLowerBoundedWildcardList()] (1 ms)</li><li>org.axonframework.queryhandling.annotation.AnnotationQueryHandlerAdapterTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.annotation.AnnotationQueryHandlerAdapterTest]/[method:canHandleMessage()] (2 ms)</li><li>org.axonframework.queryhandling.StreamingQueryTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.StreamingQueryTest]/[method:streamingMonoResult()] (103 ms)</li><li>org.axonframework.messaging.responsetypes.InstanceResponseTypeTest.[engine:junit-jupiter]/[class:org.axonframework.messaging.responsetypes.InstanceResponseTypeTest]/[method:convertThrowsClassCastExceptionForMultipleInstanceResponse()] (0 ms)</li><li>org.axonframework.queryhandling.SimpleQueryBusTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.SimpleQueryBusTest]/[method:querySingleIsTraced()] (3 ms)</li><li>org.axonframework.queryhandling.SimpleQueryBusTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.SimpleQueryBusTest]/[method:queryListWithBothSingleHandlerAndListHandlerReturnsListResult()] (1 ms)</li><li>org.axonframework.queryhandling.annotation.AnnotationQueryHandlerAdapterTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.annotation.AnnotationQueryHandlerAdapterTest]/[method:interceptMessages()] (3 ms)</li><li>org.axonframework.queryhandling.StreamingQueryTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.StreamingQueryTest]/[method:dispatchInterceptor()] (1 ms)</li><li>org.axonframework.queryhandling.StreamingQueryTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.StreamingQueryTest]/[method:throttledFluxQuery()] (802 ms)</li><li>org.axonframework.messaging.responsetypes.MultipleInstancesResponseTypeTest.[engine:junit-jupiter]/[class:org.axonframework.messaging.responsetypes.MultipleInstancesResponseTypeTest]/[method:matchesReturnsNoMatchIfResponseTypeIsLowerBoundedWildcardList()] (0 ms)</li><li>org.axonframework.queryhandling.PrimitiveQueryHandlerResponseTypeTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.PrimitiveQueryHandlerResponseTypeTest]/[method:testBoolean()] (1 ms)</li><li>org.axonframework.queryhandling.FutureAsResponseTypeToQueryHandlersTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.FutureAsResponseTypeToQueryHandlersTest]/[method:subscriptionQueryWithSingleResponse()] (502 ms)</li><li>org.axonframework.messaging.responsetypes.InstanceResponseTypeTest.[engine:junit-jupiter]/[class:org.axonframework.messaging.responsetypes.InstanceResponseTypeTest]/[method:matchesReturnsNoMatchIfResponseTypeIsSetOfProvidedType()] (0 ms)</li><li>org.axonframework.messaging.responsetypes.InstanceResponseTypeTest.[engine:junit-jupiter]/[class:org.axonframework.messaging.responsetypes.InstanceResponseTypeTest]/[method:matchesReturnsNoMatchIfResponseTypeIsMultiBoundedGenericArrayOfProvidedType()] (1 ms)</li><li>org.axonframework.messaging.responsetypes.MultipleInstancesResponseTypeTest.[engine:junit-jupiter]/[class:org.axonframework.messaging.responsetypes.MultipleInstancesResponseTypeTest]/[method:matchesReturnsNoMatchIfResponseTypeIsSuperTypeOfProvidedType()] (0 ms)</li><li>org.axonframework.queryhandling.PrimitiveQueryHandlerResponseTypeTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.PrimitiveQueryHandlerResponseTypeTest]/[method:testChar()] (0 ms)</li><li>org.axonframework.queryhandling.StreamingQueryTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.StreamingQueryTest]/[method:streamingListResults()] (0 ms)</li><li>org.axonframework.queryhandling.SimpleQueryBusTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.SimpleQueryBusTest]/[method:scatterGatherReportsExceptionsWithErrorHandler()] (2 ms)</li><li>org.axonframework.messaging.responsetypes.InstanceResponseTypeTest.[engine:junit-jupiter]/[class:org.axonframework.messaging.responsetypes.InstanceResponseTypeTest]/[method:matchesReturnsNoMatchIfResponseTypeIsBoundedListImplementationOfProvidedType()] (0 ms)</li><li>org.axonframework.messaging.responsetypes.InstanceResponseTypeTest.[engine:junit-jupiter]/[class:org.axonframework.messaging.responsetypes.InstanceResponseTypeTest]/[method:matchesReturnsNoMatchIfResponseTypeIsUnboundedGenericList()] (0 ms)</li><li>org.axonframework.messaging.responsetypes.MultipleInstancesResponseTypeTest.[engine:junit-jupiter]/[class:org.axonframework.messaging.responsetypes.MultipleInstancesResponseTypeTest]/[method:matchesReturnsMatchSingleIfResponseTypeIsOfTheSame()] (0 ms)</li><li>org.axonframework.messaging.responsetypes.MultipleInstancesResponseTypeTest.[engine:junit-jupiter]/[class:org.axonframework.messaging.responsetypes.MultipleInstancesResponseTypeTest]/[method:matchesReturnsNoMatchIfResponseTypeIsMapOfProvidedType()] (1 ms)</li><li>org.axonframework.queryhandling.SimpleQueryBusTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.SimpleQueryBusTest]/[method:queryListWithSingleHandlerReturnsSingleAsList()] (4 ms)</li><li>org.axonframework.queryhandling.annotation.AnnotationQueryHandlerAdapterTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.annotation.AnnotationQueryHandlerAdapterTest]/[method:handleQueryWithEmptyOptional()] (1 ms)</li><li>org.axonframework.messaging.responsetypes.MultipleInstancesResponseTypeTest.[engine:junit-jupiter]/[class:org.axonframework.messaging.responsetypes.MultipleInstancesResponseTypeTest]/[method:matchesReturnsNoMatchIfResponseTypeIsGenericArrayOfOtherType()] (1 ms)</li><li>org.axonframework.queryhandling.PrimitiveQueryHandlerResponseTypeTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.PrimitiveQueryHandlerResponseTypeTest]/[method:testLong()] (1 ms)</li><li>org.axonframework.messaging.responsetypes.InstanceResponseTypeTest.[engine:junit-jupiter]/[class:org.axonframework.messaging.responsetypes.InstanceResponseTypeTest]/[method:convertReturnsSingleResponseAsIsForSubTypedResponse()] (0 ms)</li><li>org.axonframework.messaging.responsetypes.InstanceResponseTypeTest.[engine:junit-jupiter]/[class:org.axonframework.messaging.responsetypes.InstanceResponseTypeTest]/[method:matchesReturnsNoMatchIfResponseTypeIsGenericOfOtherType()] (1 ms)</li><li>org.axonframework.messaging.responsetypes.InstanceResponseTypeTest.[engine:junit-jupiter]/[class:org.axonframework.messaging.responsetypes.InstanceResponseTypeTest]/[method:matchesReturnsNoMatchIfResponseTypeIsUpperBoundedWildcardListOfProvidedType()] (1 ms)</li><li>org.axonframework.messaging.responsetypes.MultipleInstancesResponseTypeTest.[engine:junit-jupiter]/[class:org.axonframework.messaging.responsetypes.MultipleInstancesResponseTypeTest]/[method:matchesReturnsSingleMatchIfResponseTypeIsBoundedGenericOfProvidedType()] (0 ms)</li><li>org.axonframework.messaging.responsetypes.OptionalResponseTypeTest.[engine:junit-jupiter]/[class:org.axonframework.messaging.responsetypes.OptionalResponseTypeTest]/[method:optionalMatchesExpectedType()] (1 ms)</li><li>org.axonframework.messaging.responsetypes.MultipleInstancesResponseTypeTest.[engine:junit-jupiter]/[class:org.axonframework.messaging.responsetypes.MultipleInstancesResponseTypeTest]/[method:matchesReturnsNoMatchIfResponseTypeIsArrayWithSuperTypeOfProvidedType()] (0 ms)</li><li>org.axonframework.messaging.responsetypes.InstanceResponseTypeTest.[engine:junit-jupiter]/[class:org.axonframework.messaging.responsetypes.InstanceResponseTypeTest]/[method:matchesReturnsMatchIfResponseTypeIsMultiBoundedGenericOfProvidedType()] (0 ms)</li><li>org.axonframework.messaging.responsetypes.OptionalResponseTypeTest.[engine:junit-jupiter]/[class:org.axonframework.messaging.responsetypes.OptionalResponseTypeTest]/[method:convertThrowsClassCastExceptionForMultipleInstanceResponse()] (0 ms)</li><li>org.axonframework.queryhandling.SimpleQueryBusTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.SimpleQueryBusTest]/[method:queryReportsExceptionInResponseMessage()] (2 ms)</li><li>org.axonframework.queryhandling.StreamingQueryTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.StreamingQueryTest]/[method:backpressureFluxQuery()] (4 ms)</li><li>org.axonframework.messaging.responsetypes.MultipleInstancesResponseTypeTest.[engine:junit-jupiter]/[class:org.axonframework.messaging.responsetypes.MultipleInstancesResponseTypeTest]/[method:convertThrowsExceptionForResponseOfDifferentArrayType()] (0 ms)</li><li>org.axonframework.queryhandling.StreamingQueryTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.StreamingQueryTest]/[method:streamingFluxResults()] (1 ms)</li><li>org.axonframework.messaging.responsetypes.InstanceResponseTypeTest.[engine:junit-jupiter]/[class:org.axonframework.messaging.responsetypes.InstanceResponseTypeTest]/[method:matchesReturnsNoMatchIfResponseTypeIsMultiGenericUpperBoundedWildcardListOfProvidedType()] (0 ms)</li><li>org.axonframework.queryhandling.SimpleQueryBusTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.SimpleQueryBusTest]/[method:subscriptionQueryIsTraced()] (22 ms)</li><li>org.axonframework.messaging.responsetypes.OptionalResponseTypeTest.[engine:junit-jupiter]/[class:org.axonframework.messaging.responsetypes.OptionalResponseTypeTest]/[method:convertThrowsClassCastExceptionForDifferentSingleInstanceResponse()] (0 ms)</li><li>org.axonframework.queryhandling.StreamingQueryTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.StreamingQueryTest]/[method:streamingNullResult()] (9 ms)</li><li>org.axonframework.commandhandling.gateway.CommandGatewayFactoryTest.[engine:junit-jupiter]/[class:org.axonframework.commandhandling.gateway.CommandGatewayFactoryTest]/[method:createGatewayWaitForResultAndInvokeCallbacksSuccess()] (2 ms)</li><li>org.axonframework.queryhandling.SimpleQueryBusTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.SimpleQueryBusTest]/[method:queryReturnsException()] (3 ms)</li><li>org.axonframework.queryhandling.annotation.AnnotationQueryHandlerAdapterTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.annotation.AnnotationQueryHandlerAdapterTest]/[method:handleQuery()] (1 ms)</li><li>org.axonframework.commandhandling.gateway.CommandGatewayFactoryTest.[engine:junit-jupiter]/[class:org.axonframework.commandhandling.gateway.CommandGatewayFactoryTest]/[method:createGatewayAsyncWithCallbacksSuccessButReturnTypeDoesNotMatchCallback()] (5 ms)</li><li>org.axonframework.queryhandling.annotation.AnnotationQueryHandlerAdapterTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.annotation.AnnotationQueryHandlerAdapterTest]/[method:handleQueryWithProvidedOptional()] (1 ms)</li><li>org.axonframework.commandhandling.gateway.CommandGatewayFactoryTest.[engine:junit-jupiter]/[class:org.axonframework.commandhandling.gateway.CommandGatewayFactoryTest]/[method:createGatewayFutureSuccessfulResult()] (3 ms)</li><li>org.axonframework.queryhandling.PrimitiveQueryHandlerResponseTypeTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.PrimitiveQueryHandlerResponseTypeTest]/[method:testInt()] (0 ms)</li><li>org.axonframework.queryhandling.SimpleQueryBusTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.SimpleQueryBusTest]/[method:subscribingSameHandlerTwiceInvokedOnce()] (1 ms)</li><li>org.axonframework.queryhandling.StreamingQueryTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.StreamingQueryTest]/[method:streamingFluxAfterHandlerCompletes()] (5002 ms)</li><li>org.axonframework.queryhandling.SimpleQueryBusTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.SimpleQueryBusTest]/[method:nullResponseProperlyReturned()] (2 ms)</li><li>org.axonframework.queryhandling.StreamingQueryTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.StreamingQueryTest]/[method:errorStream()] (2 ms)</li><li>org.axonframework.commandhandling.gateway.CommandGatewayFactoryTest.[engine:junit-jupiter]/[class:org.axonframework.commandhandling.gateway.CommandGatewayFactoryTest]/[method:gatewayWithReturnValueReturns()] (32 ms)</li><li>org.axonframework.queryhandling.SimpleQueryBusTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.SimpleQueryBusTest]/[method:querySingleWithTransaction()] (1 ms)</li><li>org.axonframework.messaging.responsetypes.InstanceResponseTypeTest.[engine:junit-jupiter]/[class:org.axonframework.messaging.responsetypes.InstanceResponseTypeTest]/[method:matchesReturnsMatchIfResponseTypeIsOptionalOfProvidedType()] (0 ms)</li><li>org.axonframework.queryhandling.SimpleQueryBusTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.SimpleQueryBusTest]/[method:queryForSingleResultWillReportErrors()] (2 ms)</li><li>org.axonframework.messaging.responsetypes.MultipleInstancesResponseTypeTest.[engine:junit-jupiter]/[class:org.axonframework.messaging.responsetypes.MultipleInstancesResponseTypeTest]/[method:matchesReturnsNoMatchIfResponseTypeIsGenericOfOtherType()] (0 ms)</li><li>org.axonframework.commandhandling.gateway.CommandGatewayFactoryTest.[engine:junit-jupiter]/[class:org.axonframework.commandhandling.gateway.CommandGatewayFactoryTest]/[method:createGatewayAsyncWithCallbacksSuccess()] (2 ms)</li><li>org.axonframework.queryhandling.SimpleQueryBusTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.SimpleQueryBusTest]/[method:queryDoesNotArriveAtUnsubscribedHandler()] (2 ms)</li><li>org.axonframework.messaging.responsetypes.InstanceResponseTypeTest.[engine:junit-jupiter]/[class:org.axonframework.messaging.responsetypes.InstanceResponseTypeTest]/[method:matchesReturnsNoMatchIfResponseTypeIsArrayWithSubTypeOfProvidedType()] (0 ms)</li><li>org.axonframework.messaging.responsetypes.MultipleInstancesResponseTypeTest.[engine:junit-jupiter]/[class:org.axonframework.messaging.responsetypes.MultipleInstancesResponseTypeTest]/[method:matchesReturnsNoMatchIfResponseTypeIsMultiUnboundedListImplementationOfProvidedType()] (1 ms)</li><li>org.axonframework.queryhandling.StreamingQueryTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.StreamingQueryTest]/[method:handlerInterceptor()] (1 ms)</li><li>org.axonframework.messaging.responsetypes.InstanceResponseTypeTest.[engine:junit-jupiter]/[class:org.axonframework.messaging.responsetypes.InstanceResponseTypeTest]/[method:matchesReturnsNoMatchIfResponseTypeIsUnboundedListImplementationOfProvidedType()] (0 ms)</li><li>org.axonframework.messaging.responsetypes.InstanceResponseTypeTest.[engine:junit-jupiter]/[class:org.axonframework.messaging.responsetypes.InstanceResponseTypeTest]/[method:matchesReturnsNoMatchIfResponseTypeIsMultiUnboundedListImplementationOfProvidedType()] (0 ms)</li><li>org.axonframework.queryhandling.SimpleQueryBusTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.SimpleQueryBusTest]/[method:scatterGather()] (2 ms)</li><li>org.axonframework.messaging.responsetypes.MultipleInstancesResponseTypeTest.[engine:junit-jupiter]/[class:org.axonframework.messaging.responsetypes.MultipleInstancesResponseTypeTest]/[method:matchesReturnsNoMatchIfResponseTypeIsOptionalOfProvidedType()] (0 ms)</li><li>org.axonframework.queryhandling.SimpleQueryBusTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.SimpleQueryBusTest]/[method:subscriptionQueryReportsExceptionInInitialResult()] (2 ms)</li><li>org.axonframework.queryhandling.StreamingQueryTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.StreamingQueryTest]/[method:streamingSingleResult()] (1 ms)</li><li>org.axonframework.messaging.responsetypes.InstanceResponseTypeTest.[engine:junit-jupiter]/[class:org.axonframework.messaging.responsetypes.InstanceResponseTypeTest]/[method:matchesReturnsNoMatchIfResponseTypeIsSubListOfProvidedType()] (0 ms)</li><li>org.axonframework.queryhandling.SimpleQueryBusTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.SimpleQueryBusTest]/[method:scatterGatherWithTransactionRollsBackOnFailure()] (5 ms)</li><li>org.axonframework.queryhandling.SimpleQueryBusTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.SimpleQueryBusTest]/[method:queryResponseMessageCorrelationData()] (1 ms)</li><li>org.axonframework.queryhandling.SimpleQueryBusTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.SimpleQueryBusTest]/[method:subscriptionQueryIncreasingProjection()] (3019 ms)</li><li>org.axonframework.messaging.responsetypes.MultipleInstancesResponseTypeTest.[engine:junit-jupiter]/[class:org.axonframework.messaging.responsetypes.MultipleInstancesResponseTypeTest]/[method:convertReturnsListForSingleInstanceResponse()] (1 ms)</li><li>org.axonframework.messaging.responsetypes.InstanceResponseTypeTest.[engine:junit-jupiter]/[class:org.axonframework.messaging.responsetypes.InstanceResponseTypeTest]/[method:matchesReturnsNoMatchIfResponseTypeIsUnboundedGeneric()] (0 ms)</li><li>org.axonframework.queryhandling.PrimitiveQueryHandlerResponseTypeTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.PrimitiveQueryHandlerResponseTypeTest]/[method:testByte()] (1 ms)</li><li>org.axonframework.messaging.responsetypes.InstanceResponseTypeTest.[engine:junit-jupiter]/[class:org.axonframework.messaging.responsetypes.InstanceResponseTypeTest]/[method:matchesReturnsNoMatchIfResponseTypeIsBoundedGenericListOfProvidedType()] (0 ms)</li><li>org.axonframework.messaging.responsetypes.InstanceResponseTypeTest.[engine:junit-jupiter]/[class:org.axonframework.messaging.responsetypes.InstanceResponseTypeTest]/[method:matchesReturnsNoMatchIfResponseTypeIsSuperTypeOfProvidedType()] (0 ms)</li><li>org.axonframework.messaging.responsetypes.MultipleInstancesResponseTypeTest.[engine:junit-jupiter]/[class:org.axonframework.messaging.responsetypes.MultipleInstancesResponseTypeTest]/[method:matchesReturnsNoMatchIfResponseTypeIsUnboundedGenericList()] (0 ms)</li><li>org.axonframework.messaging.responsetypes.InstanceResponseTypeTest.[engine:junit-jupiter]/[class:org.axonframework.messaging.responsetypes.InstanceResponseTypeTest]/[method:matchesReturnsNoMatchIfResponseTypeIsGenericArrayOfOtherType()] (0 ms)</li><li>org.axonframework.queryhandling.PrimitiveQueryHandlerResponseTypeTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.PrimitiveQueryHandlerResponseTypeTest]/[method:testFloat()] (2 ms)</li><li>org.axonframework.messaging.responsetypes.MultipleInstancesResponseTypeTest.[engine:junit-jupiter]/[class:org.axonframework.messaging.responsetypes.MultipleInstancesResponseTypeTest]/[method:matchesReturnsMatchSingleIfResponseTypeIsSubTypeOfProvidedType()] (0 ms)</li><li>org.axonframework.queryhandling.StreamingQueryTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.StreamingQueryTest]/[method:resubscribeWorksEvenWhenAnErrorHasBeenCashed()] (2 ms)</li><li>org.axonframework.messaging.responsetypes.InstanceResponseTypeTest.[engine:junit-jupiter]/[class:org.axonframework.messaging.responsetypes.InstanceResponseTypeTest]/[method:matchesReturnsNoMatchIfResponseTypeIsGenericUpperBoundedWildcardListOfProvidedType()] (0 ms)</li><li>org.axonframework.messaging.responsetypes.MultipleInstancesResponseTypeTest.[engine:junit-jupiter]/[class:org.axonframework.messaging.responsetypes.MultipleInstancesResponseTypeTest]/[method:matchesReturnsNoMatchIfResponseTypeIsSuperListOfProvidedType()] (0 ms)</li><li>org.axonframework.queryhandling.StreamingQueryTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.StreamingQueryTest]/[method:switchHandlerOnError()] (2 ms)</li><li>org.axonframework.messaging.responsetypes.MultipleInstancesResponseTypeTest.[engine:junit-jupiter]/[class:org.axonframework.messaging.responsetypes.MultipleInstancesResponseTypeTest]/[method:matchesReturnsSingleMatchIfResponseTypeIsFutureOfProvidedType()] (0 ms)</li><li>org.axonframework.queryhandling.FutureAsResponseTypeToQueryHandlersTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.FutureAsResponseTypeToQueryHandlersTest]/[method:scatterGatherQueryWithSingleResponse()] (503 ms)</li><li>org.axonframework.messaging.responsetypes.InstanceResponseTypeTest.[engine:junit-jupiter]/[class:org.axonframework.messaging.responsetypes.InstanceResponseTypeTest]/[method:matchesReturnsNoMatchIfResponseTypeIsMultiBoundedGenericListOfProvidedType()] (0 ms)</li><li>org.axonframework.messaging.responsetypes.MultipleInstancesResponseTypeTest.[engine:junit-jupiter]/[class:org.axonframework.messaging.responsetypes.MultipleInstancesResponseTypeTest]/[method:matchesReturnsNoMatchIfResponseTypeIsUnboundedGenericArray()] (0 ms)</li><li>org.axonframework.queryhandling.FutureAsResponseTypeToQueryHandlersTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.FutureAsResponseTypeToQueryHandlersTest]/[method:queryWithSingleResponse()] (502 ms)</li><li>org.axonframework.messaging.responsetypes.InstanceResponseTypeTest.[engine:junit-jupiter]/[class:org.axonframework.messaging.responsetypes.InstanceResponseTypeTest]/[method:matchesReturnsMatchIfResponseTypeIsSubTypeOfProvidedType()] (0 ms)</li><li>org.axonframework.messaging.responsetypes.InstanceResponseTypeTest.[engine:junit-jupiter]/[class:org.axonframework.messaging.responsetypes.InstanceResponseTypeTest]/[method:matchesReturnsNoMatchIfResponseTypeIsWildcardListOfOtherType()] (1 ms)</li><li>org.axonframework.messaging.responsetypes.InstanceResponseTypeTest.[engine:junit-jupiter]/[class:org.axonframework.messaging.responsetypes.InstanceResponseTypeTest]/[method:matchesReturnsNoMatchIfResponseTypeIsSuperListOfProvidedType()] (0 ms)</li><li>org.axonframework.messaging.responsetypes.InstanceResponseTypeTest.[engine:junit-jupiter]/[class:org.axonframework.messaging.responsetypes.InstanceResponseTypeTest]/[method:matchesReturnsNoMatchIfResponseTypeIsListOfFutureOfProvidedType()] (1 ms)</li><li>org.axonframework.commandhandling.gateway.CommandGatewayFactoryTest.[engine:junit-jupiter]/[class:org.axonframework.commandhandling.gateway.CommandGatewayFactoryTest]/[method:createGatewayCompletableFutureSuccessfulResult()] (5 ms)</li><li>org.axonframework.messaging.responsetypes.MultipleInstancesResponseTypeTest.[engine:junit-jupiter]/[class:org.axonframework.messaging.responsetypes.MultipleInstancesResponseTypeTest]/[method:matchesReturnsNoMatchIfResponseTypeIsUnboundedGenericUpperBoundedWildcardList()] (0 ms)</li><li>org.axonframework.messaging.responsetypes.MultipleInstancesResponseTypeTest.[engine:junit-jupiter]/[class:org.axonframework.messaging.responsetypes.MultipleInstancesResponseTypeTest]/[method:matchesReturnsNoMatchIfResponseTypeIsUnboundedWildcardList()] (1 ms)</li><li>org.axonframework.messaging.responsetypes.MultipleInstancesResponseTypeTest.[engine:junit-jupiter]/[class:org.axonframework.messaging.responsetypes.MultipleInstancesResponseTypeTest]/[method:matchesReturnsNoMatchIfResponseTypeIsGenericListOfOtherType()] (0 ms)</li><li>org.axonframework.queryhandling.SimpleQueryBusTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.SimpleQueryBusTest]/[method:queryHandlerDeclaresCompletableFutureResponseType()] (2 ms)</li><li>org.axonframework.messaging.responsetypes.InstanceResponseTypeTest.[engine:junit-jupiter]/[class:org.axonframework.messaging.responsetypes.InstanceResponseTypeTest]/[method:matchesReturnsMatchIfResponseTypeIsTheSame()] (0 ms)</li><li>org.axonframework.messaging.responsetypes.InstanceResponseTypeTest.[engine:junit-jupiter]/[class:org.axonframework.messaging.responsetypes.InstanceResponseTypeTest]/[method:matchesReturnsNoMatchIfResponseTypeIsArrayOfProvidedType()] (0 ms)</li><li>org.axonframework.messaging.responsetypes.InstanceResponseTypeTest.[engine:junit-jupiter]/[class:org.axonframework.messaging.responsetypes.InstanceResponseTypeTest]/[method:matchesReturnsNoMatchIfResponseTypeIsUnboundedWildcardList()] (0 ms)</li><li>org.axonframework.commandhandling.gateway.CommandGatewayFactoryTest.[engine:junit-jupiter]/[class:org.axonframework.commandhandling.gateway.CommandGatewayFactoryTest]/[method:gatewayFireAndForget()] (3 ms)</li><li>org.axonframework.messaging.responsetypes.InstanceResponseTypeTest.[engine:junit-jupiter]/[class:org.axonframework.messaging.responsetypes.InstanceResponseTypeTest]/[method:matchesReturnsNoMatchIfResponseTypeIsListOfProvidedType()] (0 ms)</li><li>org.axonframework.queryhandling.SimpleQueryBusTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.SimpleQueryBusTest]/[method:queryReturnsResponseMessageFromHandlerAsIs()] (2 ms)</li><li>org.axonframework.messaging.responsetypes.InstanceResponseTypeTest.[engine:junit-jupiter]/[class:org.axonframework.messaging.responsetypes.InstanceResponseTypeTest]/[method:convertThrowsClassCastExceptionForDifferentSingleInstanceResponse()] (0 ms)</li><li>org.axonframework.queryhandling.SimpleQueryBusTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.SimpleQueryBusTest]/[method:handlerInterceptorThrowsException()] (1 ms)</li><li>org.axonframework.queryhandling.SimpleQueryBusTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.SimpleQueryBusTest]/[method:scatterGatherWithTransaction()] (4 ms)</li><li>org.axonframework.queryhandling.SimpleQueryBusTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.SimpleQueryBusTest]/[method:queryHandlerDeclaresFutureResponseType()] (1 ms)</li><li>org.axonframework.messaging.responsetypes.InstanceResponseTypeTest.[engine:junit-jupiter]/[class:org.axonframework.messaging.responsetypes.InstanceResponseTypeTest]/[method:convertReturnsSingleResponseAsIs()] (0 ms)</li><li>org.axonframework.messaging.responsetypes.MultipleInstancesResponseTypeTest.[engine:junit-jupiter]/[class:org.axonframework.messaging.responsetypes.MultipleInstancesResponseTypeTest]/[method:matchesReturnsNoMatchIfResponseTypeIsUnboundedListImplementationOfProvidedType()] (1 ms)</li><li>org.axonframework.commandhandling.gateway.CommandGatewayFactoryTest.[engine:junit-jupiter]/[class:org.axonframework.commandhandling.gateway.CommandGatewayFactoryTest]/[method:differentCommandCallbackResultTypesInvocationsAreAllInvoked()] (15 ms)</li><li>org.axonframework.queryhandling.SimpleQueryBusTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.SimpleQueryBusTest]/[method:queryWithInterceptors()] (2 ms)</li><li>org.axonframework.queryhandling.StreamingQueryTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.StreamingQueryTest]/[method:optionalResults()] (0 ms)</li><li>org.axonframework.messaging.responsetypes.InstanceResponseTypeTest.[engine:junit-jupiter]/[class:org.axonframework.messaging.responsetypes.InstanceResponseTypeTest]/[method:matchesReturnsNoMatchIfResponseTypeIsUnboundedGenericArray()] (0 ms)</li><li>org.axonframework.messaging.responsetypes.InstanceResponseTypeTest.[engine:junit-jupiter]/[class:org.axonframework.messaging.responsetypes.InstanceResponseTypeTest]/[method:matchesReturnsNoMatchIfResponseTypeIsUnboundedGenericUpperBoundedWildcardList()] (0 ms)</li><li>org.axonframework.queryhandling.SimpleQueryBusTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.SimpleQueryBusTest]/[method:ScatterGatherIsTraced()] (7 ms)</li><li>org.axonframework.queryhandling.PrimitiveQueryHandlerResponseTypeTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.PrimitiveQueryHandlerResponseTypeTest]/[method:testShort()] (1 ms)</li><li>org.axonframework.commandhandling.gateway.CommandGatewayFactoryTest.[engine:junit-jupiter]/[class:org.axonframework.commandhandling.gateway.CommandGatewayFactoryTest]/[method:gatewayTimeout()] (503 ms)</li><li>org.axonframework.queryhandling.SimpleQueryBusTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.SimpleQueryBusTest]/[method:queryWithOnlyUnsuitableResultsInException()] (1 ms)</li><li>org.axonframework.queryhandling.annotation.MethodQueryMessageHandlerDefinitionTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.annotation.MethodQueryMessageHandlerDefinitionTest]/[method:optionalResponseTypeUnwrapped()] (1 ms)</li><li>org.axonframework.messaging.responsetypes.InstanceResponseTypeTest.[engine:junit-jupiter]/[class:org.axonframework.messaging.responsetypes.InstanceResponseTypeTest]/[method:matchesReturnsMatchIfResponseTypeIsBoundedGenericOfProvidedType()] (1 ms)</li><li>org.axonframework.queryhandling.PrimitiveQueryHandlerResponseTypeTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.PrimitiveQueryHandlerResponseTypeTest]/[method:testDouble()] (2 ms)</li><li>org.axonframework.messaging.responsetypes.InstanceResponseTypeTest.[engine:junit-jupiter]/[class:org.axonframework.messaging.responsetypes.InstanceResponseTypeTest]/[method:matchesReturnsNoMatchIfResponseTypeIsArrayWithSuperTypeOfProvidedType()] (0 ms)</li><li>org.axonframework.messaging.responsetypes.MultipleInstancesResponseTypeTest.[engine:junit-jupiter]/[class:org.axonframework.messaging.responsetypes.MultipleInstancesResponseTypeTest]/[method:matchesReturnsNoMatchIfResponseTypeIsWildcardListOfOtherType()] (1 ms)</li><li>org.axonframework.messaging.interceptors.ExceptionHandlerTest.[engine:junit-jupiter]/[class:org.axonframework.messaging.interceptors.ExceptionHandlerTest]/[method:exceptionHandlerIsInvokedForAnQueryHandlerThrowingAnException()] (5 ms)</li><li>org.axonframework.queryhandling.StreamingQueryTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.StreamingQueryTest]/[method:streamingCompletableFutureResult()] (1 ms)</li><li>org.axonframework.messaging.responsetypes.InstanceResponseTypeTest.[engine:junit-jupiter]/[class:org.axonframework.messaging.responsetypes.InstanceResponseTypeTest]/[method:matchesReturnsNoMatchIfResponseTypeIsMultiBoundedListImplementationOfProvidedType()] (0 ms)</li><li>org.axonframework.messaging.responsetypes.InstanceResponseTypeTest.[engine:junit-jupiter]/[class:org.axonframework.messaging.responsetypes.InstanceResponseTypeTest]/[method:matchesReturnsNoMatchIfResponseTypeIsStreamOfProvidedType()] (0 ms)</li><li>org.axonframework.queryhandling.annotation.AnnotationQueryHandlerAdapterTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.annotation.AnnotationQueryHandlerAdapterTest]/[method:handleQueryWithException()] (2 ms)</li><li>org.axonframework.messaging.responsetypes.InstanceResponseTypeTest.[engine:junit-jupiter]/[class:org.axonframework.messaging.responsetypes.InstanceResponseTypeTest]/[method:matchesReturnsNoMatchIfResponseTypeIsGenericListOfOtherType()] (0 ms)</li><li>org.axonframework.messaging.responsetypes.InstanceResponseTypeTest.[engine:junit-jupiter]/[class:org.axonframework.messaging.responsetypes.InstanceResponseTypeTest]/[method:matchesReturnsNoMatchIfResponseTypeIsMapOfProvidedType()] (0 ms)</li><li>org.axonframework.messaging.responsetypes.MultipleInstancesResponseTypeTest.[engine:junit-jupiter]/[class:org.axonframework.messaging.responsetypes.MultipleInstancesResponseTypeTest]/[method:convertThrowsExceptionForResponseOfDifferentListType()] (0 ms)</li><li>org.axonframework.queryhandling.SimpleQueryBusTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.SimpleQueryBusTest]/[method:queryFirstFromScatterGatherWillCommitUnitOfWork()] (4 ms)</li><li>org.axonframework.messaging.responsetypes.OptionalResponseTypeTest.[engine:junit-jupiter]/[class:org.axonframework.messaging.responsetypes.OptionalResponseTypeTest]/[method:convertReturnsSingleResponseAsIsForSubTypedResponse()] (0 ms)</li>
+</ul>
+
+<br/>
+
+Report generated by <a href='https://pitest.org'>PIT</a> pitest-reactor
+
+</body>
+</html>

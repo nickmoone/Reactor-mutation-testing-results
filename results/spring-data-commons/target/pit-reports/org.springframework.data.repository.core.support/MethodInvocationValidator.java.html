@@ -1,0 +1,3640 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+<body>
+
+
+<h1>MethodInvocationValidator.java</h1>
+
+<table class="src">
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_1'/>
+1
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_1'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>/*</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_2'/>
+2
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_2'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * Copyright 2017-2023 the original author or authors.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_3'/>
+3
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_3'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> *</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_4'/>
+4
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_4'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * Licensed under the Apache License, Version 2.0 (the &#34;License&#34;);</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_5'/>
+5
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_5'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * you may not use this file except in compliance with the License.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_6'/>
+6
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_6'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * You may obtain a copy of the License at</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_7'/>
+7
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_7'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> *</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_8'/>
+8
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_8'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> *      https://www.apache.org/licenses/LICENSE-2.0</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_9'/>
+9
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_9'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> *</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_10'/>
+10
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_10'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * Unless required by applicable law or agreed to in writing, software</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_11'/>
+11
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_11'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * distributed under the License is distributed on an &#34;AS IS&#34; BASIS,</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_12'/>
+12
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_12'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_13'/>
+13
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_13'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * See the License for the specific language governing permissions and</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_14'/>
+14
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_14'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * limitations under the License.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_15'/>
+15
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_15'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_16'/>
+16
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_16'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>package org.springframework.data.repository.core.support;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_17'/>
+17
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_17'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_18'/>
+18
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_18'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import java.lang.annotation.ElementType;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_19'/>
+19
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_19'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import java.lang.reflect.Method;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_20'/>
+20
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_20'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import java.util.Map;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_21'/>
+21
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_21'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_22'/>
+22
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_22'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.aopalliance.intercept.MethodInterceptor;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_23'/>
+23
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_23'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.aopalliance.intercept.MethodInvocation;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_24'/>
+24
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_24'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.springframework.core.DefaultParameterNameDiscoverer;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_25'/>
+25
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_25'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.springframework.core.MethodParameter;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_26'/>
+26
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_26'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.springframework.core.ParameterNameDiscoverer;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_27'/>
+27
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_27'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.springframework.dao.EmptyResultDataAccessException;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_28'/>
+28
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_28'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.springframework.data.util.KotlinReflectionUtils;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_29'/>
+29
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_29'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.springframework.data.util.NullableUtils;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_30'/>
+30
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_30'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.springframework.data.util.ReflectionUtils;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_31'/>
+31
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_31'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.springframework.lang.Nullable;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_32'/>
+32
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_32'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.springframework.util.ClassUtils;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_33'/>
+33
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_33'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.springframework.util.ConcurrentReferenceHashMap;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_34'/>
+34
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_34'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.springframework.util.ConcurrentReferenceHashMap.ReferenceType;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_35'/>
+35
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_35'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.springframework.util.ObjectUtils;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_36'/>
+36
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_36'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_37'/>
+37
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_37'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>/**</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_38'/>
+38
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_38'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * Interceptor enforcing required return value and method parameter constraints declared on repository query methods.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_39'/>
+39
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_39'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * Supports Kotlin nullability markers and JSR-305 Non-null annotations.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_40'/>
+40
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_40'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> *</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_41'/>
+41
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_41'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * @author Mark Paluch</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_42'/>
+42
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_42'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * @author Johannes Englmeier</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_43'/>
+43
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_43'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * @since 2.0</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_44'/>
+44
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_44'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * @see org.springframework.lang.NonNull</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_45'/>
+45
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_45'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * @see ReflectionUtils#isNullable(MethodParameter)</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_46'/>
+46
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_46'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * @see NullableUtils</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_47'/>
+47
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_47'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> */</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_48'/>
+48
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_48'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>public class MethodInvocationValidator implements MethodInterceptor {</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_49'/>
+49
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_49'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_50'/>
+50
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_50'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>&#9;private final ParameterNameDiscoverer discoverer = new DefaultParameterNameDiscoverer();</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_51'/>
+51
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_51'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>&#9;private final Map&#60;Method, Nullability&#62; nullabilityCache = new ConcurrentReferenceHashMap&#60;&#62;(16, ReferenceType.WEAK);</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_52'/>
+52
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_52'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_53'/>
+53
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_53'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;/**</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_54'/>
+54
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_54'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9; * Returns {@literal true} if the {@code repositoryInterface} is supported by this interceptor.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_55'/>
+55
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_55'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9; *</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_56'/>
+56
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_56'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9; * @param repositoryInterface the interface class.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_57'/>
+57
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_57'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9; * @return {@literal true} if the {@code repositoryInterface} is supported by this interceptor.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_58'/>
+58
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_58'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9; */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_59'/>
+59
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_59'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;public static boolean supports(Class&#60;?&#62; repositoryInterface) {</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_60'/>
+60
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_60'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_61'/>
+61
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_61'>3</a>
+<span>
+1. supports : replaced boolean return with true for org/springframework/data/repository/core/support/MethodInvocationValidator::supports &rarr; SURVIVED<br/>
+2. supports : removed conditional - replaced equality check with true &rarr; SURVIVED<br/>
+3. supports : removed conditional - replaced equality check with false &rarr; SURVIVED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='survived'>&#9;&#9;return KotlinReflectionUtils.isSupportedKotlinClass(repositoryInterface)</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_62'/>
+62
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_62'>2</a>
+<span>
+1. supports : removed conditional - replaced equality check with false &rarr; SURVIVED<br/>
+2. supports : removed conditional - replaced equality check with true &rarr; SURVIVED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='survived'>&#9;&#9;&#9;&#9;|| NullableUtils.isNonNull(repositoryInterface, ElementType.METHOD)</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_63'/>
+63
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_63'>2</a>
+<span>
+1. supports : removed conditional - replaced equality check with true &rarr; SURVIVED<br/>
+2. supports : removed conditional - replaced equality check with false &rarr; SURVIVED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='survived'>&#9;&#9;&#9;&#9;|| NullableUtils.isNonNull(repositoryInterface, ElementType.PARAMETER);</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_64'/>
+64
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_64'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;}</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_65'/>
+65
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_65'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_66'/>
+66
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_66'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;@Nullable</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_67'/>
+67
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_67'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;@Override</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_68'/>
+68
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_68'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;public Object invoke(@SuppressWarnings(&#34;null&#34;) MethodInvocation invocation) throws Throwable {</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_69'/>
+69
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_69'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_70'/>
+70
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_70'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>&#9;&#9;Method method = invocation.getMethod();</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_71'/>
+71
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_71'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>&#9;&#9;Nullability nullability = nullabilityCache.get(method);</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_72'/>
+72
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_72'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_73'/>
+73
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_73'>2</a>
+<span>
+1. invoke : removed conditional - replaced equality check with true &rarr; SURVIVED<br/>
+2. invoke : removed conditional - replaced equality check with false &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='survived'>&#9;&#9;if (nullability == null) {</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_74'/>
+74
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_74'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_75'/>
+75
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_75'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>&#9;&#9;&#9;nullability = Nullability.of(method, discoverer);</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_76'/>
+76
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_76'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>&#9;&#9;&#9;nullabilityCache.put(method, nullability);</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_77'/>
+77
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_77'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;&#9;}</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_78'/>
+78
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_78'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_79'/>
+79
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_79'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>&#9;&#9;Object[] arguments = invocation.getArguments();</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_80'/>
+80
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_80'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_81'/>
+81
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_81'>3</a>
+<span>
+1. invoke : removed conditional - replaced comparison check with false &rarr; KILLED<br/>
+2. invoke : removed conditional - replaced comparison check with true &rarr; KILLED<br/>
+3. invoke : changed conditional boundary &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>&#9;&#9;for (int i = 0; i &#60; method.getParameterCount(); i++) {</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_82'/>
+82
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_82'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_83'/>
+83
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_83'>2</a>
+<span>
+1. invoke : removed conditional - replaced equality check with false &rarr; KILLED<br/>
+2. invoke : removed conditional - replaced equality check with true &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>&#9;&#9;&#9;if (nullability.isNullableParameter(i)) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_84'/>
+84
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_84'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>&#9;&#9;&#9;&#9;continue;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_85'/>
+85
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_85'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;&#9;&#9;}</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_86'/>
+86
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_86'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_87'/>
+87
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_87'>5</a>
+<span>
+1. invoke : changed conditional boundary &rarr; SURVIVED<br/>
+2. invoke : removed conditional - replaced comparison check with true &rarr; SURVIVED<br/>
+3. invoke : removed conditional - replaced comparison check with false &rarr; KILLED<br/>
+4. invoke : removed conditional - replaced equality check with true &rarr; KILLED<br/>
+5. invoke : removed conditional - replaced equality check with false &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='survived'>&#9;&#9;&#9;if ((arguments.length &#60; i) || (arguments[i] == null)) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_88'/>
+88
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_88'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>&#9;&#9;&#9;&#9;throw new IllegalArgumentException(</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_89'/>
+89
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_89'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>&#9;&#9;&#9;&#9;&#9;&#9;String.format(&#34;Parameter %s in %s.%s must not be null&#34;, nullability.getMethodParameterName(i),</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_90'/>
+90
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_90'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>&#9;&#9;&#9;&#9;&#9;&#9;&#9;&#9;ClassUtils.getShortName(method.getDeclaringClass()), method.getName()));</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_91'/>
+91
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_91'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;&#9;&#9;}</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_92'/>
+92
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_92'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;&#9;}</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_93'/>
+93
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_93'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_94'/>
+94
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_94'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>&#9;&#9;Object result = invocation.proceed();</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_95'/>
+95
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_95'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_96'/>
+96
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_96'>4</a>
+<span>
+1. invoke : removed conditional - replaced equality check with false &rarr; KILLED<br/>
+2. invoke : removed conditional - replaced equality check with true &rarr; KILLED<br/>
+3. invoke : removed conditional - replaced equality check with false &rarr; KILLED<br/>
+4. invoke : removed conditional - replaced equality check with true &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>&#9;&#9;if ((result == null) &#38;&#38; !nullability.isNullableReturn()) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_97'/>
+97
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_97'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>&#9;&#9;&#9;throw new EmptyResultDataAccessException(&#34;Result must not be null&#34;, 1);</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_98'/>
+98
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_98'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;&#9;}</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_99'/>
+99
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_99'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_100'/>
+100
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_100'>1</a>
+<span>
+1. invoke : replaced return value with null for org/springframework/data/repository/core/support/MethodInvocationValidator::invoke &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>&#9;&#9;return result;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_101'/>
+101
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_101'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;}</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_102'/>
+102
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_102'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_103'/>
+103
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_103'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;static final class Nullability {</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_104'/>
+104
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_104'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_105'/>
+105
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_105'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;&#9;private final boolean nullableReturn;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_106'/>
+106
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_106'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;&#9;private final boolean[] nullableParameters;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_107'/>
+107
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_107'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;&#9;private final MethodParameter[] methodParameters;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_108'/>
+108
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_108'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_109'/>
+109
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_109'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>&#9;&#9;private Nullability(boolean nullableReturn, boolean[] nullableParameters, MethodParameter[] methodParameters) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_110'/>
+110
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_110'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>&#9;&#9;&#9;this.nullableReturn = nullableReturn;</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_111'/>
+111
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_111'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>&#9;&#9;&#9;this.nullableParameters = nullableParameters;</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_112'/>
+112
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_112'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>&#9;&#9;&#9;this.methodParameters = methodParameters;</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_113'/>
+113
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_113'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>&#9;&#9;}</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_114'/>
+114
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_114'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_115'/>
+115
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_115'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;&#9;static Nullability of(Method method, ParameterNameDiscoverer discoverer) {</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_116'/>
+116
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_116'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_117'/>
+117
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_117'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>&#9;&#9;&#9;boolean nullableReturn = isNullableParameter(new MethodParameter(method, -1));</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_118'/>
+118
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_118'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>&#9;&#9;&#9;boolean[] nullableParameters = new boolean[method.getParameterCount()];</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_119'/>
+119
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_119'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>&#9;&#9;&#9;MethodParameter[] methodParameters = new MethodParameter[method.getParameterCount()];</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_120'/>
+120
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_120'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_121'/>
+121
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_121'>3</a>
+<span>
+1. of : changed conditional boundary &rarr; KILLED<br/>
+2. of : removed conditional - replaced comparison check with false &rarr; KILLED<br/>
+3. of : removed conditional - replaced comparison check with true &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>&#9;&#9;&#9;for (int i = 0; i &#60; method.getParameterCount(); i++) {</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_122'/>
+122
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_122'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_123'/>
+123
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_123'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>&#9;&#9;&#9;&#9;MethodParameter parameter = new MethodParameter(method, i);</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_124'/>
+124
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_124'>1</a>
+<span>
+1. of : removed call to org/springframework/core/MethodParameter::initParameterNameDiscovery &rarr; SURVIVED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='survived'>&#9;&#9;&#9;&#9;parameter.initParameterNameDiscovery(discoverer);</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_125'/>
+125
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_125'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>&#9;&#9;&#9;&#9;nullableParameters[i] = isNullableParameter(parameter);</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_126'/>
+126
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_126'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>&#9;&#9;&#9;&#9;methodParameters[i] = parameter;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_127'/>
+127
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_127'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;&#9;&#9;}</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_128'/>
+128
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_128'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_129'/>
+129
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_129'>1</a>
+<span>
+1. of : replaced return value with null for org/springframework/data/repository/core/support/MethodInvocationValidator$Nullability::of &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>&#9;&#9;&#9;return new Nullability(nullableReturn, nullableParameters, methodParameters);</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_130'/>
+130
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_130'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;&#9;}</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_131'/>
+131
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_131'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_132'/>
+132
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_132'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;&#9;String getMethodParameterName(int index) {</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_133'/>
+133
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_133'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_134'/>
+134
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_134'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>&#9;&#9;&#9;String parameterName = methodParameters[index].getParameterName();</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_135'/>
+135
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_135'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_136'/>
+136
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_136'>2</a>
+<span>
+1. getMethodParameterName : removed conditional - replaced equality check with false &rarr; SURVIVED<br/>
+2. getMethodParameterName : removed conditional - replaced equality check with true &rarr; SURVIVED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='survived'>&#9;&#9;&#9;if (parameterName == null) {</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_137'/>
+137
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_137'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='uncovered'><pre><span  class=''>&#9;&#9;&#9;&#9;parameterName = String.format(&#34;of type %s at index %d&#34;,</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_138'/>
+138
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_138'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='uncovered'><pre><span  class=''>&#9;&#9;&#9;&#9;&#9;&#9;ClassUtils.getShortName(methodParameters[index].getParameterType()), index);</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_139'/>
+139
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_139'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;&#9;&#9;}</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_140'/>
+140
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_140'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_141'/>
+141
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_141'>1</a>
+<span>
+1. getMethodParameterName : replaced return value with &#34;&#34; for org/springframework/data/repository/core/support/MethodInvocationValidator$Nullability::getMethodParameterName &rarr; SURVIVED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='survived'>&#9;&#9;&#9;return parameterName;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_142'/>
+142
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_142'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;&#9;}</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_143'/>
+143
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_143'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_144'/>
+144
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_144'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;&#9;boolean isNullableReturn() {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_145'/>
+145
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_145'>2</a>
+<span>
+1. isNullableReturn : replaced boolean return with true for org/springframework/data/repository/core/support/MethodInvocationValidator$Nullability::isNullableReturn &rarr; KILLED<br/>
+2. isNullableReturn : replaced boolean return with false for org/springframework/data/repository/core/support/MethodInvocationValidator$Nullability::isNullableReturn &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>&#9;&#9;&#9;return nullableReturn;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_146'/>
+146
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_146'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;&#9;}</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_147'/>
+147
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_147'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_148'/>
+148
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_148'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;&#9;boolean isNullableParameter(int index) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_149'/>
+149
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_149'>2</a>
+<span>
+1. isNullableParameter : replaced boolean return with true for org/springframework/data/repository/core/support/MethodInvocationValidator$Nullability::isNullableParameter &rarr; KILLED<br/>
+2. isNullableParameter : replaced boolean return with false for org/springframework/data/repository/core/support/MethodInvocationValidator$Nullability::isNullableParameter &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>&#9;&#9;&#9;return nullableParameters[index];</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_150'/>
+150
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_150'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;&#9;}</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_151'/>
+151
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_151'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_152'/>
+152
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_152'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;&#9;private static boolean isNullableParameter(MethodParameter parameter) {</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_153'/>
+153
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_153'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_154'/>
+154
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_154'>5</a>
+<span>
+1. isNullableParameter : removed conditional - replaced equality check with true &rarr; KILLED<br/>
+2. isNullableParameter : replaced boolean return with true for org/springframework/data/repository/core/support/MethodInvocationValidator$Nullability::isNullableParameter &rarr; KILLED<br/>
+3. isNullableParameter : removed conditional - replaced equality check with true &rarr; KILLED<br/>
+4. isNullableParameter : removed conditional - replaced equality check with false &rarr; KILLED<br/>
+5. isNullableParameter : removed conditional - replaced equality check with false &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>&#9;&#9;&#9;return requiresNoValue(parameter) || NullableUtils.isExplicitNullable(parameter)</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_155'/>
+155
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_155'>2</a>
+<span>
+1. isNullableParameter : removed conditional - replaced equality check with false &rarr; KILLED<br/>
+2. isNullableParameter : removed conditional - replaced equality check with true &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>&#9;&#9;&#9;&#9;&#9;|| (KotlinReflectionUtils.isSupportedKotlinClass(parameter.getDeclaringClass())</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_156'/>
+156
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_156'>2</a>
+<span>
+1. isNullableParameter : removed conditional - replaced equality check with true &rarr; KILLED<br/>
+2. isNullableParameter : removed conditional - replaced equality check with false &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>&#9;&#9;&#9;&#9;&#9;&#9;&#9;&#38;&#38; ReflectionUtils.isNullable(parameter));</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_157'/>
+157
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_157'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;&#9;}</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_158'/>
+158
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_158'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_159'/>
+159
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_159'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;&#9;private static boolean requiresNoValue(MethodParameter parameter) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_160'/>
+160
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_160'>2</a>
+<span>
+1. requiresNoValue : replaced boolean return with true for org/springframework/data/repository/core/support/MethodInvocationValidator$Nullability::requiresNoValue &rarr; KILLED<br/>
+2. requiresNoValue : replaced boolean return with false for org/springframework/data/repository/core/support/MethodInvocationValidator$Nullability::requiresNoValue &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>&#9;&#9;&#9;return ReflectionUtils.isVoid(parameter.getParameterType());</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_161'/>
+161
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_161'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;&#9;}</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_162'/>
+162
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_162'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_163'/>
+163
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_163'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;&#9;public boolean[] getNullableParameters() {</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_164'/>
+164
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_164'>1</a>
+<span>
+1. getNullableParameters : replaced return value with null for org/springframework/data/repository/core/support/MethodInvocationValidator$Nullability::getNullableParameters &rarr; NO_COVERAGE<br/>
+
+</span>
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>&#9;&#9;&#9;return this.nullableParameters;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_165'/>
+165
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_165'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;&#9;}</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_166'/>
+166
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_166'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_167'/>
+167
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_167'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;&#9;public MethodParameter[] getMethodParameters() {</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_168'/>
+168
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_168'>1</a>
+<span>
+1. getMethodParameters : replaced return value with null for org/springframework/data/repository/core/support/MethodInvocationValidator$Nullability::getMethodParameters &rarr; NO_COVERAGE<br/>
+
+</span>
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>&#9;&#9;&#9;return this.methodParameters;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_169'/>
+169
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_169'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;&#9;}</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_170'/>
+170
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_170'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_171'/>
+171
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_171'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;&#9;@Override</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_172'/>
+172
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_172'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;&#9;public boolean equals(@Nullable Object o) {</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_173'/>
+173
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_173'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_174'/>
+174
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_174'>1</a>
+<span>
+1. equals : removed conditional - replaced equality check with true &rarr; NO_COVERAGE<br/>
+
+</span>
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>&#9;&#9;&#9;if (this == o) {</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_175'/>
+175
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_175'>1</a>
+<span>
+1. equals : replaced boolean return with false for org/springframework/data/repository/core/support/MethodInvocationValidator$Nullability::equals &rarr; NO_COVERAGE<br/>
+
+</span>
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>&#9;&#9;&#9;&#9;return true;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_176'/>
+176
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_176'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;&#9;&#9;}</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_177'/>
+177
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_177'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_178'/>
+178
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_178'>2</a>
+<span>
+1. equals : removed conditional - replaced equality check with true &rarr; NO_COVERAGE<br/>
+2. equals : removed conditional - replaced equality check with false &rarr; NO_COVERAGE<br/>
+
+</span>
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>&#9;&#9;&#9;if (!(o instanceof Nullability that)) {</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_179'/>
+179
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_179'>1</a>
+<span>
+1. equals : replaced boolean return with true for org/springframework/data/repository/core/support/MethodInvocationValidator$Nullability::equals &rarr; NO_COVERAGE<br/>
+
+</span>
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>&#9;&#9;&#9;&#9;return false;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_180'/>
+180
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_180'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;&#9;&#9;}</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_181'/>
+181
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_181'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_182'/>
+182
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_182'>2</a>
+<span>
+1. equals : removed conditional - replaced equality check with true &rarr; NO_COVERAGE<br/>
+2. equals : removed conditional - replaced equality check with false &rarr; NO_COVERAGE<br/>
+
+</span>
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>&#9;&#9;&#9;if (nullableReturn != that.nullableReturn) {</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_183'/>
+183
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_183'>1</a>
+<span>
+1. equals : replaced boolean return with true for org/springframework/data/repository/core/support/MethodInvocationValidator$Nullability::equals &rarr; NO_COVERAGE<br/>
+
+</span>
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>&#9;&#9;&#9;&#9;return false;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_184'/>
+184
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_184'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;&#9;&#9;}</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_185'/>
+185
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_185'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_186'/>
+186
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_186'>2</a>
+<span>
+1. equals : removed conditional - replaced equality check with true &rarr; NO_COVERAGE<br/>
+2. equals : removed conditional - replaced equality check with false &rarr; NO_COVERAGE<br/>
+
+</span>
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>&#9;&#9;&#9;if (!ObjectUtils.nullSafeEquals(nullableParameters, that.nullableParameters)) {</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_187'/>
+187
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_187'>1</a>
+<span>
+1. equals : replaced boolean return with true for org/springframework/data/repository/core/support/MethodInvocationValidator$Nullability::equals &rarr; NO_COVERAGE<br/>
+
+</span>
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>&#9;&#9;&#9;&#9;return false;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_188'/>
+188
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_188'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;&#9;&#9;}</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_189'/>
+189
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_189'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_190'/>
+190
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_190'>2</a>
+<span>
+1. equals : replaced boolean return with false for org/springframework/data/repository/core/support/MethodInvocationValidator$Nullability::equals &rarr; NO_COVERAGE<br/>
+2. equals : replaced boolean return with true for org/springframework/data/repository/core/support/MethodInvocationValidator$Nullability::equals &rarr; NO_COVERAGE<br/>
+
+</span>
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>&#9;&#9;&#9;return ObjectUtils.nullSafeEquals(methodParameters, that.methodParameters);</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_191'/>
+191
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_191'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;&#9;}</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_192'/>
+192
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_192'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_193'/>
+193
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_193'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;&#9;@Override</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_194'/>
+194
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_194'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;&#9;public int hashCode() {</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_195'/>
+195
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_195'>2</a>
+<span>
+1. hashCode : removed conditional - replaced equality check with true &rarr; NO_COVERAGE<br/>
+2. hashCode : removed conditional - replaced equality check with false &rarr; NO_COVERAGE<br/>
+
+</span>
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>&#9;&#9;&#9;int result = (nullableReturn ? 1 : 0);</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_196'/>
+196
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_196'>2</a>
+<span>
+1. hashCode : Replaced integer multiplication with division &rarr; NO_COVERAGE<br/>
+2. hashCode : Replaced integer addition with subtraction &rarr; NO_COVERAGE<br/>
+
+</span>
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>&#9;&#9;&#9;result = (31 * result) + ObjectUtils.nullSafeHashCode(nullableParameters);</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_197'/>
+197
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_197'>2</a>
+<span>
+1. hashCode : Replaced integer addition with subtraction &rarr; NO_COVERAGE<br/>
+2. hashCode : Replaced integer multiplication with division &rarr; NO_COVERAGE<br/>
+
+</span>
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>&#9;&#9;&#9;result = (31 * result) + ObjectUtils.nullSafeHashCode(methodParameters);</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_198'/>
+198
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_198'>1</a>
+<span>
+1. hashCode : replaced int return with 0 for org/springframework/data/repository/core/support/MethodInvocationValidator$Nullability::hashCode &rarr; NO_COVERAGE<br/>
+
+</span>
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>&#9;&#9;&#9;return result;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_199'/>
+199
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_199'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;&#9;}</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_200'/>
+200
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_200'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_201'/>
+201
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_201'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;&#9;@Override</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_202'/>
+202
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_202'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;&#9;public String toString() {</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_203'/>
+203
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_203'>1</a>
+<span>
+1. toString : replaced return value with &#34;&#34; for org/springframework/data/repository/core/support/MethodInvocationValidator$Nullability::toString &rarr; NO_COVERAGE<br/>
+
+</span>
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>&#9;&#9;&#9;return &#34;MethodInvocationValidator.Nullability(nullableReturn=&#34; + this.isNullableReturn() + &#34;, nullableParameters=&#34;</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_204'/>
+204
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_204'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='uncovered'><pre><span  class=''>&#9;&#9;&#9;&#9;&#9;+ java.util.Arrays.toString(this.getNullableParameters()) + &#34;, methodParameters=&#34;</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_205'/>
+205
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_205'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='uncovered'><pre><span  class=''>&#9;&#9;&#9;&#9;&#9;+ java.util.Arrays.deepToString(this.getMethodParameters()) + &#34;)&#34;;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_206'/>
+206
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_206'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;&#9;}</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_207'/>
+207
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_207'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;}</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@107f5195_208'/>
+208
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_208'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>}</span></pre></td></tr>
+
+
+
+<tr><td></td><td></td><td><h2>Mutations</h2></td></tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@107f5195_61'>61</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_61'/> 
+
+<p class='SURVIVED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>supports<br/><b>Killed by : </b>none</span></span> replaced boolean return with true for org/springframework/data/repository/core/support/MethodInvocationValidator::supports &rarr; SURVIVED</p> <p class='SURVIVED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>supports<br/><b>Killed by : </b>none</span></span> removed conditional - replaced equality check with true &rarr; SURVIVED</p> <p class='SURVIVED'><span class='pop'>3.<span><b>3</b><br/><b>Location : </b>supports<br/><b>Killed by : </b>none</span></span> removed conditional - replaced equality check with false &rarr; SURVIVED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@107f5195_62'>62</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_62'/> 
+
+<p class='SURVIVED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>supports<br/><b>Killed by : </b>none</span></span> removed conditional - replaced equality check with false &rarr; SURVIVED</p> <p class='SURVIVED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>supports<br/><b>Killed by : </b>none</span></span> removed conditional - replaced equality check with true &rarr; SURVIVED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@107f5195_63'>63</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_63'/> 
+
+<p class='SURVIVED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>supports<br/><b>Killed by : </b>none</span></span> removed conditional - replaced equality check with true &rarr; SURVIVED</p> <p class='SURVIVED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>supports<br/><b>Killed by : </b>none</span></span> removed conditional - replaced equality check with false &rarr; SURVIVED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@107f5195_73'>73</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_73'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>invoke<br/><b>Killed by : </b>org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests]/[method:considersRequiredKotlinParameter()]</span></span> removed conditional - replaced equality check with false &rarr; KILLED</p> <p class='SURVIVED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>invoke<br/><b>Killed by : </b>none</span></span> removed conditional - replaced equality check with true &rarr; SURVIVED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@107f5195_81'>81</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_81'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>invoke<br/><b>Killed by : </b>org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests]/[method:considersRequiredKotlinParameter()]</span></span> removed conditional - replaced comparison check with false &rarr; KILLED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>invoke<br/><b>Killed by : </b>org.springframework.data.repository.cdi.RepositoryFragmentsIntegrationTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.cdi.RepositoryFragmentsIntegrationTests]/[method:shouldFindImplementationForNestedRepositoryFragment()]</span></span> removed conditional - replaced comparison check with true &rarr; KILLED</p> <p class='KILLED'><span class='pop'>3.<span><b>3</b><br/><b>Location : </b>invoke<br/><b>Killed by : </b>org.springframework.data.repository.cdi.RepositoryFragmentsIntegrationTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.cdi.RepositoryFragmentsIntegrationTests]/[method:shouldFindImplementationForNestedRepositoryFragment()]</span></span> changed conditional boundary &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@107f5195_83'>83</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_83'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>invoke<br/><b>Killed by : </b>org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests]/[method:considersRequiredKotlinNullableParameter()]</span></span> removed conditional - replaced equality check with false &rarr; KILLED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>invoke<br/><b>Killed by : </b>org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests]/[method:considersRequiredKotlinParameter()]</span></span> removed conditional - replaced equality check with true &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@107f5195_87'>87</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_87'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>invoke<br/><b>Killed by : </b>org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests]/[method:capturesFailureFromInvocation()]</span></span> removed conditional - replaced comparison check with false &rarr; KILLED</p> <p class='SURVIVED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>invoke<br/><b>Killed by : </b>none</span></span> changed conditional boundary &rarr; SURVIVED</p> <p class='KILLED'><span class='pop'>3.<span><b>3</b><br/><b>Location : </b>invoke<br/><b>Killed by : </b>org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests]/[method:capturesFailureFromInvocation()]</span></span> removed conditional - replaced equality check with true &rarr; KILLED</p> <p class='SURVIVED'><span class='pop'>4.<span><b>4</b><br/><b>Location : </b>invoke<br/><b>Killed by : </b>none</span></span> removed conditional - replaced comparison check with true &rarr; SURVIVED</p> <p class='KILLED'><span class='pop'>5.<span><b>5</b><br/><b>Location : </b>invoke<br/><b>Killed by : </b>org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests]/[method:considersRequiredKotlinParameter()]</span></span> removed conditional - replaced equality check with false &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@107f5195_96'>96</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_96'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>invoke<br/><b>Killed by : </b>org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests]/[method:considersRequiredReturnValue()]</span></span> removed conditional - replaced equality check with false &rarr; KILLED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>invoke<br/><b>Killed by : </b>org.springframework.data.repository.cdi.RepositoryFragmentsIntegrationTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.cdi.RepositoryFragmentsIntegrationTests]/[method:shouldFindImplementationForNestedRepositoryFragment()]</span></span> removed conditional - replaced equality check with true &rarr; KILLED</p> <p class='KILLED'><span class='pop'>3.<span><b>3</b><br/><b>Location : </b>invoke<br/><b>Killed by : </b>org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests]/[method:considersRequiredReturnValue()]</span></span> removed conditional - replaced equality check with false &rarr; KILLED</p> <p class='KILLED'><span class='pop'>4.<span><b>4</b><br/><b>Location : </b>invoke<br/><b>Killed by : </b>org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests]/[method:considersRequiredKotlinNullableParameter()]</span></span> removed conditional - replaced equality check with true &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@107f5195_100'>100</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_100'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>invoke<br/><b>Killed by : </b>org.springframework.data.repository.cdi.RepositoryFragmentsIntegrationTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.cdi.RepositoryFragmentsIntegrationTests]/[method:shouldFindImplementationForNestedRepositoryFragment()]</span></span> replaced return value with null for org/springframework/data/repository/core/support/MethodInvocationValidator::invoke &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@107f5195_121'>121</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_121'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>of<br/><b>Killed by : </b>org.springframework.data.repository.cdi.RepositoryFragmentsIntegrationTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.cdi.RepositoryFragmentsIntegrationTests]/[method:shouldFindImplementationForNestedRepositoryFragment()]</span></span> changed conditional boundary &rarr; KILLED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>of<br/><b>Killed by : </b>org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests]/[method:considersRequiredKotlinParameter()]</span></span> removed conditional - replaced comparison check with false &rarr; KILLED</p> <p class='KILLED'><span class='pop'>3.<span><b>3</b><br/><b>Location : </b>of<br/><b>Killed by : </b>org.springframework.data.repository.cdi.RepositoryFragmentsIntegrationTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.cdi.RepositoryFragmentsIntegrationTests]/[method:shouldFindImplementationForNestedRepositoryFragment()]</span></span> removed conditional - replaced comparison check with true &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@107f5195_124'>124</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_124'/> 
+
+<p class='SURVIVED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>of<br/><b>Killed by : </b>none</span></span> removed call to org/springframework/core/MethodParameter::initParameterNameDiscovery &rarr; SURVIVED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@107f5195_129'>129</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_129'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>of<br/><b>Killed by : </b>org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests]/[method:considersRequiredKotlinParameter()]</span></span> replaced return value with null for org/springframework/data/repository/core/support/MethodInvocationValidator$Nullability::of &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@107f5195_136'>136</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_136'/> 
+
+<p class='SURVIVED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>getMethodParameterName<br/><b>Killed by : </b>none</span></span> removed conditional - replaced equality check with false &rarr; SURVIVED</p> <p class='SURVIVED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>getMethodParameterName<br/><b>Killed by : </b>none</span></span> removed conditional - replaced equality check with true &rarr; SURVIVED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@107f5195_141'>141</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_141'/> 
+
+<p class='SURVIVED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>getMethodParameterName<br/><b>Killed by : </b>none</span></span> replaced return value with &#34;&#34; for org/springframework/data/repository/core/support/MethodInvocationValidator$Nullability::getMethodParameterName &rarr; SURVIVED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@107f5195_145'>145</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_145'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>isNullableReturn<br/><b>Killed by : </b>org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests]/[method:considersRequiredReturnValue()]</span></span> replaced boolean return with true for org/springframework/data/repository/core/support/MethodInvocationValidator$Nullability::isNullableReturn &rarr; KILLED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>isNullableReturn<br/><b>Killed by : </b>org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests]/[method:considersRequiredKotlinNullableParameter()]</span></span> replaced boolean return with false for org/springframework/data/repository/core/support/MethodInvocationValidator$Nullability::isNullableReturn &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@107f5195_149'>149</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_149'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>isNullableParameter<br/><b>Killed by : </b>org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests]/[method:considersRequiredKotlinParameter()]</span></span> replaced boolean return with true for org/springframework/data/repository/core/support/MethodInvocationValidator$Nullability::isNullableParameter &rarr; KILLED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>isNullableParameter<br/><b>Killed by : </b>org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests]/[method:considersRequiredKotlinNullableParameter()]</span></span> replaced boolean return with false for org/springframework/data/repository/core/support/MethodInvocationValidator$Nullability::isNullableParameter &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@107f5195_154'>154</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_154'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>isNullableParameter<br/><b>Killed by : </b>org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests]/[method:invokesCustomMethodCompositionMethodIfItRedeclaresACRUDOne()]</span></span> removed conditional - replaced equality check with true &rarr; KILLED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>isNullableParameter<br/><b>Killed by : </b>org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests]/[method:considersRequiredKotlinParameter()]</span></span> replaced boolean return with true for org/springframework/data/repository/core/support/MethodInvocationValidator$Nullability::isNullableParameter &rarr; KILLED</p> <p class='KILLED'><span class='pop'>3.<span><b>3</b><br/><b>Location : </b>isNullableParameter<br/><b>Killed by : </b>org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests]/[method:shouldAllowVoidMethods()]</span></span> removed conditional - replaced equality check with true &rarr; KILLED</p> <p class='KILLED'><span class='pop'>4.<span><b>4</b><br/><b>Location : </b>isNullableParameter<br/><b>Killed by : </b>org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests]/[method:considersRequiredKotlinParameter()]</span></span> removed conditional - replaced equality check with false &rarr; KILLED</p> <p class='KILLED'><span class='pop'>5.<span><b>5</b><br/><b>Location : </b>isNullableParameter<br/><b>Killed by : </b>org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests]/[method:considersRequiredKotlinParameter()]</span></span> removed conditional - replaced equality check with false &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@107f5195_155'>155</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_155'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>isNullableParameter<br/><b>Killed by : </b>org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests]/[method:considersRequiredKotlinNullableParameter()]</span></span> removed conditional - replaced equality check with false &rarr; KILLED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>isNullableParameter<br/><b>Killed by : </b>org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests]/[method:considersRequiredParameter()]</span></span> removed conditional - replaced equality check with true &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@107f5195_156'>156</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_156'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>isNullableParameter<br/><b>Killed by : </b>org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests]/[method:considersRequiredKotlinParameter()]</span></span> removed conditional - replaced equality check with true &rarr; KILLED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>isNullableParameter<br/><b>Killed by : </b>org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests]/[method:considersRequiredKotlinNullableParameter()]</span></span> removed conditional - replaced equality check with false &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@107f5195_160'>160</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_160'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>requiresNoValue<br/><b>Killed by : </b>org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests]/[method:considersRequiredKotlinParameter()]</span></span> replaced boolean return with true for org/springframework/data/repository/core/support/MethodInvocationValidator$Nullability::requiresNoValue &rarr; KILLED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>requiresNoValue<br/><b>Killed by : </b>org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests]/[method:shouldAllowVoidMethods()]</span></span> replaced boolean return with false for org/springframework/data/repository/core/support/MethodInvocationValidator$Nullability::requiresNoValue &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@107f5195_164'>164</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_164'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>getNullableParameters<br/><b>Killed by : </b>none</span></span> replaced return value with null for org/springframework/data/repository/core/support/MethodInvocationValidator$Nullability::getNullableParameters &rarr; NO_COVERAGE</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@107f5195_168'>168</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_168'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>getMethodParameters<br/><b>Killed by : </b>none</span></span> replaced return value with null for org/springframework/data/repository/core/support/MethodInvocationValidator$Nullability::getMethodParameters &rarr; NO_COVERAGE</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@107f5195_174'>174</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_174'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>equals<br/><b>Killed by : </b>none</span></span> removed conditional - replaced equality check with true &rarr; NO_COVERAGE</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@107f5195_175'>175</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_175'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>equals<br/><b>Killed by : </b>none</span></span> replaced boolean return with false for org/springframework/data/repository/core/support/MethodInvocationValidator$Nullability::equals &rarr; NO_COVERAGE</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@107f5195_178'>178</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_178'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>equals<br/><b>Killed by : </b>none</span></span> removed conditional - replaced equality check with true &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>equals<br/><b>Killed by : </b>none</span></span> removed conditional - replaced equality check with false &rarr; NO_COVERAGE</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@107f5195_179'>179</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_179'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>equals<br/><b>Killed by : </b>none</span></span> replaced boolean return with true for org/springframework/data/repository/core/support/MethodInvocationValidator$Nullability::equals &rarr; NO_COVERAGE</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@107f5195_182'>182</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_182'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>equals<br/><b>Killed by : </b>none</span></span> removed conditional - replaced equality check with true &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>equals<br/><b>Killed by : </b>none</span></span> removed conditional - replaced equality check with false &rarr; NO_COVERAGE</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@107f5195_183'>183</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_183'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>equals<br/><b>Killed by : </b>none</span></span> replaced boolean return with true for org/springframework/data/repository/core/support/MethodInvocationValidator$Nullability::equals &rarr; NO_COVERAGE</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@107f5195_186'>186</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_186'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>equals<br/><b>Killed by : </b>none</span></span> removed conditional - replaced equality check with true &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>equals<br/><b>Killed by : </b>none</span></span> removed conditional - replaced equality check with false &rarr; NO_COVERAGE</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@107f5195_187'>187</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_187'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>equals<br/><b>Killed by : </b>none</span></span> replaced boolean return with true for org/springframework/data/repository/core/support/MethodInvocationValidator$Nullability::equals &rarr; NO_COVERAGE</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@107f5195_190'>190</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_190'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>equals<br/><b>Killed by : </b>none</span></span> replaced boolean return with false for org/springframework/data/repository/core/support/MethodInvocationValidator$Nullability::equals &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>equals<br/><b>Killed by : </b>none</span></span> replaced boolean return with true for org/springframework/data/repository/core/support/MethodInvocationValidator$Nullability::equals &rarr; NO_COVERAGE</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@107f5195_195'>195</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_195'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>hashCode<br/><b>Killed by : </b>none</span></span> removed conditional - replaced equality check with true &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>hashCode<br/><b>Killed by : </b>none</span></span> removed conditional - replaced equality check with false &rarr; NO_COVERAGE</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@107f5195_196'>196</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_196'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>hashCode<br/><b>Killed by : </b>none</span></span> Replaced integer multiplication with division &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>hashCode<br/><b>Killed by : </b>none</span></span> Replaced integer addition with subtraction &rarr; NO_COVERAGE</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@107f5195_197'>197</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_197'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>hashCode<br/><b>Killed by : </b>none</span></span> Replaced integer addition with subtraction &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>hashCode<br/><b>Killed by : </b>none</span></span> Replaced integer multiplication with division &rarr; NO_COVERAGE</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@107f5195_198'>198</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_198'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>hashCode<br/><b>Killed by : </b>none</span></span> replaced int return with 0 for org/springframework/data/repository/core/support/MethodInvocationValidator$Nullability::hashCode &rarr; NO_COVERAGE</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@107f5195_203'>203</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@107f5195_203'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>toString<br/><b>Killed by : </b>none</span></span> replaced return value with &#34;&#34; for org/springframework/data/repository/core/support/MethodInvocationValidator$Nullability::toString &rarr; NO_COVERAGE</p> 
+</td>
+</tr>
+
+</table>
+
+
+<h2>Active mutators</h2>
+<ul>
+<li class='mutator'>CONDITIONALS_BOUNDARY</li>
+<li class='mutator'>EMPTY_RETURNS</li>
+<li class='mutator'>EXPERIMENTAL_SWITCH</li>
+<li class='mutator'>FALSE_RETURNS</li>
+<li class='mutator'>INCREMENTS</li>
+<li class='mutator'>INVERT_NEGS</li>
+<li class='mutator'>MATH</li>
+<li class='mutator'>NULL_RETURNS</li>
+<li class='mutator'>PRIMITIVE_RETURNS</li>
+<li class='mutator'>REACTOR_REACTIVE_MUTATOR</li>
+<li class='mutator'>REMOVE_CONDITIONALS_EQUAL_ELSE</li>
+<li class='mutator'>REMOVE_CONDITIONALS_EQUAL_IF</li>
+<li class='mutator'>REMOVE_CONDITIONALS_ORDER_ELSE</li>
+<li class='mutator'>REMOVE_CONDITIONALS_ORDER_IF</li>
+<li class='mutator'>TRUE_RETURNS</li>
+<li class='mutator'>VOID_METHOD_CALLS</li>
+
+</ul>
+
+<h2>Tests examined</h2>
+<ul>
+<li>org.springframework.data.repository.support.RepositoriesUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.support.RepositoriesUnitTests]/[method:exposesPersistentEntityForDomainTypes()] (35 ms)</li><li>org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests]/[method:considersRequiredReturnValue()] (16 ms)</li><li>org.springframework.data.repository.kotlin.CoroutineCrudRepositoryUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.kotlin.CoroutineCrudRepositoryUnitTests]/[method:shouldBridgeFlowMethod()] (25 ms)</li><li>org.springframework.data.repository.support.RepositoriesUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.support.RepositoriesUnitTests]/[method:exposesRepositoryForProxyType()] (25 ms)</li><li>org.springframework.data.repository.kotlin.CoroutineCrudRepositoryUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.kotlin.CoroutineCrudRepositoryUnitTests]/[method:shouldInvokeDeleteAllWhenGivenIterable()] (22 ms)</li><li>org.springframework.data.repository.support.DomainClassConverterUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.support.DomainClassConverterUnitTests]/[method:supportsConversionFromEntityToString()] (7 ms)</li><li>org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests]/[method:invokesCustomQueryCreationListenerForSpecialRepositoryQueryOnly()] (4 ms)</li><li>org.springframework.data.repository.support.RepositoriesUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.support.RepositoriesUnitTests]/[method:keepsPrimaryRepositoryInCaseOfMultipleOnes()] (317 ms)</li><li>org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests]/[method:addsTransactionProxyInterfaceIfAvailable()] (18 ms)</li><li>org.springframework.data.repository.core.support.ReactiveWrapperRepositoryFactorySupportUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.core.support.ReactiveWrapperRepositoryFactorySupportUnitTests]/[method:invokesCustomMethodIfItRedeclaresACRUDOne()] (152 ms)</li><li>org.springframework.data.repository.support.DomainClassConverterUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.support.DomainClassConverterUnitTests]/[method:matchesIfConversionInBetweenIsPossible()] (8 ms)</li><li>org.springframework.data.repository.support.RepositoriesUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.support.RepositoriesUnitTests]/[method:findsRepositoryForSubTypes()] (14 ms)</li><li>org.springframework.data.repository.config.RepositoryConfigurationDelegateUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.config.RepositoryConfigurationDelegateUnitTests]/[method:registersDeferredRepositoryInitializationListener()] (58 ms)</li><li>org.springframework.data.repository.support.RepositoriesUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.support.RepositoriesUnitTests]/[method:usesChildRepositoryIfRegistered()] (339 ms)</li><li>org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests]/[method:invokesCustomMethodCompositionMethodIfItRedeclaresACRUDOne()] (5 ms)</li><li>org.springframework.data.repository.support.DomainClassConverterUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.support.DomainClassConverterUnitTests]/[method:registersConvertersOnConversionService()] (8 ms)</li><li>org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests]/[method:wrapsExecutionResultIntoCompletableFutureWithEntityCollectionIfConfigured()] (220 ms)</li><li>org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests]/[method:considersRequiredKotlinNullableParameter()] (4 ms)</li><li>org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests]/[method:wrapsExecutionResultIntoListenableFutureWithEntityCollectionIfConfigured()] (758 ms)</li><li>org.springframework.data.repository.cdi.RepositoryFragmentsIntegrationTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.cdi.RepositoryFragmentsIntegrationTests]/[method:shouldRespectInterfaceOrder()] (165 ms)</li><li>org.springframework.data.repository.kotlin.CoroutineCrudRepositoryUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.kotlin.CoroutineCrudRepositoryUnitTests]/[method:shouldInvokeExistsById()] (31 ms)</li><li>org.springframework.data.repository.cdi.CdiConfigurationIntegrationTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.cdi.CdiConfigurationIntegrationTests]/[method:shouldApplyImplementationPostfix()] (571 ms)</li><li>org.springframework.data.repository.support.DomainClassConverterUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.support.DomainClassConverterUnitTests]/[method:supportsConversionFromIdType()] (8 ms)</li><li>org.springframework.data.repository.kotlin.CoroutineCrudRepositoryUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.kotlin.CoroutineCrudRepositoryUnitTests]/[method:shouldInvokeFindAll()] (21 ms)</li><li>org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests]/[method:dummyRepositoryShouldsupportQuerydsl()] (11 ms)</li><li>org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests]/[method:callsApplicationStartupOnRepositoryInitialization()] (9 ms)</li><li>org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests]/[method:convertsWithSameElementType()] (18 ms)</li><li>org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests]/[method:derivedQueryMethodCannotBeImplemented()] (9 ms)</li><li>org.springframework.data.repository.cdi.RepositoryFragmentsIntegrationTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.cdi.RepositoryFragmentsIntegrationTests]/[method:shouldFindImplementationForNestedRepositoryFragment()] (1 ms)</li><li>org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests]/[method:considersNullabilityForKotlinInterfaceProperties()] (20 ms)</li><li>org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests]/[method:callsStaticMethodOnInterface()] (17 ms)</li><li>org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests]/[method:considersRequiredKotlinParameter()] (5 ms)</li><li>org.springframework.data.repository.support.RepositoriesUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.support.RepositoriesUnitTests]/[method:keepsPrimaryRepositoryInCaseOfMultipleOnesIfContextIsNotAConfigurableListableBeanFactory()] (26 ms)</li><li>org.springframework.data.repository.kotlin.CoroutineCrudRepositoryUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.kotlin.CoroutineCrudRepositoryUnitTests]/[method:shouldBridgeSuspendedAsListMethod()] (26 ms)</li><li>org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests]/[method:createsRepositoryInstanceWithCustomIntermediateRepository()] (22 ms)</li><li>org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests]/[method:wrapsExecutionResultIntoFutureIfConfigured()] (620 ms)</li><li>org.springframework.data.repository.kotlin.CoroutineCrudRepositoryUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.kotlin.CoroutineCrudRepositoryUnitTests]/[method:shouldInvokeFindAllById()] (29 ms)</li><li>org.springframework.data.repository.kotlin.CoroutineCrudRepositoryUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.kotlin.CoroutineCrudRepositoryUnitTests]/[method:shouldBridgeRxJavaQueryMethod()] (6 ms)</li><li>org.springframework.data.repository.kotlin.CoroutineCrudRepositoryUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.kotlin.CoroutineCrudRepositoryUnitTests]/[method:shouldBridgeSuspendedFlowMethod()] (17 ms)</li><li>org.springframework.data.repository.init.ResourceReaderRepositoryInitializerUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.init.ResourceReaderRepositoryInitializerUnitTests]/[method:emitsRepositoriesPopulatedEventIfPublisherConfigured()] (163 ms)</li><li>org.springframework.data.repository.kotlin.CoroutineCrudRepositoryCustomImplementationUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.kotlin.CoroutineCrudRepositoryCustomImplementationUnitTests]/[method:shouldInvokeFindAll()] (129 ms)</li><li>org.springframework.data.repository.kotlin.CoroutineCrudRepositoryUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.kotlin.CoroutineCrudRepositoryUnitTests]/[method:shouldBridgeQueryMethod()] (5 ms)</li><li>org.springframework.data.repository.config.RepositoryBeanDefinitionRegistrarSupportIntegrationTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.config.RepositoryBeanDefinitionRegistrarSupportIntegrationTests]/[method:testBootstrappingWithInheritedConfigClasses()] (247 ms)</li><li>org.springframework.data.repository.core.support.ReactiveWrapperRepositoryFactorySupportUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.core.support.ReactiveWrapperRepositoryFactorySupportUnitTests]/[method:callsRxJava2MethodOnBaseImplementationWithExactArguments()] (12 ms)</li><li>org.springframework.data.repository.kotlin.CoroutineCrudRepositoryUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.kotlin.CoroutineCrudRepositoryUnitTests]/[method:shouldInvokeDeleteAll()] (411 ms)</li><li>org.springframework.data.repository.core.support.RepositoryFactoryBeanSupportUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.core.support.RepositoryFactoryBeanSupportUnitTests]/[method:customizesRepositoryFactory()] (17 ms)</li><li>org.springframework.data.repository.core.support.TransactionRepositoryFactoryBeanSupportUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.core.support.TransactionRepositoryFactoryBeanSupportUnitTests]/[method:disablesDefaultTransactionsIfConfigured()] (26 ms)</li><li>org.springframework.data.repository.cdi.RepositoryFragmentsIntegrationTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.cdi.RepositoryFragmentsIntegrationTests]/[method:shouldFindCustomImplementationForNestedRepository()] (179 ms)</li><li>org.springframework.data.repository.config.RepositoryConfigurationDelegateUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.config.RepositoryConfigurationDelegateUnitTests]/[method:registersLazyAutowireCandidateResolver()] (346 ms)</li><li>org.springframework.data.repository.cdi.RepositoryFragmentsIntegrationTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.cdi.RepositoryFragmentsIntegrationTests]/[method:shouldInvokeCustomImplementationLast()] (1 ms)</li><li>org.springframework.data.repository.support.RepositoriesUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.support.RepositoriesUnitTests]/[method:exposesParentRepositoryForChildIfOnlyParentRepositoryIsRegistered()] (23 ms)</li><li>org.springframework.data.repository.kotlin.CoroutineCrudRepositoryUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.kotlin.CoroutineCrudRepositoryUnitTests]/[method:shouldInvokeDeleteAllWhenGivenFlow()] (22 ms)</li><li>org.springframework.data.repository.support.DomainClassConverterUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.support.DomainClassConverterUnitTests]/[method:matchFailsIfNoIntermediateConversionIsPossible()] (9 ms)</li><li>org.springframework.data.repository.config.RepositoryBeanDefinitionRegistrarSupportIntegrationTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.config.RepositoryBeanDefinitionRegistrarSupportIntegrationTests]/[method:registersExtensionAsBeanDefinition()] (213 ms)</li><li>org.springframework.data.repository.config.RepositoryBeanDefinitionRegistrarSupportIntegrationTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.config.RepositoryBeanDefinitionRegistrarSupportIntegrationTests]/[method:duplicateImplementationsMayBeExcludedViaFilters()] (219 ms)</li><li>org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests]/[method:routesCallToRedeclaredMethodIntoTarget()] (59 ms)</li><li>org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests]/[method:createsProxyForAnnotatedRepository()] (7 ms)</li><li>org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests]/[method:wrapsExecutionResultIntoListenableFutureIfConfigured()] (258 ms)</li><li>org.springframework.data.repository.core.support.RepositoryFactoryBeanSupportUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.core.support.RepositoryFactoryBeanSupportUnitTests]/[method:returnsRepositoryInformationForFragmentSetup()] (96 ms)</li><li>org.springframework.data.repository.kotlin.CoroutineCrudRepositoryUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.kotlin.CoroutineCrudRepositoryUnitTests]/[method:shouldInvokeSaveAllWhenGivenFlow()] (22 ms)</li><li>org.springframework.data.repository.cdi.CdiRepositoryBeanUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.cdi.CdiRepositoryBeanUnitTests]/[method:passesCorrectBeanNameToTheImplementationDetector()] (172 ms)</li><li>org.springframework.data.repository.cdi.WebbeansCdiRepositoryExtensionSupportIntegrationTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.cdi.WebbeansCdiRepositoryExtensionSupportIntegrationTests]/[method:createsSpringDataRepositoryWithCustimImplBean()] (157 ms)</li><li>org.springframework.data.repository.config.RepositoryBeanDefinitionRegistrarSupportIntegrationTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.config.RepositoryBeanDefinitionRegistrarSupportIntegrationTests]/[method:composedRepositoriesShouldBeAssembledCorrectly()] (902 ms)</li><li>org.springframework.data.repository.support.RepositoriesUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.support.RepositoriesUnitTests]/[method:rejectsNullBeanFactory()] (8 ms)</li><li>org.springframework.data.repository.support.DomainClassConverterUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.support.DomainClassConverterUnitTests]/[method:toIdConverterDoesNotMatchIfTargetTypeIsAssignableFromSource()] (12 ms)</li><li>org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests]/[method:shouldAllowVoidMethods()] (5 ms)</li><li>org.springframework.data.repository.kotlin.CoroutineCrudRepositoryUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.kotlin.CoroutineCrudRepositoryUnitTests]/[method:shouldInvokeDeleteAllById()] (9 ms)</li><li>org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests]/[method:invokesCustomMethodIfItRedeclaresACRUDOne()] (5 ms)</li><li>org.springframework.data.repository.support.DomainClassConverterUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.support.DomainClassConverterUnitTests]/[method:converterDoesntMatchIfTargetTypeIsAssignableFromSource()] (7 ms)</li><li>org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests]/[method:invokesCustomRepositoryProxyPostProcessor()] (5 ms)</li><li>org.springframework.data.repository.support.DomainClassConverterUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.support.DomainClassConverterUnitTests]/[method:returnsNullForFailedLookup()] (8 ms)</li><li>org.springframework.data.repository.support.DomainClassConverterUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.support.DomainClassConverterUnitTests]/[method:convertsStringToUserCorrectly()] (10 ms)</li><li>org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests]/[method:convertsCollectionToOtherCollectionWithElementSuperType()] (5 ms)</li><li>org.springframework.data.repository.core.support.RepositoryFactoryBeanSupportUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.core.support.RepositoryFactoryBeanSupportUnitTests]/[method:reportsMappingContextUnavailableForPersistentEntityLookup()] (78 ms)</li><li>org.springframework.data.repository.kotlin.CoroutineCrudRepositoryUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.kotlin.CoroutineCrudRepositoryUnitTests]/[method:shouldInvokeFindById()] (7 ms)</li><li>org.springframework.data.repository.config.RepositoryBeanDefinitionRegistrarSupportIntegrationTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.config.RepositoryBeanDefinitionRegistrarSupportIntegrationTests]/[method:registeredBeanDefinitionsContainHumanReadableResourceDescription()] (234 ms)</li><li>org.springframework.data.repository.support.RepositoriesUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.support.RepositoriesUnitTests]/[method:doesNotConsiderCrudRepositoriesOnly()] (18 ms)</li><li>org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests]/[method:capturesFailureFromInvocation()] (12 ms)</li><li>org.springframework.data.repository.core.support.ReactiveWrapperRepositoryFactorySupportUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.core.support.ReactiveWrapperRepositoryFactorySupportUnitTests]/[method:callsRxJava2MethodOnBaseImplementationWithTypeConversion()] (5 ms)</li><li>org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests]/[method:wrapsExecutionResultIntoCompletableFutureIfConfigured()] (282 ms)</li><li>org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.core.support.RepositoryFactorySupportUnitTests]/[method:considersRequiredParameter()] (7 ms)</li><li>org.springframework.data.repository.config.PrimaryRepositoryIntegrationTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.config.PrimaryRepositoryIntegrationTests]/[method:returnsPrimaryInstance()] (300 ms)</li><li>org.springframework.data.repository.kotlin.CoroutineCrudRepositoryUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.kotlin.CoroutineCrudRepositoryUnitTests]/[method:shouldBridgeRxJavaToFlowMethod()] (62 ms)</li><li>org.springframework.data.repository.support.RepositoriesUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.support.RepositoriesUnitTests]/[method:discoversRepositoryForAlternativeDomainType()] (25 ms)</li><li>org.springframework.data.repository.support.DomainClassConverterUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.support.DomainClassConverterUnitTests]/[method:supportsConversionFromEntityToIdType()] (114 ms)</li><li>org.springframework.data.repository.support.RepositoriesUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.support.RepositoriesUnitTests]/[method:doesNotFindInformationForNonManagedDomainClass()] (22 ms)</li><li>org.springframework.data.repository.config.RepositoryBeanDefinitionRegistrarSupportIntegrationTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.config.RepositoryBeanDefinitionRegistrarSupportIntegrationTests]/[method:beanDefinitionSourceIsSetForJavaConfigScannedBeans()] (227 ms)</li><li>org.springframework.data.repository.kotlin.CoroutineCrudRepositoryUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.kotlin.CoroutineCrudRepositoryUnitTests]/[method:shouldInvokeSaveAllWhenGivenIterable()] (746 ms)</li><li>org.springframework.data.repository.support.RepositoriesUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.support.RepositoriesUnitTests]/[method:exposesRepositoryFactoryInformationForRepository()] (8 ms)</li><li>org.springframework.data.repository.support.DomainClassConverterUnitTests.[engine:junit-jupiter]/[class:org.springframework.data.repository.support.DomainClassConverterUnitTests]/[method:discoversFactoryAndRepoFromParentApplicationContext()] (9 ms)</li>
+</ul>
+
+<br/>
+
+Report generated by <a href='https://pitest.org'>PIT</a> pitest-reactor
+
+</body>
+</html>

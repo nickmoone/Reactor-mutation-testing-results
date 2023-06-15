@@ -1,0 +1,1296 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+<body>
+
+
+<h1>TransactionManager.java</h1>
+
+<table class="src">
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@17a27dac_1'/>
+1
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@17a27dac_1'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>/*</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@17a27dac_2'/>
+2
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@17a27dac_2'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * Copyright (c) 2010-2018. Axon Framework</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@17a27dac_3'/>
+3
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@17a27dac_3'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> *</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@17a27dac_4'/>
+4
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@17a27dac_4'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * Licensed under the Apache License, Version 2.0 (the &#34;License&#34;);</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@17a27dac_5'/>
+5
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@17a27dac_5'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * you may not use this file except in compliance with the License.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@17a27dac_6'/>
+6
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@17a27dac_6'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * You may obtain a copy of the License at</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@17a27dac_7'/>
+7
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@17a27dac_7'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> *</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@17a27dac_8'/>
+8
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@17a27dac_8'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> *    http://www.apache.org/licenses/LICENSE-2.0</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@17a27dac_9'/>
+9
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@17a27dac_9'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> *</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@17a27dac_10'/>
+10
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@17a27dac_10'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * Unless required by applicable law or agreed to in writing, software</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@17a27dac_11'/>
+11
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@17a27dac_11'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * distributed under the License is distributed on an &#34;AS IS&#34; BASIS,</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@17a27dac_12'/>
+12
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@17a27dac_12'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@17a27dac_13'/>
+13
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@17a27dac_13'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * See the License for the specific language governing permissions and</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@17a27dac_14'/>
+14
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@17a27dac_14'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * limitations under the License.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@17a27dac_15'/>
+15
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@17a27dac_15'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@17a27dac_16'/>
+16
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@17a27dac_16'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@17a27dac_17'/>
+17
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@17a27dac_17'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>package org.axonframework.common.transaction;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@17a27dac_18'/>
+18
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@17a27dac_18'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@17a27dac_19'/>
+19
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@17a27dac_19'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import java.util.function.Supplier;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@17a27dac_20'/>
+20
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@17a27dac_20'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@17a27dac_21'/>
+21
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@17a27dac_21'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>/**</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@17a27dac_22'/>
+22
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@17a27dac_22'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * Interface towards a mechanism that manages transactions</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@17a27dac_23'/>
+23
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@17a27dac_23'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * &#60;p/&#62;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@17a27dac_24'/>
+24
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@17a27dac_24'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * Typically, this will involve opening database transactions or connecting to external systems.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@17a27dac_25'/>
+25
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@17a27dac_25'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> *</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@17a27dac_26'/>
+26
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@17a27dac_26'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * @author Allard Buijze</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@17a27dac_27'/>
+27
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@17a27dac_27'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * @since 2.0</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@17a27dac_28'/>
+28
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@17a27dac_28'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@17a27dac_29'/>
+29
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@17a27dac_29'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>public interface TransactionManager {</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@17a27dac_30'/>
+30
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@17a27dac_30'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@17a27dac_31'/>
+31
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@17a27dac_31'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    /**</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@17a27dac_32'/>
+32
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@17a27dac_32'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * Starts a transaction. The return value is the started transaction that can be committed or rolled back.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@17a27dac_33'/>
+33
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@17a27dac_33'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     *</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@17a27dac_34'/>
+34
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@17a27dac_34'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * @return The object representing the transaction</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@17a27dac_35'/>
+35
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@17a27dac_35'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@17a27dac_36'/>
+36
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@17a27dac_36'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    Transaction startTransaction();</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@17a27dac_37'/>
+37
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@17a27dac_37'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@17a27dac_38'/>
+38
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@17a27dac_38'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    /**</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@17a27dac_39'/>
+39
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@17a27dac_39'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * Executes the given {@code task} in a new {@link Transaction}. The transaction is committed when the task</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@17a27dac_40'/>
+40
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@17a27dac_40'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * completes normally, and rolled back when it throws an exception.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@17a27dac_41'/>
+41
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@17a27dac_41'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     *</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@17a27dac_42'/>
+42
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@17a27dac_42'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * @param task The task to execute</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@17a27dac_43'/>
+43
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@17a27dac_43'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@17a27dac_44'/>
+44
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@17a27dac_44'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    default void executeInTransaction(Runnable task) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@17a27dac_45'/>
+45
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@17a27dac_45'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        Transaction transaction = startTransaction();</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@17a27dac_46'/>
+46
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@17a27dac_46'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        try {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@17a27dac_47'/>
+47
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@17a27dac_47'>1</a>
+<span>
+1. executeInTransaction : removed call to java/lang/Runnable::run &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>            task.run();</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@17a27dac_48'/>
+48
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@17a27dac_48'>1</a>
+<span>
+1. executeInTransaction : removed call to org/axonframework/common/transaction/Transaction::commit &rarr; SURVIVED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='survived'>            transaction.commit();</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@17a27dac_49'/>
+49
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@17a27dac_49'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        } catch (Throwable e) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@17a27dac_50'/>
+50
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@17a27dac_50'>1</a>
+<span>
+1. executeInTransaction : removed call to org/axonframework/common/transaction/Transaction::rollback &rarr; SURVIVED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='survived'>            transaction.rollback();</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@17a27dac_51'/>
+51
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@17a27dac_51'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>            throw e;</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@17a27dac_52'/>
+52
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@17a27dac_52'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        }</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@17a27dac_53'/>
+53
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@17a27dac_53'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@17a27dac_54'/>
+54
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@17a27dac_54'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@17a27dac_55'/>
+55
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@17a27dac_55'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    /**</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@17a27dac_56'/>
+56
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@17a27dac_56'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * Invokes the given {@code supplier} in a transaction managed by the current TransactionManager. Upon completion</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@17a27dac_57'/>
+57
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@17a27dac_57'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * of the call, the transaction will be committed in the case of a regular return value, or rolled back in case an</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@17a27dac_58'/>
+58
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@17a27dac_58'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * exception occurred.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@17a27dac_59'/>
+59
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@17a27dac_59'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * &#60;p&#62;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@17a27dac_60'/>
+60
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@17a27dac_60'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * This method is an alternative to {@link #executeInTransaction(Runnable)} in cases where a result needs to be</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@17a27dac_61'/>
+61
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@17a27dac_61'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * returned from the code to be executed transactionally.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@17a27dac_62'/>
+62
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@17a27dac_62'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     *</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@17a27dac_63'/>
+63
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@17a27dac_63'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * @param supplier The supplier of the value to return</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@17a27dac_64'/>
+64
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@17a27dac_64'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * @param &#60;T&#62;      The type of value to return</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@17a27dac_65'/>
+65
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@17a27dac_65'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * @return The value returned by the supplier</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@17a27dac_66'/>
+66
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@17a27dac_66'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@17a27dac_67'/>
+67
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@17a27dac_67'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    default &#60;T&#62; T fetchInTransaction(Supplier&#60;T&#62; supplier) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@17a27dac_68'/>
+68
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@17a27dac_68'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        Transaction transaction = startTransaction();</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@17a27dac_69'/>
+69
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@17a27dac_69'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        try {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@17a27dac_70'/>
+70
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@17a27dac_70'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>            T result = supplier.get();</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@17a27dac_71'/>
+71
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@17a27dac_71'>1</a>
+<span>
+1. fetchInTransaction : removed call to org/axonframework/common/transaction/Transaction::commit &rarr; SURVIVED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='survived'>            transaction.commit();</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@17a27dac_72'/>
+72
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@17a27dac_72'>1</a>
+<span>
+1. fetchInTransaction : replaced return value with null for org/axonframework/common/transaction/TransactionManager::fetchInTransaction &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>            return result;</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@17a27dac_73'/>
+73
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@17a27dac_73'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        } catch (Throwable e) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@17a27dac_74'/>
+74
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@17a27dac_74'>1</a>
+<span>
+1. fetchInTransaction : removed call to org/axonframework/common/transaction/Transaction::rollback &rarr; SURVIVED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='survived'>            transaction.rollback();</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@17a27dac_75'/>
+75
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@17a27dac_75'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>            throw e;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@17a27dac_76'/>
+76
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@17a27dac_76'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@17a27dac_77'/>
+77
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@17a27dac_77'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@17a27dac_78'/>
+78
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@17a27dac_78'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>}</span></pre></td></tr>
+
+
+
+<tr><td></td><td></td><td><h2>Mutations</h2></td></tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@17a27dac_47'>47</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@17a27dac_47'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>executeInTransaction<br/><b>Killed by : </b>org.axonframework.eventhandling.pooled.SplitTaskTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.pooled.SplitTaskTest]/[method:runCompletesExceptionallyThroughUnableToClaimTokenException()]</span></span> removed call to java/lang/Runnable::run &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@17a27dac_48'>48</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@17a27dac_48'/> 
+
+<p class='SURVIVED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>executeInTransaction<br/><b>Killed by : </b>none</span></span> removed call to org/axonframework/common/transaction/Transaction::commit &rarr; SURVIVED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@17a27dac_50'>50</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@17a27dac_50'/> 
+
+<p class='SURVIVED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>executeInTransaction<br/><b>Killed by : </b>none</span></span> removed call to org/axonframework/common/transaction/Transaction::rollback &rarr; SURVIVED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@17a27dac_71'>71</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@17a27dac_71'/> 
+
+<p class='SURVIVED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>fetchInTransaction<br/><b>Killed by : </b>none</span></span> removed call to org/axonframework/common/transaction/Transaction::commit &rarr; SURVIVED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@17a27dac_72'>72</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@17a27dac_72'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>fetchInTransaction<br/><b>Killed by : </b>org.axonframework.eventhandling.pooled.MergeTaskTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.pooled.MergeTaskTest]/[method:runReturnsFalseThroughSegmentIdsWhichCannotMerge()]</span></span> replaced return value with null for org/axonframework/common/transaction/TransactionManager::fetchInTransaction &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@17a27dac_74'>74</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@17a27dac_74'/> 
+
+<p class='SURVIVED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>fetchInTransaction<br/><b>Killed by : </b>none</span></span> removed call to org/axonframework/common/transaction/Transaction::rollback &rarr; SURVIVED</p> 
+</td>
+</tr>
+
+</table>
+
+
+<h2>Active mutators</h2>
+<ul>
+<li class='mutator'>CONDITIONALS_BOUNDARY</li>
+<li class='mutator'>EMPTY_RETURNS</li>
+<li class='mutator'>EXPERIMENTAL_SWITCH</li>
+<li class='mutator'>FALSE_RETURNS</li>
+<li class='mutator'>INCREMENTS</li>
+<li class='mutator'>INVERT_NEGS</li>
+<li class='mutator'>MATH</li>
+<li class='mutator'>NULL_RETURNS</li>
+<li class='mutator'>PRIMITIVE_RETURNS</li>
+<li class='mutator'>REACTOR_REACTIVE_MUTATOR</li>
+<li class='mutator'>REMOVE_CONDITIONALS_EQUAL_ELSE</li>
+<li class='mutator'>REMOVE_CONDITIONALS_EQUAL_IF</li>
+<li class='mutator'>REMOVE_CONDITIONALS_ORDER_ELSE</li>
+<li class='mutator'>REMOVE_CONDITIONALS_ORDER_IF</li>
+<li class='mutator'>TRUE_RETURNS</li>
+<li class='mutator'>VOID_METHOD_CALLS</li>
+
+</ul>
+
+<h2>Tests examined</h2>
+<ul>
+<li>org.axonframework.eventhandling.pooled.PooledStreamingEventProcessorTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.pooled.PooledStreamingEventProcessorTest]/[method:shutdownCompletesAfterAbortingWorkPackages()] (558 ms)</li><li>org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest]/[method:processInvocationReturnsTrueAndEvictsTheLetter()] (34 ms)</li><li>org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest]/[method:processWithLetterPredicateReturnsFalseIfThereAreNoMatchingLetters()] (15 ms)</li><li>org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest]/[method:requeueThrowsNoSuchDeadLetterExceptionForNonExistentLetterIdentifier()] (5 ms)</li><li>org.axonframework.eventhandling.tokenstore.jdbc.JdbcTokenStoreTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.tokenstore.jdbc.JdbcTokenStoreTest]/[method:identifierReadIfAvailable()] (6 ms)</li><li>org.axonframework.eventhandling.pooled.PooledStreamingEventProcessorTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.pooled.PooledStreamingEventProcessorTest]/[method:exceptionWhileHandlingEventAbortsWorker()] (1010 ms)</li><li>org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest]/[method:enqueueThrowsDeadLetterQueueOverflowExceptionWhenMaxSequencesIsReached()] (117 ms)</li><li>org.axonframework.eventhandling.pooled.CoordinatorTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.pooled.CoordinatorTest]/[method:ifCoordinationTaskInitializesTokenStoreWhenNeeded()] (1 ms)</li><li>org.axonframework.eventhandling.pooled.PooledStreamingEventProcessorTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.pooled.PooledStreamingEventProcessorTest]/[method:coordinationIsTriggeredThroughEventAvailabilityCallback()] (15 ms)</li><li>org.axonframework.eventhandling.tokenstore.jdbc.JdbcTokenStoreTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.tokenstore.jdbc.JdbcTokenStoreTest]/[method:deleteTokenFailsWhenClaimedByOtherNode()] (3 ms)</li><li>org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest]/[method:deadLettersInvocationReturnsAllEnqueuedDeadLetters()] (23 ms)</li><li>org.axonframework.eventhandling.tokenstore.jdbc.JdbcTokenStoreTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.tokenstore.jdbc.JdbcTokenStoreTest]/[method:initializeTokensWhileAlreadyPresent()] (3 ms)</li><li>org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest]/[method:processWithLetterPredicateHandlesAllLettersInSequence()] (31 ms)</li><li>org.axonframework.eventhandling.pooled.PooledStreamingEventProcessorTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.pooled.PooledStreamingEventProcessorTest]/[method:resetTokensFromDefinedPosition()] (510 ms)</li><li>org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest]/[method:processWithLetterPredicateReturnsFalseAndRequeuesTheLetter()] (18 ms)</li><li>org.axonframework.eventhandling.pooled.PooledStreamingEventProcessorTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.pooled.PooledStreamingEventProcessorTest]/[method:isErrorWhenOpeningTheStreamFails()] (1524 ms)</li><li>org.axonframework.eventhandling.tokenstore.jdbc.JdbcTokenStoreTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.tokenstore.jdbc.JdbcTokenStoreTest]/[method:fetchTokenBySegment()] (4 ms)</li><li>org.axonframework.eventhandling.pooled.PooledStreamingEventProcessorTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.pooled.PooledStreamingEventProcessorTest]/[method:splitSegment()] (509 ms)</li><li>org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest]/[method:evictRemovesLetterFromQueue()] (18 ms)</li><li>org.axonframework.eventhandling.pooled.MergeTaskTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.pooled.MergeTaskTest]/[method:runCompletesExceptionallyThroughUnableToClaimTokenExceptionOnFetch()] (1 ms)</li><li>org.axonframework.eventhandling.tokenstore.jdbc.JdbcTokenStoreTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.tokenstore.jdbc.JdbcTokenStoreTest]/[method:fetchTokenBySegmentFailsDuringSplitSegment0()] (5 ms)</li><li>org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest]/[method:containsReturnsTrueForContainedLetter()] (7 ms)</li><li>org.axonframework.eventhandling.tokenstore.jdbc.JdbcTokenStoreTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.tokenstore.jdbc.JdbcTokenStoreTest]/[method:claimTokenConcurrentlyAfterTimeLimit()] (4 ms)</li><li>org.axonframework.eventhandling.tokenstore.jdbc.JdbcTokenStoreTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.tokenstore.jdbc.JdbcTokenStoreTest]/[method:claimTokenConcurrently()] (4 ms)</li><li>org.axonframework.eventhandling.pooled.PooledStreamingEventProcessorTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.pooled.PooledStreamingEventProcessorTest]/[method:mergeSegment()] (1012 ms)</li><li>org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest]/[method:sizeReturnsOverallNumberOfContainedDeadLetters()] (12 ms)</li><li>org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest]/[method:processInvocationReturnsFalseIfThereAreNoLetters()] (17 ms)</li><li>org.axonframework.eventhandling.deadletter.DeadLetteringEventHandlerInvokerTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.deadletter.DeadLetteringEventHandlerInvokerTest]/[method:performResetWithContextClearsOutTheQueueForAllowResetSetToTrue()] (1 ms)</li><li>org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest]/[method:sequenceSizeForSequenceIdentifierReturnsTheNumberOfContainedLettersForGivenSequenceIdentifier()] (20 ms)</li><li>org.axonframework.eventhandling.pooled.MergeTaskTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.pooled.MergeTaskTest]/[method:runCompletesExceptionallyThroughOtherException()] (9 ms)</li><li>org.axonframework.eventhandling.tokenstore.jdbc.JdbcTokenStoreTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.tokenstore.jdbc.JdbcTokenStoreTest]/[method:fetchTokenBySegmentSegment0()] (3 ms)</li><li>org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest]/[method:processInvocationReturnsFalseAndRequeuesTheLetter()] (14 ms)</li><li>org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest]/[method:evictDoesNotChangeTheQueueForNonExistentSequenceIdentifier()] (16 ms)</li><li>org.axonframework.eventhandling.pooled.PooledStreamingEventProcessorTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.pooled.PooledStreamingEventProcessorTest]/[method:resetTokensFromDefinedPositionAndWithResetContext()] (517 ms)</li><li>org.axonframework.eventhandling.pooled.MergeTaskTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.pooled.MergeTaskTest]/[method:runMergeSegmentsFromWorkPackages()] (1 ms)</li><li>org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest]/[method:enqueueIfPresentDoesNotEnqueueForNonExistentSequenceIdentifier()] (7 ms)</li><li>org.axonframework.eventhandling.pooled.CoordinatorTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.pooled.CoordinatorTest]/[method:ifCoordinationTaskRescheduledAfterTokenReleaseClaimFails()] (5 ms)</li><li>org.axonframework.eventhandling.tokenstore.jdbc.JdbcTokenStoreTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.tokenstore.jdbc.JdbcTokenStoreTest]/[method:querySegments()] (30 ms)</li><li>org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest]/[method:clearInvocationRemovesAllEntries()] (12 ms)</li><li>org.axonframework.eventhandling.tokenstore.jdbc.JdbcTokenStoreTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.tokenstore.jdbc.JdbcTokenStoreTest]/[method:initializeTokens()] (3 ms)</li><li>org.axonframework.eventhandling.pooled.SplitTaskTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.pooled.SplitTaskTest]/[method:runCompletesExceptionallyThroughUnableToClaimTokenException()] (1 ms)</li><li>org.axonframework.eventhandling.tokenstore.jdbc.JdbcTokenStoreTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.tokenstore.jdbc.JdbcTokenStoreTest]/[method:claimAndDeleteToken()] (4 ms)</li><li>org.axonframework.eventhandling.pooled.PooledStreamingEventProcessorTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.pooled.PooledStreamingEventProcessorTest]/[method:retriesWhenTokenInitializationInitiallyFails()] (675 ms)</li><li>org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest]/[method:processWithLetterPredicateReturnsTrueAndEvictsTheLetter()] (16 ms)</li><li>org.axonframework.eventhandling.pooled.PooledStreamingEventProcessorTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.pooled.PooledStreamingEventProcessorTest]/[method:startingAfterShutdownLetsProcessorProceed()] (570 ms)</li><li>org.axonframework.eventhandling.pooled.MergeTaskTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.pooled.MergeTaskTest]/[method:runReturnsFalseThroughSegmentIdsWhichCannotMerge()] (1 ms)</li><li>org.axonframework.eventhandling.pooled.PooledStreamingEventProcessorTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.pooled.PooledStreamingEventProcessorTest]/[method:shutdownProcessorAsyncTwiceReturnsSameFuture()] (4 ms)</li><li>org.axonframework.eventhandling.pooled.PooledStreamingEventProcessorTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.pooled.PooledStreamingEventProcessorTest]/[method:allTokensUpdatedToLatestValue()] (1544 ms)</li><li>org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest]/[method:isFullReturnsTrueAfterMaximumAmountOfSequencesIsReached()] (146 ms)</li><li>org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest]/[method:enqueueThrowsDeadLetterQueueOverflowExceptionWhenMaxSequenceSizeIsReached()] (121 ms)</li><li>org.axonframework.eventhandling.tokenstore.jdbc.JdbcTokenStoreTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.tokenstore.jdbc.JdbcTokenStoreTest]/[method:updateAndLoadNullToken()] (4 ms)</li><li>org.axonframework.eventhandling.pooled.PooledStreamingEventProcessorTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.pooled.PooledStreamingEventProcessorTest]/[method:getTokenStoreIdentifier()] (4 ms)</li><li>org.axonframework.eventhandling.tokenstore.jdbc.JdbcTokenStoreTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.tokenstore.jdbc.JdbcTokenStoreTest]/[method:fetchTokenBySegmentFailsDuringMergeSegment0()] (8 ms)</li><li>org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest]/[method:requeueReentersLetterToQueueWithUpdatedLastTouchedAndCause()] (47 ms)</li><li>org.axonframework.eventhandling.tokenstore.jdbc.JdbcTokenStoreTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.tokenstore.jdbc.JdbcTokenStoreTest]/[method:initializeTokensAtGivenPosition()] (9 ms)</li><li>org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest]/[method:isFullReturnsTrueAfterMaximumSequenceSizeIsReached()] (230 ms)</li><li>org.axonframework.eventhandling.pooled.PooledStreamingEventProcessorTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.pooled.PooledStreamingEventProcessorTest]/[method:handlingUnknownMessageTypeWillAdvanceToken()] (505 ms)</li><li>org.axonframework.eventhandling.pooled.MergeTaskTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.pooled.MergeTaskTest]/[method:runMergeSegmentsAfterClaimingBoth()] (1 ms)</li><li>org.axonframework.eventhandling.pooled.PooledStreamingEventProcessorTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.pooled.PooledStreamingEventProcessorTest]/[method:tokenStoreReturningSingleNullToken()] (506 ms)</li><li>org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest]/[method:processWithLetterPredicateInvokesProcessingTaskWithMatchingLetter()] (25 ms)</li><li>org.axonframework.eventhandling.tokenstore.jdbc.JdbcTokenStoreTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.tokenstore.jdbc.JdbcTokenStoreTest]/[method:deleteUnclaimedTokenFails()] (2 ms)</li><li>org.axonframework.eventhandling.pooled.PooledStreamingEventProcessorTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.pooled.PooledStreamingEventProcessorTest]/[method:startFailsWhenShutdownIsInProgress()] (1032 ms)</li><li>org.axonframework.eventhandling.pooled.PooledStreamingEventProcessorTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.pooled.PooledStreamingEventProcessorTest]/[method:handlingEventsHaveSegmentAndTokenInUnitOfWork()] (509 ms)</li><li>org.axonframework.eventhandling.tokenstore.jdbc.JdbcTokenStoreTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.tokenstore.jdbc.JdbcTokenStoreTest]/[method:fetchTokenBySegmentFailsDuringSplit()] (4 ms)</li><li>org.axonframework.eventhandling.tokenstore.jdbc.JdbcTokenStoreTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.tokenstore.jdbc.JdbcTokenStoreTest]/[method:fetchTokenBySegmentFailsDuringMerge()] (3 ms)</li><li>org.axonframework.eventhandling.deadletter.DeadLetteringEventHandlerInvokerTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.deadletter.DeadLetteringEventHandlerInvokerTest]/[method:performResetClearsOutTheQueueWhenAllowResetSetToTrue()] (2 ms)</li><li>org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest]/[method:enqueueIfPresentThrowsDeadLetterQueueOverflowExceptionForFullQueue()] (351 ms)</li><li>org.axonframework.eventhandling.pooled.WorkPackageTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.pooled.WorkPackageTest]/[method:scheduleEventExtendsTokenClaimAfterClaimThresholdExtension()] (3 ms)</li><li>org.axonframework.eventhandling.tokenstore.jdbc.JdbcTokenStoreTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.tokenstore.jdbc.JdbcTokenStoreTest]/[method:claimAndUpdateToken()] (5 ms)</li><li>org.axonframework.eventhandling.pooled.PooledStreamingEventProcessorTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.pooled.PooledStreamingEventProcessorTest]/[method:processingStatusIsUpdatedWithTrackingToken()] (518 ms)</li><li>org.axonframework.eventhandling.tokenstore.jdbc.JdbcTokenStoreTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.tokenstore.jdbc.JdbcTokenStoreTest]/[method:stealToken()] (7 ms)</li><li>org.axonframework.eventhandling.pooled.PooledStreamingEventProcessorTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.pooled.PooledStreamingEventProcessorTest]/[method:eventsWhichMustBeIgnoredAreNotHandledOnlyValidated()] (507 ms)</li><li>org.axonframework.eventhandling.tokenstore.jdbc.JdbcTokenStoreTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.tokenstore.jdbc.JdbcTokenStoreTest]/[method:identifierInitializedOnDemand()] (5 ms)</li><li>org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest]/[method:evictDoesNotChangeTheQueueForNonExistentLetterIdentifier()] (19 ms)</li><li>org.axonframework.eventhandling.pooled.MergeTaskTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.pooled.MergeTaskTest]/[method:runMergeSegmentsFromWorkPackageAndClaimedSegment()] (1 ms)</li><li>org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest]/[method:enqueueIfPresentEnqueuesForExistingSequenceIdentifier()] (13 ms)</li><li>org.axonframework.eventhandling.pooled.SplitTaskTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.pooled.SplitTaskTest]/[method:runSplitsSegmentFromWorkPackage()] (1 ms)</li><li>org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest]/[method:processInvocationHandlesAllLettersInSequence()] (28 ms)</li><li>org.axonframework.eventhandling.pooled.PooledStreamingEventProcessorTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.pooled.PooledStreamingEventProcessorTest]/[method:workPackageIsAbortedWhenExtendingClaimFails()] (23 ms)</li><li>org.axonframework.eventhandling.tokenstore.jdbc.JdbcTokenStoreTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.tokenstore.jdbc.JdbcTokenStoreTest]/[method:claimTokenConcurrentlyAfterRelease()] (5 ms)</li><li>org.axonframework.eventhandling.tokenstore.jdbc.JdbcTokenStoreTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.tokenstore.jdbc.JdbcTokenStoreTest]/[method:queryAvailableSegments()] (51 ms)</li><li>org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest]/[method:enqueueIfPresentDoesNotEnqueueForEmptyQueue()] (2 ms)</li><li>org.axonframework.eventhandling.pooled.PooledStreamingEventProcessorTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.pooled.PooledStreamingEventProcessorTest]/[method:processorOnlyTriesToClaimAvailableSegments()] (507 ms)</li><li>org.axonframework.eventhandling.pooled.SplitTaskTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.pooled.SplitTaskTest]/[method:runCompletesExceptionallyThroughOtherException()] (1 ms)</li><li>org.axonframework.eventhandling.pooled.PooledStreamingEventProcessorTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.pooled.PooledStreamingEventProcessorTest]/[method:secondStartInvocationIsIgnored()] (513 ms)</li><li>org.axonframework.eventhandling.tokenstore.jdbc.JdbcTokenStoreTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.tokenstore.jdbc.JdbcTokenStoreTest]/[method:storeAndLoadAcrossTransactions()] (8 ms)</li><li>org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest]/[method:processHandlesMassiveAmountOfLettersInSequence()] (306 ms)</li><li>org.axonframework.eventhandling.pooled.PooledStreamingEventProcessorTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.pooled.PooledStreamingEventProcessorTest]/[method:isErrorForFailingMessageSourceOperation()] (1510 ms)</li><li>org.axonframework.common.legacyjpa.PagingJpaQueryIterableTest.[engine:junit-jupiter]/[class:org.axonframework.common.legacyjpa.PagingJpaQueryIterableTest]/[method:queriesJustOneItemAsOnePage()] (4 ms)</li><li>org.axonframework.eventhandling.pooled.PooledStreamingEventProcessorTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.pooled.PooledStreamingEventProcessorTest]/[method:resetTokens()] (507 ms)</li><li>org.axonframework.eventhandling.pooled.PooledStreamingEventProcessorTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.pooled.PooledStreamingEventProcessorTest]/[method:resetTokensWithContext()] (508 ms)</li><li>org.axonframework.eventhandling.pooled.MergeTaskTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.pooled.MergeTaskTest]/[method:runCompletesExceptionallyThroughUnableToClaimTokenExceptionOnDelete()] (1 ms)</li><li>org.axonframework.eventhandling.pooled.WorkPackageTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.pooled.WorkPackageTest]/[method:scheduleEventUpdatesTokenAfterClaimThresholdExtension()] (3 ms)</li><li>org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest]/[method:processInvocationReturnsFalseIfAllLetterSequencesAreClaimed()] (14 ms)</li><li>org.axonframework.eventhandling.pooled.PooledStreamingEventProcessorTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.pooled.PooledStreamingEventProcessorTest]/[method:startShutsDownImmediatelyIfCoordinatorExecutorThrowsAnException()] (68 ms)</li><li>org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest]/[method:processWithLetterPredicateReturnsFalseIfAllLetterSequencesAreClaimed()] (23 ms)</li><li>org.axonframework.eventhandling.pooled.PooledStreamingEventProcessorTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.pooled.PooledStreamingEventProcessorTest]/[method:handlingEventsAreCorrectlyTraced()] (506 ms)</li><li>org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest]/[method:enqueueAddsDeadLetter()] (10 ms)</li><li>org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest]/[method:processInvocationInvokesProcessingTaskInLastTouchedOrderOfLetters()] (24 ms)</li><li>org.axonframework.eventhandling.pooled.PooledStreamingEventProcessorTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.pooled.PooledStreamingEventProcessorTest]/[method:startingProcessorClaimsAllAvailableTokens()] (576 ms)</li><li>org.axonframework.eventhandling.pooled.SplitTaskTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.pooled.SplitTaskTest]/[method:runSplitsSegmentAfterClaiming()] (0 ms)</li><li>org.axonframework.eventhandling.pooled.PooledStreamingEventProcessorTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.pooled.PooledStreamingEventProcessorTest]/[method:isReplaying()] (1511 ms)</li><li>org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest]/[method:amountOfSequencesReturnsTheNumberOfUniqueSequences()] (21 ms)</li><li>org.axonframework.eventhandling.tokenstore.jdbc.JdbcTokenStoreTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.tokenstore.jdbc.JdbcTokenStoreTest]/[method:claimAndUpdateTokenWithoutTransaction()] (4 ms)</li><li>org.axonframework.common.legacyjpa.PagingJpaQueryIterableTest.[engine:junit-jupiter]/[class:org.axonframework.common.legacyjpa.PagingJpaQueryIterableTest]/[method:queriesMultiplePages()] (146 ms)</li><li>org.axonframework.common.legacyjpa.PagingJpaQueryIterableTest.[engine:junit-jupiter]/[class:org.axonframework.common.legacyjpa.PagingJpaQueryIterableTest]/[method:throwsExceptionWhenNoItemPresent()] (5 ms)</li><li>org.axonframework.eventhandling.pooled.CoordinatorTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.pooled.CoordinatorTest]/[method:ifCoordinationTaskSchedulesEventsWithTheSameTokenTogether()] (17 ms)</li><li>org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.deadletter.legacyjpa.JpaSequencedDeadLetterQueueTest]/[method:deadLettersInvocationPerSequenceIdentifierReturnsEnqueuedLettersMatchingGivenSequenceIdentifier()] (8 ms)</li><li>org.axonframework.eventhandling.pooled.PooledStreamingEventProcessorTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.pooled.PooledStreamingEventProcessorTest]/[method:releaseSegmentMakesTheTokenUnclaimedForTwiceTheTokenClaimInterval()] (1515 ms)</li><li>org.axonframework.eventhandling.pooled.PooledStreamingEventProcessorTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.pooled.PooledStreamingEventProcessorTest]/[method:isRunningOnlyReturnsTrueForStartedProcessor()] (6 ms)</li><li>org.axonframework.eventhandling.pooled.PooledStreamingEventProcessorTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.pooled.PooledStreamingEventProcessorTest]/[method:resetTokensFailsIfTheProcessorIsStillRunning()] (2 ms)</li>
+</ul>
+
+<br/>
+
+Report generated by <a href='https://pitest.org'>PIT</a> pitest-reactor
+
+</body>
+</html>

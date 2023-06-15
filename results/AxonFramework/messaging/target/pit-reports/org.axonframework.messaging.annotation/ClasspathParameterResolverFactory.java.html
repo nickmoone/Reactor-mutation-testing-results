@@ -1,0 +1,1731 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+<body>
+
+
+<h1>ClasspathParameterResolverFactory.java</h1>
+
+<table class="src">
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@555db14f_1'/>
+1
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@555db14f_1'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>/*</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@555db14f_2'/>
+2
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@555db14f_2'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * Copyright (c) 2010-2018. Axon Framework</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@555db14f_3'/>
+3
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@555db14f_3'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> *</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@555db14f_4'/>
+4
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@555db14f_4'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * Licensed under the Apache License, Version 2.0 (the &#34;License&#34;);</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@555db14f_5'/>
+5
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@555db14f_5'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * you may not use this file except in compliance with the License.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@555db14f_6'/>
+6
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@555db14f_6'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * You may obtain a copy of the License at</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@555db14f_7'/>
+7
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@555db14f_7'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> *</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@555db14f_8'/>
+8
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@555db14f_8'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> *    http://www.apache.org/licenses/LICENSE-2.0</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@555db14f_9'/>
+9
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@555db14f_9'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> *</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@555db14f_10'/>
+10
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@555db14f_10'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * Unless required by applicable law or agreed to in writing, software</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@555db14f_11'/>
+11
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@555db14f_11'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * distributed under the License is distributed on an &#34;AS IS&#34; BASIS,</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@555db14f_12'/>
+12
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@555db14f_12'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@555db14f_13'/>
+13
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@555db14f_13'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * See the License for the specific language governing permissions and</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@555db14f_14'/>
+14
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@555db14f_14'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * limitations under the License.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@555db14f_15'/>
+15
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@555db14f_15'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@555db14f_16'/>
+16
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@555db14f_16'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@555db14f_17'/>
+17
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@555db14f_17'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>package org.axonframework.messaging.annotation;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@555db14f_18'/>
+18
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@555db14f_18'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@555db14f_19'/>
+19
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@555db14f_19'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.slf4j.LoggerFactory;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@555db14f_20'/>
+20
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@555db14f_20'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@555db14f_21'/>
+21
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@555db14f_21'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import java.lang.ref.WeakReference;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@555db14f_22'/>
+22
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@555db14f_22'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import java.util.*;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@555db14f_23'/>
+23
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@555db14f_23'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@555db14f_24'/>
+24
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@555db14f_24'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import static java.util.ServiceLoader.load;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@555db14f_25'/>
+25
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@555db14f_25'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@555db14f_26'/>
+26
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@555db14f_26'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>/**</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@555db14f_27'/>
+27
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@555db14f_27'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * ParameterResolverFactory instance that locates other ParameterResolverFactory instances on the class path. It uses</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@555db14f_28'/>
+28
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@555db14f_28'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * the {@link ServiceLoader} mechanism to locate and initialize them.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@555db14f_29'/>
+29
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@555db14f_29'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * &#60;p/&#62;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@555db14f_30'/>
+30
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@555db14f_30'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * This means for this class to find implementations, their fully qualified class name has to be put into a file called</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@555db14f_31'/>
+31
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@555db14f_31'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * {@code META-INF/services/org.axonframework.messaging.annotation.ParameterResolverFactory}. For more details, see</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@555db14f_32'/>
+32
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@555db14f_32'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * {@link ServiceLoader}.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@555db14f_33'/>
+33
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@555db14f_33'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> *</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@555db14f_34'/>
+34
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@555db14f_34'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * @author Allard Buijze</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@555db14f_35'/>
+35
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@555db14f_35'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * @see ServiceLoader</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@555db14f_36'/>
+36
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@555db14f_36'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * @since 2.1</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@555db14f_37'/>
+37
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@555db14f_37'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@555db14f_38'/>
+38
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@555db14f_38'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>public final class ClasspathParameterResolverFactory {</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@555db14f_39'/>
+39
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@555db14f_39'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@555db14f_40'/>
+40
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@555db14f_40'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    private static final org.slf4j.Logger logger = LoggerFactory.getLogger(ClasspathParameterResolverFactory.class);</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@555db14f_41'/>
+41
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@555db14f_41'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    private static final Object monitor = new Object();</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@555db14f_42'/>
+42
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@555db14f_42'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    private static final Map&#60;ClassLoader, WeakReference&#60;ParameterResolverFactory&#62;&#62; FACTORIES = new WeakHashMap&#60;&#62;();</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@555db14f_43'/>
+43
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@555db14f_43'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@555db14f_44'/>
+44
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@555db14f_44'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    /**</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@555db14f_45'/>
+45
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@555db14f_45'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * Private default constructor</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@555db14f_46'/>
+46
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@555db14f_46'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     */</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@555db14f_47'/>
+47
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@555db14f_47'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='uncovered'><pre><span  class=''>    private ClasspathParameterResolverFactory() {</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@555db14f_48'/>
+48
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@555db14f_48'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='uncovered'><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@555db14f_49'/>
+49
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@555db14f_49'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@555db14f_50'/>
+50
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@555db14f_50'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    /**</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@555db14f_51'/>
+51
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@555db14f_51'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * Creates an instance for the given {@code clazz}. Effectively, the class loader of the given class is used</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@555db14f_52'/>
+52
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@555db14f_52'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * to locate implementations.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@555db14f_53'/>
+53
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@555db14f_53'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     *</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@555db14f_54'/>
+54
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@555db14f_54'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * @param clazz The class for which the parameter resolver must be returned</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@555db14f_55'/>
+55
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@555db14f_55'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * @return a ClasspathParameterResolverFactory that can resolve parameters for the given class</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@555db14f_56'/>
+56
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@555db14f_56'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@555db14f_57'/>
+57
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@555db14f_57'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public static ParameterResolverFactory forClass(Class&#60;?&#62; clazz) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@555db14f_58'/>
+58
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@555db14f_58'>3</a>
+<span>
+1. forClass : removed conditional - replaced equality check with false &rarr; SURVIVED<br/>
+2. forClass : removed conditional - replaced equality check with true &rarr; SURVIVED<br/>
+3. forClass : replaced return value with null for org/axonframework/messaging/annotation/ClasspathParameterResolverFactory::forClass &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='survived'>        return forClassLoader(clazz == null ? null : clazz.getClassLoader());</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@555db14f_59'/>
+59
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@555db14f_59'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@555db14f_60'/>
+60
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@555db14f_60'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@555db14f_61'/>
+61
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@555db14f_61'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    /**</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@555db14f_62'/>
+62
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@555db14f_62'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * Creates an instance using the given {@code classLoader}. Implementations are located using this class</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@555db14f_63'/>
+63
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@555db14f_63'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * loader.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@555db14f_64'/>
+64
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@555db14f_64'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     *</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@555db14f_65'/>
+65
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@555db14f_65'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * @param classLoader The class loader to locate the implementations with</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@555db14f_66'/>
+66
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@555db14f_66'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * @return a ParameterResolverFactory instance using the given classLoader</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@555db14f_67'/>
+67
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@555db14f_67'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@555db14f_68'/>
+68
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@555db14f_68'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public static ParameterResolverFactory forClassLoader(ClassLoader classLoader) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@555db14f_69'/>
+69
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@555db14f_69'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        synchronized (monitor) {</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@555db14f_70'/>
+70
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@555db14f_70'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>            ParameterResolverFactory factory;</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@555db14f_71'/>
+71
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@555db14f_71'>2</a>
+<span>
+1. forClassLoader : removed conditional - replaced equality check with true &rarr; SURVIVED<br/>
+2. forClassLoader : removed conditional - replaced equality check with false &rarr; SURVIVED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='survived'>            if (!FACTORIES.containsKey(classLoader)) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@555db14f_72'/>
+72
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@555db14f_72'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>                factory = MultiParameterResolverFactory.ordered(findDelegates(classLoader));</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@555db14f_73'/>
+73
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@555db14f_73'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>                FACTORIES.put(classLoader, new WeakReference&#60;&#62;(factory));</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@555db14f_74'/>
+74
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@555db14f_74'>1</a>
+<span>
+1. forClassLoader : replaced return value with null for org/axonframework/messaging/annotation/ClasspathParameterResolverFactory::forClassLoader &rarr; SURVIVED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='survived'>                return factory;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@555db14f_75'/>
+75
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@555db14f_75'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>            }</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@555db14f_76'/>
+76
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@555db14f_76'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>            factory = FACTORIES.get(classLoader).get();</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@555db14f_77'/>
+77
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@555db14f_77'>2</a>
+<span>
+1. forClassLoader : removed conditional - replaced equality check with false &rarr; SURVIVED<br/>
+2. forClassLoader : removed conditional - replaced equality check with true &rarr; SURVIVED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='survived'>            if (factory == null) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@555db14f_78'/>
+78
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@555db14f_78'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>                factory = MultiParameterResolverFactory.ordered(findDelegates(classLoader));</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@555db14f_79'/>
+79
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@555db14f_79'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>                FACTORIES.put(classLoader, new WeakReference&#60;&#62;(factory));</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@555db14f_80'/>
+80
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@555db14f_80'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>            }</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@555db14f_81'/>
+81
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@555db14f_81'>1</a>
+<span>
+1. forClassLoader : replaced return value with null for org/axonframework/messaging/annotation/ClasspathParameterResolverFactory::forClassLoader &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>            return factory;</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@555db14f_82'/>
+82
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@555db14f_82'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='uncovered'><pre><span  class=''>        }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@555db14f_83'/>
+83
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@555db14f_83'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@555db14f_84'/>
+84
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@555db14f_84'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@555db14f_85'/>
+85
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@555db14f_85'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    private static List&#60;ParameterResolverFactory&#62; findDelegates(ClassLoader classLoader) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@555db14f_86'/>
+86
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@555db14f_86'>2</a>
+<span>
+1. findDelegates : removed conditional - replaced equality check with true &rarr; SURVIVED<br/>
+2. findDelegates : removed conditional - replaced equality check with false &rarr; SURVIVED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='survived'>        Iterator&#60;ParameterResolverFactory&#62; iterator = load(ParameterResolverFactory.class, classLoader == null ?</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@555db14f_87'/>
+87
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@555db14f_87'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>                Thread.currentThread().getContextClassLoader() : classLoader).iterator();</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@555db14f_88'/>
+88
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@555db14f_88'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        //noinspection WhileLoopReplaceableByForEach</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@555db14f_89'/>
+89
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@555db14f_89'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        final List&#60;ParameterResolverFactory&#62; factories = new ArrayList&#60;&#62;();</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@555db14f_90'/>
+90
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@555db14f_90'>2</a>
+<span>
+1. findDelegates : removed conditional - replaced equality check with true &rarr; SURVIVED<br/>
+2. findDelegates : removed conditional - replaced equality check with false &rarr; SURVIVED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='survived'>        while (iterator.hasNext()) {</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@555db14f_91'/>
+91
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@555db14f_91'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>            try {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@555db14f_92'/>
+92
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@555db14f_92'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>                ParameterResolverFactory factory = iterator.next();</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@555db14f_93'/>
+93
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@555db14f_93'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>                factories.add(factory);</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@555db14f_94'/>
+94
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@555db14f_94'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='uncovered'><pre><span  class=''>            } catch (ServiceConfigurationError e) {</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@555db14f_95'/>
+95
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@555db14f_95'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='uncovered'><pre><span  class=''>                logger.info(</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@555db14f_96'/>
+96
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@555db14f_96'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>                        &#34;ParameterResolverFactory instance ignored, as one of the required classes is not available&#34; +</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@555db14f_97'/>
+97
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@555db14f_97'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='uncovered'><pre><span  class=''>                                &#34;on the classpath: {}&#34;, e.getMessage());</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@555db14f_98'/>
+98
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@555db14f_98'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='uncovered'><pre><span  class=''>            } catch (NoClassDefFoundError e) {</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@555db14f_99'/>
+99
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@555db14f_99'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='uncovered'><pre><span  class=''>                logger.info(&#34;ParameterResolverFactory instance ignored. It relies on a class that cannot be found: {}&#34;,</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@555db14f_100'/>
+100
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@555db14f_100'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='uncovered'><pre><span  class=''>                            e.getMessage());</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@555db14f_101'/>
+101
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@555db14f_101'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>            }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@555db14f_102'/>
+102
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@555db14f_102'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        }</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@555db14f_103'/>
+103
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@555db14f_103'>1</a>
+<span>
+1. findDelegates : replaced return value with Collections.emptyList for org/axonframework/messaging/annotation/ClasspathParameterResolverFactory::findDelegates &rarr; SURVIVED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='survived'>        return factories;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@555db14f_104'/>
+104
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@555db14f_104'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@555db14f_105'/>
+105
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@555db14f_105'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>}</span></pre></td></tr>
+
+
+
+<tr><td></td><td></td><td><h2>Mutations</h2></td></tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@555db14f_58'>58</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@555db14f_58'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>forClass<br/><b>Killed by : </b>org.axonframework.messaging.annotation.AnnotatedMessageHandlingMemberTest.[engine:junit-jupiter]/[class:org.axonframework.messaging.annotation.AnnotatedMessageHandlingMemberTest]/[method:canHandleMessageType()]</span></span> replaced return value with null for org/axonframework/messaging/annotation/ClasspathParameterResolverFactory::forClass &rarr; KILLED</p> <p class='SURVIVED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>forClass<br/><b>Killed by : </b>none</span></span> removed conditional - replaced equality check with false &rarr; SURVIVED</p> <p class='SURVIVED'><span class='pop'>3.<span><b>3</b><br/><b>Location : </b>forClass<br/><b>Killed by : </b>none</span></span> removed conditional - replaced equality check with true &rarr; SURVIVED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@555db14f_71'>71</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@555db14f_71'/> 
+
+<p class='SURVIVED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>forClassLoader<br/><b>Killed by : </b>none</span></span> removed conditional - replaced equality check with true &rarr; SURVIVED</p> <p class='SURVIVED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>forClassLoader<br/><b>Killed by : </b>none</span></span> removed conditional - replaced equality check with false &rarr; SURVIVED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@555db14f_74'>74</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@555db14f_74'/> 
+
+<p class='SURVIVED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>forClassLoader<br/><b>Killed by : </b>none</span></span> replaced return value with null for org/axonframework/messaging/annotation/ClasspathParameterResolverFactory::forClassLoader &rarr; SURVIVED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@555db14f_77'>77</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@555db14f_77'/> 
+
+<p class='SURVIVED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>forClassLoader<br/><b>Killed by : </b>none</span></span> removed conditional - replaced equality check with false &rarr; SURVIVED</p> <p class='SURVIVED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>forClassLoader<br/><b>Killed by : </b>none</span></span> removed conditional - replaced equality check with true &rarr; SURVIVED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@555db14f_81'>81</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@555db14f_81'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>forClassLoader<br/><b>Killed by : </b>org.axonframework.messaging.annotation.AnnotatedMessageHandlingMemberTest.[engine:junit-jupiter]/[class:org.axonframework.messaging.annotation.AnnotatedMessageHandlingMemberTest]/[method:canHandleMessageType()]</span></span> replaced return value with null for org/axonframework/messaging/annotation/ClasspathParameterResolverFactory::forClassLoader &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@555db14f_86'>86</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@555db14f_86'/> 
+
+<p class='SURVIVED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>findDelegates<br/><b>Killed by : </b>none</span></span> removed conditional - replaced equality check with true &rarr; SURVIVED</p> <p class='SURVIVED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>findDelegates<br/><b>Killed by : </b>none</span></span> removed conditional - replaced equality check with false &rarr; SURVIVED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@555db14f_90'>90</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@555db14f_90'/> 
+
+<p class='SURVIVED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>findDelegates<br/><b>Killed by : </b>none</span></span> removed conditional - replaced equality check with true &rarr; SURVIVED</p> <p class='SURVIVED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>findDelegates<br/><b>Killed by : </b>none</span></span> removed conditional - replaced equality check with false &rarr; SURVIVED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@555db14f_103'>103</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@555db14f_103'/> 
+
+<p class='SURVIVED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>findDelegates<br/><b>Killed by : </b>none</span></span> replaced return value with Collections.emptyList for org/axonframework/messaging/annotation/ClasspathParameterResolverFactory::findDelegates &rarr; SURVIVED</p> 
+</td>
+</tr>
+
+</table>
+
+
+<h2>Active mutators</h2>
+<ul>
+<li class='mutator'>CONDITIONALS_BOUNDARY</li>
+<li class='mutator'>EMPTY_RETURNS</li>
+<li class='mutator'>EXPERIMENTAL_SWITCH</li>
+<li class='mutator'>FALSE_RETURNS</li>
+<li class='mutator'>INCREMENTS</li>
+<li class='mutator'>INVERT_NEGS</li>
+<li class='mutator'>MATH</li>
+<li class='mutator'>NULL_RETURNS</li>
+<li class='mutator'>PRIMITIVE_RETURNS</li>
+<li class='mutator'>REACTOR_REACTIVE_MUTATOR</li>
+<li class='mutator'>REMOVE_CONDITIONALS_EQUAL_ELSE</li>
+<li class='mutator'>REMOVE_CONDITIONALS_EQUAL_IF</li>
+<li class='mutator'>REMOVE_CONDITIONALS_ORDER_ELSE</li>
+<li class='mutator'>REMOVE_CONDITIONALS_ORDER_IF</li>
+<li class='mutator'>TRUE_RETURNS</li>
+<li class='mutator'>VOID_METHOD_CALLS</li>
+
+</ul>
+
+<h2>Tests examined</h2>
+<ul>
+<li>org.axonframework.eventhandling.SimpleEventHandlerInvokerTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.SimpleEventHandlerInvokerTest]/[method:performReset()] (1 ms)</li><li>org.axonframework.messaging.interceptors.ExceptionHandlerTest.[engine:junit-jupiter]/[class:org.axonframework.messaging.interceptors.ExceptionHandlerTest]/[method:exceptionHandlerIsInvokedForAnCommandHandlerThrowingAnException()] (3 ms)</li><li>org.axonframework.queryhandling.StreamingQueryTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.StreamingQueryTest]/[method:emptyOptionalResults()] (1 ms)</li><li>org.axonframework.queryhandling.StreamingQueryTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.StreamingQueryTest]/[method:streamingStreamResults()] (2 ms)</li><li>org.axonframework.commandhandling.AnnotationCommandHandlerAdapterTest.[engine:junit-jupiter]/[class:org.axonframework.commandhandling.AnnotationCommandHandlerAdapterTest]/[method:handlerDispatching_ThrowingException()] (12 ms)</li><li>org.axonframework.queryhandling.StreamingQueryTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.StreamingQueryTest]/[method:streamingSingleResult()] (1 ms)</li><li>org.axonframework.queryhandling.annotation.MethodQueryMessageHandlerDefinitionTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.annotation.MethodQueryMessageHandlerDefinitionTest]/[method:unspecifiedOptionalResponseTypeUnwrapped()] (0 ms)</li><li>org.axonframework.queryhandling.StreamingQueryTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.StreamingQueryTest]/[method:queryNotExists()] (0 ms)</li><li>org.axonframework.eventhandling.SimpleEventHandlerInvokerTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.SimpleEventHandlerInvokerTest]/[method:buildWithNullSequencingPolicyThrowsAxonConfigurationException()] (1 ms)</li><li>org.axonframework.eventhandling.SimpleEventHandlerInvokerTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.SimpleEventHandlerInvokerTest]/[method:buildWithNullHandlerDefinitionThrowsAxonConfigurationException()] (2 ms)</li><li>org.axonframework.messaging.annotation.AnnotatedMessageHandlingMemberTest.[engine:junit-jupiter]/[class:org.axonframework.messaging.annotation.AnnotatedMessageHandlingMemberTest]/[method:canHandleMessageType()] (1 ms)</li><li>org.axonframework.queryhandling.annotation.MethodQueryMessageHandlerDefinitionTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.annotation.MethodQueryMessageHandlerDefinitionTest]/[method:wildcardOptionalResponseTypeUnwrapped()] (0 ms)</li><li>org.axonframework.queryhandling.annotation.AnnotationQueryHandlerAdapterTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.annotation.AnnotationQueryHandlerAdapterTest]/[method:subscribeFailsForHandlerWithInvalidParameters()] (1 ms)</li><li>org.axonframework.queryhandling.annotation.AnnotationQueryHandlerAdapterTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.annotation.AnnotationQueryHandlerAdapterTest]/[method:canHandleMessage()] (2 ms)</li><li>org.axonframework.queryhandling.StreamingQueryTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.StreamingQueryTest]/[method:streamingMonoResult()] (103 ms)</li><li>org.axonframework.queryhandling.annotation.AnnotationQueryHandlerAdapterTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.annotation.AnnotationQueryHandlerAdapterTest]/[method:subscribe()] (2 ms)</li><li>org.axonframework.queryhandling.PrimitiveQueryHandlerResponseTypeTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.PrimitiveQueryHandlerResponseTypeTest]/[method:testByte()] (1 ms)</li><li>org.axonframework.eventhandling.AnnotationEventHandlerAdapterTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.AnnotationEventHandlerAdapterTest]/[method:mismatchingExceptionTypeFromHandlerIgnored()] (11 ms)</li><li>org.axonframework.commandhandling.AnnotationCommandHandlerAdapterTest.[engine:junit-jupiter]/[class:org.axonframework.commandhandling.AnnotationCommandHandlerAdapterTest]/[method:handlerDispatching_WithReturnType()] (14 ms)</li><li>org.axonframework.queryhandling.annotation.AnnotationQueryHandlerAdapterTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.annotation.AnnotationQueryHandlerAdapterTest]/[method:interceptMessages()] (3 ms)</li><li>org.axonframework.queryhandling.FutureAsResponseTypeToQueryHandlersTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.FutureAsResponseTypeToQueryHandlersTest]/[method:futureSubscriptionQueryWithMultipleResponses()] (530 ms)</li><li>org.axonframework.queryhandling.annotation.MethodQueryMessageHandlerDefinitionTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.annotation.MethodQueryMessageHandlerDefinitionTest]/[method:futureResponseTypeUnwrapped()] (0 ms)</li><li>org.axonframework.queryhandling.StreamingQueryTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.StreamingQueryTest]/[method:dispatchInterceptor()] (1 ms)</li><li>org.axonframework.queryhandling.StreamingQueryTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.StreamingQueryTest]/[method:throttledFluxQuery()] (802 ms)</li><li>org.axonframework.queryhandling.PrimitiveQueryHandlerResponseTypeTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.PrimitiveQueryHandlerResponseTypeTest]/[method:testBoolean()] (1 ms)</li><li>org.axonframework.queryhandling.FutureAsResponseTypeToQueryHandlersTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.FutureAsResponseTypeToQueryHandlersTest]/[method:futureQueryWithMultipleResponses()] (502 ms)</li><li>org.axonframework.queryhandling.PrimitiveQueryHandlerResponseTypeTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.PrimitiveQueryHandlerResponseTypeTest]/[method:testFloat()] (2 ms)</li><li>org.axonframework.queryhandling.StreamingQueryTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.StreamingQueryTest]/[method:errorResult()] (1 ms)</li><li>org.axonframework.queryhandling.FutureAsResponseTypeToQueryHandlersTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.FutureAsResponseTypeToQueryHandlersTest]/[method:subscriptionQueryWithSingleResponse()] (502 ms)</li><li>org.axonframework.queryhandling.StreamingQueryTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.StreamingQueryTest]/[method:resubscribeWorksEvenWhenAnErrorHasBeenCashed()] (2 ms)</li><li>org.axonframework.queryhandling.PrimitiveQueryHandlerResponseTypeTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.PrimitiveQueryHandlerResponseTypeTest]/[method:testChar()] (0 ms)</li><li>org.axonframework.eventhandling.replay.ReplayParameterResolverFactoryTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.replay.ReplayParameterResolverFactoryTest]/[method:invokeWithReplayTokens()] (2 ms)</li><li>org.axonframework.eventhandling.AnnotationEventHandlerAdapterTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.AnnotationEventHandlerAdapterTest]/[method:handlerInterceptors()] (10 ms)</li><li>org.axonframework.queryhandling.StreamingQueryTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.StreamingQueryTest]/[method:streamingListResults()] (0 ms)</li><li>org.axonframework.queryhandling.annotation.AnnotationQueryHandlerAdapterTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.annotation.AnnotationQueryHandlerAdapterTest]/[method:handleQueryForCollection()] (1 ms)</li><li>org.axonframework.queryhandling.annotation.AnnotationQueryHandlerAdapterTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.annotation.AnnotationQueryHandlerAdapterTest]/[method:handleQueryWithEmptyOptional()] (1 ms)</li><li>org.axonframework.queryhandling.PrimitiveQueryHandlerResponseTypeTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.PrimitiveQueryHandlerResponseTypeTest]/[method:testLong()] (1 ms)</li><li>org.axonframework.queryhandling.StreamingQueryTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.StreamingQueryTest]/[method:switchHandlerOnError()] (2 ms)</li><li>org.axonframework.queryhandling.FutureAsResponseTypeToQueryHandlersTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.FutureAsResponseTypeToQueryHandlersTest]/[method:scatterGatherQueryWithSingleResponse()] (503 ms)</li><li>org.axonframework.eventhandling.AnnotationEventHandlerAdapterTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.AnnotationEventHandlerAdapterTest]/[method:wrapExceptionInResultInterceptor()] (4 ms)</li><li>org.axonframework.queryhandling.annotation.AnnotationQueryHandlerAdapterTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.annotation.AnnotationQueryHandlerAdapterTest]/[method:handleQueryThrowsNoHandlerForQueryException()] (2 ms)</li><li>org.axonframework.queryhandling.StreamingQueryTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.StreamingQueryTest]/[method:backpressureFluxQuery()] (4 ms)</li><li>org.axonframework.queryhandling.FutureAsResponseTypeToQueryHandlersTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.FutureAsResponseTypeToQueryHandlersTest]/[method:queryWithSingleResponse()] (502 ms)</li><li>org.axonframework.queryhandling.StreamingQueryTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.StreamingQueryTest]/[method:streamingFluxResults()] (1 ms)</li><li>org.axonframework.messaging.annotation.AnnotatedMessageHandlingMemberTest.[engine:junit-jupiter]/[class:org.axonframework.messaging.annotation.AnnotatedMessageHandlingMemberTest]/[method:hasAnnotation()] (0 ms)</li><li>org.axonframework.eventhandling.replay.ReplayContextParameterResolverFactoryTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.replay.ReplayContextParameterResolverFactoryTest]/[method:resolvesIfMatching()] (3 ms)</li><li>org.axonframework.queryhandling.FutureAsResponseTypeToQueryHandlersTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.FutureAsResponseTypeToQueryHandlersTest]/[method:scatterGatherQueryWithMultipleResponses()] (510 ms)</li><li>org.axonframework.eventhandling.SimpleEventHandlerInvokerTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.SimpleEventHandlerInvokerTest]/[method:buildWithEmptyEventHandlersListThrowsAxonConfigurationException()] (1 ms)</li><li>org.axonframework.queryhandling.annotation.AnnotationQueryHandlerAdapterTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.annotation.AnnotationQueryHandlerAdapterTest]/[method:subscribeFailsForHandlerWithVoidReturnType()] (1 ms)</li><li>org.axonframework.eventhandling.replay.ReplayAwareMessageHandlerWrapperTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.replay.ReplayAwareMessageHandlerWrapperTest]/[method:invokeWithReplayTokens()] (5 ms)</li><li>org.axonframework.queryhandling.StreamingQueryTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.StreamingQueryTest]/[method:streamingNullResult()] (9 ms)</li><li>org.axonframework.deadline.annotation.DeadlineMethodMessageHandlerDefinitionTest.[engine:junit-jupiter]/[class:org.axonframework.deadline.annotation.DeadlineMethodMessageHandlerDefinitionTest]/[method:deadlineManagerIsEvaluatedBeforeGenericEventHandler()] (11 ms)</li><li>org.axonframework.messaging.annotation.AnnotatedMessageHandlingMemberTest.[engine:junit-jupiter]/[class:org.axonframework.messaging.annotation.AnnotatedMessageHandlingMemberTest]/[method:attributeReturnsNonEmptyOptionalForMatchingAttributeKey()] (1 ms)</li><li>org.axonframework.queryhandling.annotation.MethodQueryMessageHandlerDefinitionTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.annotation.MethodQueryMessageHandlerDefinitionTest]/[method:upperBoundWildcardOptionalResponseTypeUnwrapped()] (0 ms)</li><li>org.axonframework.queryhandling.annotation.AnnotationQueryHandlerAdapterTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.annotation.AnnotationQueryHandlerAdapterTest]/[method:handleQuery()] (1 ms)</li><li>org.axonframework.eventhandling.AnnotationEventHandlerAdapterTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.AnnotationEventHandlerAdapterTest]/[method:canHandleTypeDoesNotReturnResetHandlers()] (5 ms)</li><li>org.axonframework.queryhandling.StreamingQueryTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.StreamingQueryTest]/[method:optionalResults()] (0 ms)</li><li>org.axonframework.commandhandling.AnnotationCommandHandlerAdapterTest.[engine:junit-jupiter]/[class:org.axonframework.commandhandling.AnnotationCommandHandlerAdapterTest]/[method:handlerDispatching_VoidReturnType()] (6 ms)</li><li>org.axonframework.eventhandling.AnnotationEventHandlerAdapterTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.AnnotationEventHandlerAdapterTest]/[method:invokeResetHandlerWithResetContext()] (2 ms)</li><li>org.axonframework.messaging.interceptors.ExceptionHandlerTest.[engine:junit-jupiter]/[class:org.axonframework.messaging.interceptors.ExceptionHandlerTest]/[method:exceptionHandlersAreInvokedInHandlerPriorityOrder()] (3 ms)</li><li>org.axonframework.queryhandling.PrimitiveQueryHandlerResponseTypeTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.PrimitiveQueryHandlerResponseTypeTest]/[method:testShort()] (1 ms)</li><li>org.axonframework.eventhandling.SimpleEventHandlerInvokerTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.SimpleEventHandlerInvokerTest]/[method:buildWithNullParameterResolverFactoryThrowsAxonConfigurationException()] (1 ms)</li><li>org.axonframework.queryhandling.annotation.MethodQueryMessageHandlerDefinitionTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.annotation.MethodQueryMessageHandlerDefinitionTest]/[method:voidNotAcceptedAsReturnType()] (1 ms)</li><li>org.axonframework.queryhandling.annotation.AnnotationQueryHandlerAdapterTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.annotation.AnnotationQueryHandlerAdapterTest]/[method:handleQueryWithProvidedOptional()] (1 ms)</li><li>org.axonframework.queryhandling.PrimitiveQueryHandlerResponseTypeTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.PrimitiveQueryHandlerResponseTypeTest]/[method:testInt()] (0 ms)</li><li>org.axonframework.commandhandling.AnnotationCommandHandlerAdapterTest.[engine:junit-jupiter]/[class:org.axonframework.commandhandling.AnnotationCommandHandlerAdapterTest]/[method:subscribe()] (41 ms)</li><li>org.axonframework.queryhandling.FutureAsResponseTypeToQueryHandlersTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.FutureAsResponseTypeToQueryHandlersTest]/[method:queryWithMultipleResponses()] (504 ms)</li><li>org.axonframework.queryhandling.FutureAsResponseTypeToQueryHandlersTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.FutureAsResponseTypeToQueryHandlersTest]/[method:subscriptionQueryWithMultipleResponses()] (501 ms)</li><li>org.axonframework.queryhandling.StreamingQueryTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.StreamingQueryTest]/[method:streamingFluxAfterHandlerCompletes()] (5002 ms)</li><li>org.axonframework.queryhandling.StreamingQueryTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.StreamingQueryTest]/[method:errorStream()] (2 ms)</li><li>org.axonframework.eventhandling.AnnotationEventHandlerAdapterTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.AnnotationEventHandlerAdapterTest]/[method:invokeResetHandler()] (4 ms)</li><li>org.axonframework.queryhandling.annotation.MethodQueryMessageHandlerDefinitionTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.annotation.MethodQueryMessageHandlerDefinitionTest]/[method:optionalResponseTypeUnwrapped()] (1 ms)</li><li>org.axonframework.messaging.annotation.AnnotatedHandlerInspectorTest.[engine:junit-jupiter]/[class:org.axonframework.messaging.annotation.AnnotatedHandlerInspectorTest]/[method:interceptors()] (7 ms)</li><li>org.axonframework.messaging.interceptors.ExceptionHandlerTest.[engine:junit-jupiter]/[class:org.axonframework.messaging.interceptors.ExceptionHandlerTest]/[method:exceptionHandlerIsInvokedForAnEventHandlerThrowingAnException()] (3 ms)</li><li>org.axonframework.eventhandling.SimpleEventHandlerInvokerTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.SimpleEventHandlerInvokerTest]/[method:performResetWithResetContext()] (2 ms)</li><li>org.axonframework.queryhandling.PrimitiveQueryHandlerResponseTypeTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.PrimitiveQueryHandlerResponseTypeTest]/[method:testDouble()] (2 ms)</li><li>org.axonframework.eventhandling.SimpleEventHandlerInvokerTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.SimpleEventHandlerInvokerTest]/[method:singleEventPublication()] (1 ms)</li><li>org.axonframework.deadline.annotation.DeadlineMethodMessageHandlerDefinitionTest.[engine:junit-jupiter]/[class:org.axonframework.deadline.annotation.DeadlineMethodMessageHandlerDefinitionTest]/[method:namedDeadlineManagerIsEvaluatedBeforeGenericOne()] (2 ms)</li><li>org.axonframework.messaging.interceptors.ExceptionHandlerTest.[engine:junit-jupiter]/[class:org.axonframework.messaging.interceptors.ExceptionHandlerTest]/[method:exceptionHandlerIsInvokedForAnQueryHandlerThrowingAnException()] (5 ms)</li><li>org.axonframework.queryhandling.StreamingQueryTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.StreamingQueryTest]/[method:streamingCompletableFutureResult()] (1 ms)</li><li>org.axonframework.commandhandling.AnnotationCommandHandlerAdapterTest.[engine:junit-jupiter]/[class:org.axonframework.commandhandling.AnnotationCommandHandlerAdapterTest]/[method:handlerDispatching_WithCustomCommandName()] (7 ms)</li><li>org.axonframework.queryhandling.annotation.AnnotationQueryHandlerAdapterTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.annotation.AnnotationQueryHandlerAdapterTest]/[method:handleQueryWithException()] (2 ms)</li><li>org.axonframework.eventhandling.replay.ReplayAwareMessageHandlerWrapperWithDisallowReplayTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.replay.ReplayAwareMessageHandlerWrapperWithDisallowReplayTest]/[method:invokeWithReplayTokens()] (4 ms)</li><li>org.axonframework.eventhandling.SimpleEventHandlerInvokerTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.SimpleEventHandlerInvokerTest]/[method:buildWithNullListenerInvocationErrorHandlerThrowsAxonConfigurationException()] (1 ms)</li><li>org.axonframework.eventhandling.SimpleEventHandlerInvokerTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.SimpleEventHandlerInvokerTest]/[method:repeatedEventPublication()] (1 ms)</li><li>org.axonframework.commandhandling.AnnotationCommandHandlerAdapterTest.[engine:junit-jupiter]/[class:org.axonframework.commandhandling.AnnotationCommandHandlerAdapterTest]/[method:handle_NoHandlerForCommand()] (1112 ms)</li><li>org.axonframework.queryhandling.StreamingQueryTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.StreamingQueryTest]/[method:handlerInterceptor()] (1 ms)</li><li>org.axonframework.eventhandling.SimpleEventHandlerInvokerTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.SimpleEventHandlerInvokerTest]/[method:buildWithoutEventHandlersListThrowsAxonConfigurationException()] (1 ms)</li><li>org.axonframework.queryhandling.FutureAsResponseTypeToQueryHandlersTest.[engine:junit-jupiter]/[class:org.axonframework.queryhandling.FutureAsResponseTypeToQueryHandlersTest]/[method:futureScatterGatherQueryWithMultipleResponses()] (503 ms)</li><li>org.axonframework.eventhandling.SimpleEventHandlerInvokerTest.[engine:junit-jupiter]/[class:org.axonframework.eventhandling.SimpleEventHandlerInvokerTest]/[method:buildWithNullEventHandlersListThrowsAxonConfigurationException()] (2 ms)</li>
+</ul>
+
+<br/>
+
+Report generated by <a href='https://pitest.org'>PIT</a> pitest-reactor
+
+</body>
+</html>
